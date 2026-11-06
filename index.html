@@ -618,6 +618,10 @@ button{font:inherit;color:inherit;background:none;border:none;padding:0;cursor:p
 .chips{flex-shrink:0}      /* 칩 줄은 세로로 안 줄어듦 — 피드백 거르개 칩이 높이 0 으로 눌려 안 보였다 (2026-11-06 글 넘침 점검) */
 body{word-break:keep-all;overflow-wrap:break-word}
 @media (max-width:400px){#top:has(.ttl:not(:empty)) .logo{display:none}}      /* 좁은 폰 — 제목이 있으면 로고를 빼 「기록 · 피드백 · 내 정보」가 「기…」로 줄지 않게 (2026-11-06) */      /* 한글 낱말 가운데서 줄이 꺾이지 않게 (2026-11-06 대표 「글자가 멋대로 줄바꿈」) */
+.plall{background:none;border:0;border-right:1px solid #34302a;color:inherit;font:inherit;cursor:pointer;text-align:left;white-space:nowrap;flex-direction:row!important;align-items:center!important;gap:3px}.plall i{font-style:normal;color:var(--gold);font-size:12px}
+.rtall{display:grid;gap:8px;margin:4px 0 12px}.rtall-c{display:grid;grid-template-columns:22px 64px 1fr;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid #34302a;background:#1d1c1a;border-radius:12px;padding:8px 10px;color:inherit;font:inherit;cursor:pointer}
+.rtall-c .n{font-weight:900;color:var(--gold);text-align:center}.rtall-c img,.rtall-c .ni{width:64px;height:64px;border-radius:10px;background:#fff;object-fit:contain}.rtall-c .ni{display:flex;align-items:center;justify-content:center;background:#2a2824;color:var(--sub);font-size:12.5px}
+.rtall-c .t b{display:block;font-size:15px}.rtall-c .t small{color:var(--sub);font-size:13px}
 .mx-top{display:flex;justify-content:center;margin:-4px 0 6px}.mx-top img{max-height:150px;max-width:100%;border-radius:14px;background:#fff;object-fit:contain}.mx-noimg{color:var(--sub)}.mx-h{text-align:center;margin-bottom:10px}
 .mx-main{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mx-main button{display:flex;flex-direction:column;align-items:center;gap:2px;min-height:76px;justify-content:center;border-radius:16px;border:1.5px solid var(--gold-2);background:linear-gradient(180deg,#2f281c,#211d16);color:var(--gold);font:inherit}.mx-main b{font-size:17px}.mx-main small{color:var(--sub);font-size:13px}.mx-main button.off{border-color:#3a3731;background:#1d1c1a;color:#6f6a63}
 .seg.mx-tab{margin:14px 0 8px;width:100%}.seg.mx-tab button{flex:1}.mx-pane{min-height:64px;border:1px solid #34322d;border-radius:12px;padding:10px 12px;font-size:14.5px;line-height:1.6}.mx-pane div{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:4px}.mx-pane small{color:var(--sub)}
@@ -3526,7 +3530,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '562';
+const BUILD = '563';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -5225,11 +5229,13 @@ function 표에종목(nm){ nm = String(nm || '').trim().replace(/:/g, '·').slic
   const 정 = 정규(nm), 붙 = 별칭주인().get(정), 있 = EX.find(e => !e.memo && !e.cardio && 고를수있나(e) && 정규(e.n) === 정);
   const 누 = a => { const b = document.createElement('button'); b.setAttribute('data-act', a); b.style.display = 'none'; document.body.appendChild(b); b.click(); b.remove(); };
   if(있){ 누('add:' + 있.id + ':' + ((vars(있.id)[0] || {}).k || 'a')); return; }      /* 같은 이름 = 그 종목(지난 무게 · 횟수 채움) */
+  if(붙 && 고를수있나(붙) && !붙.memo && !붙.cardio && S.who !== 'tr'){ 누('add:' + 붙.id + ':' + ((vars(붙.id)[0] || {}).k || 'a')); return; }      /* 회원 = 별칭이면 그 종목 */
   if(붙 && 고를수있나(붙) && !붙.memo && !붙.cardio){ S.별칭물음 = { nm, id:붙.id }; openSheet(() => `<div class="h2">「${esc(nm)}」 <small>비슷한 종목이 있어요</small></div>
       <button class="card rowc addpick" data-act="alpick:old"><div><div class="nm">${esc(붙.n)}로 기록</div><div class="sm">「${esc(nm)}」은 ${esc(붙.n)}의 다른 이름으로 등록돼 있어요</div></div><span class="rt">›</span></button>
-      <button class="card rowc addpick q" data-act="alpick:new"><div><div class="nm">「${esc(nm)}」 새 종목으로</div><div class="sm">따로 기록 · 다음부터 모두 검색</div></div><span class="rt">›</span></button>
+      ${S.who === 'tr' ? `<button class="card rowc addpick q" data-act="alpick:new"><div><div class="nm">「${esc(nm)}」 새 종목으로</div><div class="sm">따로 기록 · 다음부터 모두 검색</div></div><span class="rt">›</span></button>` : ''}
       <button class="card rowc addpick" data-act="alpick:memo"><div><div class="nm">간편 추가</div><div class="sm">이름만 남기고 바로 · 볼륨 · 그래프엔 안 들어가요</div></div><span class="rt">›</span></button>
       <button class="btn ghost sm" data-act="close">닫기</button>`); return; }      /* 별칭으로만 맞으면 트레이너가 고름 (2026-11-06 22:08 대표 「무조건 묶지 말고 트레이너가 선택」) */
+  if(S.who !== 'tr'){ S.exq = nm; S.exqOn = true; go('pick'); setTimeout(() => { const q = document.querySelector('input[data-k="exq"]'); if(q){ q.value = nm; q.dispatchEvent(new Event('input', { bubbles:true })); } }, 0); toast('목록에서 찾아 주세요'); return; }      /* 회원 = 간편 등록 없음 → 그 이름으로 검색 (대표 23:06) */
   S.exn = { id:'x' + Date.now(), n:nm, p:'기타', e:'', d:'', media:[], files:[], 새:true, 기록:true, 더:true }; 누('exsave'); }      /* 없으면 새 종목(모두 검색 · 웨이트/부위는 나중에) — 오늘 만든 간편 등록과 같은 길 */
 document.addEventListener('keydown', ev => { const t = ev.target; if(!t || !t.classList || !t.classList.contains('plnewin') || ev.isComposing) return; if(ev.key === 'Enter'){ ev.preventDefault(); const v = t.value; t.value = ''; t.blur(); 표에종목(v); } });
 document.addEventListener('focusout', ev => { const t = ev.target; if(t && t.classList && t.classList.contains('plnewin') && t.value.trim()){ const v = t.value; t.value = ''; 표에종목(v); } });
@@ -6397,7 +6403,7 @@ function vPick(){
     <input class="search" type="text" data-k="exq" placeholder="종목 검색 · 예) 스쿼트, bp, 코어">
     <div class="pkparts">${['전체'].concat(PARTS).map(x=>`<button class="chip ${x===S.pickPart?'on':''}" data-act="part:${x}">${x}</button>`).join('')}${추가운동().length ? `<button class="chip mine ${S.pickPart==='직접 추가'?'on':''}" data-act="part:직접 추가">직접 추가 ${추가운동().length}</button>` : ''}</div>
     <div class="pkmini" id="pickhint">      ${''/* 차례 = 간편추가 · 새 종목 · 1RM · 기구 · 추가 단추는 파랑 (2026-11-05 대표 시안 ⑦ 「+종목 간편추가 , +새 종목 / 1rm 종목 / 기구-전체 · 추가버튼은 푸른색으로」 · 기타운동 = 간편추가로 합침) */}
-      <button class="b" data-act="memoadd">＋ 종목 간편추가</button>
+      ${S.who==='tr' ? `<button class="b" data-act="memoadd">＋ 종목 간편추가</button>` : ''}
       ${S.who==='tr' ? `<button class="b" data-act="exnew">＋ 새 종목</button>` : ''}
       <button class="g" data-act="rmaddpick">${svg('h_crown',14)} 1RM 종목</button>
       <button class="${(S.pickOpen || S.pickEq!=='전체')?'on':''}" data-act="partopen">기구 · ${esc(S.pickEq)} ${S.pickOpen?'▴':'▾'}</button>
@@ -7371,9 +7377,9 @@ function 플래너화면(w){
     ${몸판묶음(w)}
     <div class="pl-tools">${혼자 ? `<button class="wrchip ${c0.on ? 'on' : ''}" data-act="wrestpick">${c0.on ? '휴식 ' + c0.sec + '초' : '휴식 끔'} ▾</button>` : ''}<span class="sp"></span>${채움 ? `<button class="pl-new" data-act="plnew">새로 기록하기</button>` : ''}</div>
     ${도는중 ? `<div class="wrestbar"><b id="restleft2">${mmss(Math.max(0, (S.rest.until - Date.now()) / 1000))}</b><span>쉬는 중</span><button data-act="wrestadd">+15초</button><button data-act="wrestx">건너뛰기</button></div>` : ''}
-    <div class="pltb"><div class="plr plh pl3h"><span class="pln">운동 명칭</span><div class="plcs"><div class="plg" style="--n:4"><span class="plhh" style="grid-column:span 4">무게(kg)</span><span class="plhh r1" style="grid-column:span 4">반복수</span></div></div></div>
-      ${근.map(행).join('') || (tr ? '' : '<div class="pl-empty">아직 종목이 없습니다 · 아래 「＋ 웨이트 종목 추가」</div>')}
-      ${tr ? `<div class="plr pl3 plnew"><span class="pln"><input class="plnewin" data-k="plnewin" enterkeyhint="done" autocomplete="off" placeholder="＋ 종목" aria-label="종목 이름 쓰고 Enter"></span><div class="plcs"><div class="plg" style="--n:4">${'<span class="plc nil"></span>'.repeat(8)}</div></div><span></span></div>` : ''}</div>
+    <div class="pltb"><div class="plr plh pl3h"><button class="pln plall" data-act="plall" title="오늘 루틴 한눈에">운동 명칭 <i>▾</i></button><div class="plcs"><div class="plg" style="--n:4"><span class="plhh" style="grid-column:span 4">무게(kg)</span><span class="plhh r1" style="grid-column:span 4">반복수</span></div></div></div>
+      ${근.map(행).join('')}
+      ${true ? `<div class="plr pl3 plnew"><span class="pln"><input class="plnewin" data-k="plnewin" enterkeyhint="done" autocomplete="off" placeholder="＋ 종목" aria-label="종목 이름 쓰고 Enter"></span><div class="plcs"><div class="plg" style="--n:4">${'<span class="plc nil"></span>'.repeat(8)}</div></div><span></span></div>` : ''}</div>
     <button class="pl-add" data-act="go:pick">＋ 웨이트 종목 추가</button>
     ${수업 && tr ? `<button class="zbtn zrest" data-act="rtrest"><span class="e">📋</span><span>나머지 운동 지정하기<small>오늘 루틴에서 · 검색해서 추가</small></span></button>` : ''}
     ${유.length ? `<div class="pltb plcard"><div class="plr plca plh"><span class="pln">유산소</span><span>시간</span><span>속도</span></div>${유.map(유행).join('')}</div>` : ''}
@@ -7415,6 +7421,14 @@ function sheetPlName(i){ const w = live(), it = w && w.items[i]; if(!it) return;
       <button class="btn ghost sm" data-act="wdel:${i}">종목 삭제</button></div>
     <button class="btn ghost sm" data-act="close">닫기</button>`; }); }
 /* 회원 종목 창 — 노션 11/6 「회원이 기록할 때 종목을 눌러 뜨는 화면 : 수업 메모 필요 없음 · 그림이 위 · 사진 보기 · 영상 보기를 메인(있을 때만) = 피드백 자료 · 직전 기록까지 · 빈 곳 눌러도 닫힘 · 직전 기록과 설명은 작은 탭」 */
+/* 오늘 루틴 한 장 — 표 머리 「운동 명칭」을 누르면 오늘 종목이 그림 · 세트 계획과 함께 위에서 아래로 (2026-11-06 대표 「전체 루틴표 다시 보기 · 운동 명칭 텍스트에 붙이면 오늘 종목의 루틴이 쭉 · 한 번에 이미지로」) */
+function 오늘루틴창(){ const w = live(); if(!w) return; const 근 = w.items.map((it, i) => ({ it, i })).filter(o => !isMemo(o.it.ex) || String(o.it.va || '').trim());
+  const 계획 = it => { const ss = (it.sets || []).filter(x => x.kg || x.reps); if(!ss.length) return '세트 아직 없음'; const kg = ss.map(x => +x.kg || 0), rp = ss.map(x => +x.reps || 0), 같kg = kg.every(v => v === kg[0]), 같rp = rp.every(v => v === rp[0]);
+    return ss.length + '세트 · ' + (kg[0] ? (같kg ? kgfmt(kg[0]) : kgfmt(Math.min(...kg)) + '~' + kgfmt(Math.max(...kg))) + 'kg × ' : '') + (같rp ? rp[0] : Math.min(...rp) + '~' + Math.max(...rp)) + '회'; };
+  openSheet(() => `<div class="h2">오늘 루틴 <small>${esc(dateTxt(w.date || TODAY))}${w.title ? ' · ' + esc(w.title) : ''} · ${근.length}종목</small></div>
+    <div class="rtall">${근.map(({ it, i }, k) => { const e = exOf(it.ex) || {}, 그림 = isMemo(it.ex) ? '' : 종목그림주소(e), 유 = !!e.cardio;
+      return `<button class="rtall-c" data-act="plnm:${i}"><span class="n">${k + 1}</span>${그림 ? `<img src="${esc(그림)}" alt="" loading="lazy">` : `<span class="ni">${esc(isMemo(it.ex) ? '메모' : (e.p || ''))}</span>`}<span class="t"><b>${esc(isMemo(it.ex) ? it.va : (e.n || exName(it.ex, it.va)))}</b><small>${유 ? esc((it.sets[0] && it.sets[0].reps ? it.sets[0].reps + '분' : '유산소')) : isMemo(it.ex) ? '간편 추가 · 이름만' : esc(계획(it))}</small></span></button>`; }).join('')}</div>
+    <button class="btn ghost sm" data-act="close">닫기</button>`); }
 function 회원종목창(i){ const w = live(), it = w && w.items[i]; if(!it) return; const wmid = w.mid || S.mid, e = exOf(it.ex) || {};
   openSheet(() => { const cms = cmOf(wmid, it.ex, it.va), nw = cms.filter(c => !c.read).length, 자료 = cms.flatMap(c => (c.media || []).map(m => Object.assign({ c }, m)));
     const 사진 = 자료.filter(m => m.kind !== 'video'), 영상 = 자료.filter(m => m.kind === 'video'), 지 = lastRuns(it.ex, it.va, wmid, 1)[0], 탭 = S.mxTab === '설명' ? '설명' : '직전';
@@ -13869,7 +13883,7 @@ function 칠하기(){
   });
   const h=document.getElementById('pickhint'); if(h) h.style.display = q?'none':'';
   const c=document.getElementById('pickcnt'); if(c) c.textContent = 보임 + '개';
-  const nv = document.getElementById('pknew'); if(nv){ const 글 = (S.exq || '').trim(), 같은이름 = 글 && EX.some(e => 고를수있나(e) && 정규(e.n) === 정규(글)); nv.style.display = 글 && (!보임 || (S.who === 'tr' && !같은이름)) ? '' : 'none'; const qq = document.getElementById('pknewq'); if(qq) qq.textContent = 글; }      /* 결과가 없으면 「바로 추가」 · 트레이너는 같은 이름이 없으면 결과(별칭 · 비슷한 것)가 있어도 함께 — 고르게 (2026-11-06 22:08) */
+  const nv = document.getElementById('pknew'); if(nv){ const 글 = (S.exq || '').trim(), 같은이름 = 글 && EX.some(e => 고를수있나(e) && 정규(e.n) === 정규(글)); nv.style.display = 글 && S.who === 'tr' && (!보임 || !같은이름) ? '' : 'none';      /* 회원은 간편 등록 없음 (2026-11-06 23:06) */ const qq = document.getElementById('pknewq'); if(qq) qq.textContent = 글; }      /* 결과가 없으면 「바로 추가」 · 트레이너는 같은 이름이 없으면 결과(별칭 · 비슷한 것)가 있어도 함께 — 고르게 (2026-11-06 22:08) */
 }
 /* 사전에 없는 종목 바로 추가 — 이름 · 부위 (2026-10-23 B-2) */
 function sheetNewEx(){ const g = S.nx || (S.nx = { name:(S.exq || '').trim().slice(0, 40), part:'' }), tr = S.who === 'tr';
@@ -15136,9 +15150,10 @@ document.addEventListener('click', async ev=>{
       });
       return; }
     case 'memoadd': sheetMemoAdd(); return;
+    case 'plall': 오늘루틴창(); return;
     case 'alpick': { const q = S.별칭물음; S.별칭물음 = null; closeSheet(); if(!q) return; const 누 = a => { const b = document.createElement('button'); b.setAttribute('data-act', a); b.style.display = 'none'; document.body.appendChild(b); b.click(); b.remove(); };
       if(rest[0] === 'old'){ 누('add:' + q.id + ':' + ((vars(q.id)[0] || {}).k || 'a')); return; }
-      if(rest[0] === 'memo'){ sheetMemoAdd(); const el = document.querySelector('[data-k="memo:n"]'); if(el) el.value = q.nm; 누('memogo'); return; }      /* 간편 추가 = 이름만 (대표 22:09) */
+      if(rest[0] === 'memo'){ S.간편그대로 = true; sheetMemoAdd(); const el = document.querySelector('[data-k="memo:n"]'); if(el) el.value = q.nm; 누('memogo'); return; }      /* 간편 추가 = 이름만 (대표 22:09) */
       S.exn = { id:'x' + Date.now(), n:q.nm, p:'기타', e:'', d:'', media:[], files:[], 새:true, 기록:true, 더:true, 별칭무시:true }; 누('exsave'); return; }
 
     case 'pknew': S.nx = null; if(S.who === 'tr'){ 초안지움('exn','exe','exd'); S.exn = { id:'x'+Date.now(), n:(S.exq || '').trim().replace(/:/g, '·').slice(0, 24), p:(S.pickPart && PARTS.includes(S.pickPart)) ? S.pickPart : '기타', e:'', d:'', media:[], files:[], 새:true, 기록:true }; sheetExNew(); return; }      /* 트레이너 = 새 종목 창 그대로 (2026-10-27) */
@@ -15167,7 +15182,7 @@ document.addEventListener('click', async ev=>{
       const el=document.querySelector('[data-k="memo:n"]');
       const nm=(el&&el.value||'').trim().replace(/:/g,'·').slice(0,40);
       if(!nm){ toast('이름을 입력해 주세요'); return; }
-      { const 붙 = S.who === 'tr' ? null : 별칭주인().get(정규(nm)); if(붙 && 고를수있나(붙)){      /* 트레이너는 별칭으로 자동 묶지 않음 — 이름만 남기는 간편 추가 그대로 (2026-11-06 22:08) */ closeSheet(); if(S.draft) delete S.draft['memo:n']; const b = document.createElement('button'); b.setAttribute('data-act', 'add:' + 붙.id + ':' + ((vars(붙.id)[0] || {}).k || 'a')); b.style.display = 'none'; document.body.appendChild(b); b.click(); b.remove(); toast(붙.n + '로 추가했어요'); return; } }      /* 붙인 옛 이름 = 붙인 종목 (2026-11-05 ②A) */
+      { const 붙 = S.who === 'tr' || S.간편그대로 ? null : 별칭주인().get(정규(nm)); S.간편그대로 = false; if(붙 && 고를수있나(붙)){      /* 트레이너는 별칭으로 자동 묶지 않음 — 이름만 남기는 간편 추가 그대로 (2026-11-06 22:08) */ closeSheet(); if(S.draft) delete S.draft['memo:n']; const b = document.createElement('button'); b.setAttribute('data-act', 'add:' + 붙.id + ':' + ((vars(붙.id)[0] || {}).k || 'a')); b.style.display = 'none'; document.body.appendChild(b); b.click(); b.remove(); toast(붙.n + '로 추가했어요'); return; } }      /* 붙인 옛 이름 = 붙인 종목 (2026-11-05 ②A) */
       closeSheet();
       if(!live()) newLive('빈 운동', [], '개인운동');
       live().items.push({ ex:'memo', va:nm, rest:60, locked:false, sec:0,
