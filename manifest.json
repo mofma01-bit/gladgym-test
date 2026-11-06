@@ -1,0 +1,27 @@
+{
+  "id": "/gladgym-test/",
+  "name": "글래드짐 테스트 (샘플 회원)",
+  "short_name": "글래드짐 테스트",
+  "description": "가짜 회원으로 회원 앱을 직접 눌러 보는 테스트용 — 서버에 저장 안 됨 · 다음 날 처음으로",
+  "start_url": "/gladgym-test/?sample=1",
+  "scope": "/gladgym-test/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#131312",
+  "theme_color": "#131312",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "/gladgym-app/img/icon-test-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/gladgym-app/img/icon-test-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
