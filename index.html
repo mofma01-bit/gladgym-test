@@ -161,10 +161,10 @@ button{font:inherit;color:inherit;background:none;border:none;padding:0;cursor:p
 .pltb{flex:none;border:1px solid #3a352c;border-radius:10px;overflow:hidden;background:#151413}      /* #main 은 세로 flex — overflow 가 있으면 높이 0 으로 눌린다 */
 .plr{display:grid;grid-template-columns:27% 1fr;border-top:1px solid #34302a;width:100%}.plr:first-child{border-top:0}
 .plh{background:#2c2924}.plh .pln,.plhh{font-size:13px;color:var(--sub);font-weight:700;justify-content:center;text-align:center;padding:5px 0}
-.pln{display:flex;align-items:center;padding:0 4px;min-height:36px;border:0;border-right:1px solid #34302a;background:none;color:inherit;font:inherit;text-align:left;min-width:0}
-.pln .hl{font-size:13px;font-weight:800;color:#141210;border-radius:4px;padding:1px 5px;white-space:normal;max-width:100%}      /* 종목 이름은 다 보이게(넘치면 두 줄) — 「루마니안 데드…」 (2026-11-06) */
+.pln{display:flex;align-items:center;padding:5px 8px 5px 4px;min-height:36px;border:0;border-right:1px solid #34302a;background:none;color:inherit;font:inherit;text-align:left;min-width:0}
+.pln .hl{font-size:13px;font-weight:800;color:#141210;border-radius:4px;padding:1px 5px;white-space:normal;max-width:100%;word-break:keep-all;overflow-wrap:anywhere}      /* 종목 이름은 다 보이게(넘치면 두 줄) — 「루마니안 데드…」 (2026-11-06) */
 .plcs{min-width:0}.plcs.wide{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.plg{display:grid;grid-template-columns:repeat(calc(var(--n) * 2),1fr);height:100%}.plcs.wide .plg{width:calc(var(--n) * 25%)}
+.plg{display:grid;grid-template-columns:repeat(var(--n),1.3fr) repeat(var(--n),.8fr);height:100%}      /* 무게 1.3 : 횟수 0.8 — 폰에서 42.5 가 칸을 넘어 붙어 보이던 것 (2026-11-06) */.plcs.wide .plg{width:calc(var(--n) * 25%)}
 .plc{min-height:36px;border:0;border-left:1px solid #2a2722;background:transparent;color:var(--cream);font:inherit;font-size:13.5px;font-weight:800;letter-spacing:-.5px;padding:0}
 .plc:first-child{border-left:0}.plc.r1,.plhh.r1{border-left:2px solid #3a352c}
 .plc.ch{box-shadow:inset 0 0 0 2px var(--cream)}
@@ -625,6 +625,8 @@ body{word-break:keep-all;overflow-wrap:break-word}
 .plr.pl3{grid-template-columns:27% 1fr 30px}.pladd{border:0;border-left:1px solid #34302a;background:none;color:var(--gold);font-size:18px;font-weight:900;cursor:pointer}.plh.pl3h{grid-template-columns:27% 1fr 30px}
 .plc.kp-on{outline:2.5px solid var(--gold)!important;outline-offset:-2px;background:rgba(240,211,160,.16)!important;color:var(--gold)!important}
 .plr.pl3{position:relative}.pladd.on{background:rgba(240,211,160,.12)}.plmenu{position:absolute;right:32px;top:50%;transform:translateY(-50%);z-index:5;display:flex;gap:6px;background:#26241f;border:1px solid #5a4d36;border-radius:12px;padding:6px;box-shadow:0 8px 22px rgba(0,0,0,.5)}.plmenu button{border:1px solid #4a463d;background:#1d1c1a;color:var(--cream,#fffcf8);font:inherit;font-size:13.5px;font-weight:700;border-radius:999px;padding:7px 12px;white-space:nowrap;cursor:pointer}.plmenu button.sub{color:var(--sub,#c6bdb2);border-color:#3a372f}.plmenu button[data-act^="pladd"]{border-color:rgba(240,211,160,.55);color:var(--gold)}
+@media (max-width:400px){ .plr{grid-template-columns:30% 1fr} .plr.pl3, .plh.pl3h{grid-template-columns:30% 1fr 26px} }      /* 좁은 폰 — 이름 칸 조금 넓게(낱말 중간 줄바꿈 막음 · 11/06) */
+.plnew .pln{padding:4px 6px}.plnewin{width:100%;min-width:0;background:rgba(255,252,248,.04);border:1.5px dashed rgba(255,252,248,.62);border-radius:8px;color:var(--cream,#fffcf8);font:inherit;font-size:13.5px;font-weight:800;padding:6px 7px}.plnewin::placeholder{color:#e9e2d6;font-weight:700}      /* 점선 · 글 밝게 (대표 19:06 「너무 회색 · 더 하얗게」) */.plnewin:focus{outline:none;border-style:solid;border-color:var(--gold)}.plc.nil{opacity:.35}
 .btn.addmore{background:#2f6f9e;color:#f2fafd;border:0}
 .mx-foot .mx-ask{background:#2f6f9e;color:#f2fafd;border:0;display:inline-flex;align-items:center;gap:6px}.mx-ask em{font-style:normal;font-size:12px;font-weight:800;background:rgba(255,255,255,.2);border-radius:999px;padding:1px 7px}
 .kpdel{border-radius:999px;border:1px solid #4a463d;background:#1d1c1a;color:#c6bdb2;font:inherit;font-size:13px;font-weight:700;padding:3px 12px;cursor:pointer}
@@ -3522,7 +3524,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '558';
+const BUILD = '560';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -5217,6 +5219,13 @@ async function 붙이기실행(){ const j = S.jb; if(!j || j.중) return; let �
   (D.cm || []).forEach(옮김); (D.asks || []).forEach(옮김); (D.rm || []).forEach(옮김);
   if(D.cmKeys) D.cmKeys.add(j.mid + '|' + T);
   S.jb = null; closeSheet(); save(); toast(대상.n + ' 종목으로 만들었어요'); render(); }
+function 표에종목(nm){ nm = String(nm || '').trim().replace(/:/g, '·').slice(0, 24); if(!nm || !live()) return;
+  const 정 = 정규(nm), 붙 = 별칭주인().get(정), 있 = (붙 && 고를수있나(붙)) ? 붙 : EX.find(e => !e.memo && !e.cardio && 고를수있나(e) && 정규(e.n) === 정);
+  const 누 = a => { const b = document.createElement('button'); b.setAttribute('data-act', a); b.style.display = 'none'; document.body.appendChild(b); b.click(); b.remove(); };
+  if(있){ 누('add:' + 있.id + ':' + ((vars(있.id)[0] || {}).k || 'a')); return; }      /* 있는 종목 = 그 종목(지난 무게 · 횟수 채움) */
+  S.exn = { id:'x' + Date.now(), n:nm, p:'기타', e:'', d:'', media:[], files:[], 새:true, 기록:true, 더:true }; 누('exsave'); }      /* 없으면 새 종목(모두 검색 · 웨이트/부위는 나중에) — 오늘 만든 간편 등록과 같은 길 */
+document.addEventListener('keydown', ev => { const t = ev.target; if(!t || !t.classList || !t.classList.contains('plnewin') || ev.isComposing) return; if(ev.key === 'Enter'){ ev.preventDefault(); const v = t.value; t.value = ''; t.blur(); 표에종목(v); } });
+document.addEventListener('focusout', ev => { const t = ev.target; if(t && t.classList && t.classList.contains('plnewin') && t.value.trim()){ const v = t.value; t.value = ''; 표에종목(v); } });
 document.addEventListener('input', ev => { const f = ev.target.closest && ev.target.closest('[data-bkq]'); if(!f || !S.bulk) return; const j = +f.dataset.bkq, r = S.bulk.rows[j]; if(!r) return; r.nm = f.value;
   if(String(r.nm).trim() && r.k){ r.k = ''; const 줄 = f.closest('.vu-row'); if(줄) 줄.querySelectorAll('.vu-c button.on').forEach(x => x.classList.remove('on')); }      /* 직접 쓰면 그 이름으로 — 칩 해제 */
   const 쓸 = S.bulk.rows.filter(x => !x.off), 됨 = 쓸.filter(x => x.k || String(x.nm || '').trim()).length, b = document.querySelector('#sheetbox [data-act="bksend"]'); if(b && !S.bulk.중){ b.disabled = !됨; b.textContent = 됨 + '개 올리기'; } });
@@ -7356,7 +7365,8 @@ function 플래너화면(w){
     <div class="pl-tools">${혼자 ? `<button class="wrchip ${c0.on ? 'on' : ''}" data-act="wrestpick">${c0.on ? '휴식 ' + c0.sec + '초' : '휴식 끔'} ▾</button>` : ''}<span class="sp"></span>${채움 ? `<button class="pl-new" data-act="plnew">새로 기록하기</button>` : ''}</div>
     ${도는중 ? `<div class="wrestbar"><b id="restleft2">${mmss(Math.max(0, (S.rest.until - Date.now()) / 1000))}</b><span>쉬는 중</span><button data-act="wrestadd">+15초</button><button data-act="wrestx">건너뛰기</button></div>` : ''}
     <div class="pltb"><div class="plr plh pl3h"><span class="pln">운동 명칭</span><div class="plcs"><div class="plg" style="--n:4"><span class="plhh" style="grid-column:span 4">무게(kg)</span><span class="plhh r1" style="grid-column:span 4">반복수</span></div></div></div>
-      ${근.map(행).join('') || '<div class="pl-empty">아직 종목이 없습니다 · 아래 「＋ 웨이트 종목 추가」</div>'}</div>
+      ${근.map(행).join('') || (tr ? '' : '<div class="pl-empty">아직 종목이 없습니다 · 아래 「＋ 웨이트 종목 추가」</div>')}
+      ${tr ? `<div class="plr pl3 plnew"><span class="pln"><input class="plnewin" data-k="plnewin" enterkeyhint="done" autocomplete="off" placeholder="＋ 종목" aria-label="종목 이름 쓰고 Enter"></span><div class="plcs"><div class="plg" style="--n:4">${'<span class="plc nil"></span>'.repeat(8)}</div></div><span></span></div>` : ''}</div>
     <button class="pl-add" data-act="go:pick">＋ 웨이트 종목 추가</button>
     ${수업 && tr ? `<button class="zbtn zrest" data-act="rtrest"><span class="e">📋</span><span>나머지 운동 지정하기<small>오늘 루틴에서 · 검색해서 추가</small></span></button>` : ''}
     ${유.length ? `<div class="pltb plcard"><div class="plr plca plh"><span class="pln">유산소</span><span>시간</span><span>속도</span></div>${유.map(유행).join('')}</div>` : ''}
@@ -14531,7 +14541,7 @@ document.addEventListener('click', async ev=>{
     case 'reset': reset(); toast('처음 상태로 되돌렸어요'); return;
     case 'go': { if(rest[0]==='workout' && !D.live) adoptLive(S.mid);
       /* 이미 하는 중에 종목을 담으러 가면 「여기서부터가 새로 담은 것」을 표시해 둔다 */
-      if(rest[0]==='pick'){ const lw = live(); S.addFrom = (lw && lw.begun) ? lw.items.length : null; }
+      if(rest[0]==='pick'){ const lw = live(); S.addFrom = (lw && lw.begun) ? lw.items.length : null; S.pickFromW = !!(lw && lw.items.length && S.screen === 'workout'); }      /* 표가 있는 기록 화면에서 담으러 감 = 「추가하기 ›」 바로 (11/06) */
       go(rest[0]); return; }
     case 'dpick': S.day = rest[0]; render(); return;
     case 'dmove2': {
@@ -15119,6 +15129,7 @@ document.addEventListener('click', async ev=>{
       });
       return; }
     case 'memoadd': sheetMemoAdd(); return;
+
     case 'pknew': S.nx = null; if(S.who === 'tr'){ 초안지움('exn','exe','exd'); S.exn = { id:'x'+Date.now(), n:(S.exq || '').trim().replace(/:/g, '·').slice(0, 24), p:(S.pickPart && PARTS.includes(S.pickPart)) ? S.pickPart : '기타', e:'', d:'', media:[], files:[], 새:true, 기록:true }; sheetExNew(); return; }      /* 트레이너 = 새 종목 창 그대로 (2026-10-27) */
       sheetNewEx(); return;
     case 'exsavemore': { const d = S.exn; if(!d) return; d.더 = true; const b = document.createElement('button'); b.setAttribute('data-act', 'exsave'); b.style.display = 'none'; document.body.appendChild(b); b.click(); b.remove(); return; }      /* 파란 「더 추가하기」 */
@@ -15355,7 +15366,7 @@ document.addEventListener('click', async ev=>{
     case 'partopen': S.pickOpen=!S.pickOpen; render(); setTimeout(칠하기,0); return;
     case 'pkview': { try{ localStorage.setItem('gg_pkview', rest[0]); }catch(e){} document.documentElement.dataset.pkv = 종목보기(); document.querySelectorAll('.pkview button').forEach(b => b.classList.toggle('on', b.dataset.act === 'pkview:' + rest[0])); return; }      /* 다시 그리지 않고 표시만 — 검색어 · 스크롤 그대로 */
     /* 담은 순서 확인 → 시작 */
-    case 'askstart': { S.sordIdx=null; const z = live(); if(z && z.begun){ const b = document.createElement('button'); b.setAttribute('data-act', 'startgo'); b.style.display = 'none'; document.body.appendChild(b); b.click(); setTimeout(() => b.remove(), 0); return; }      /* 하던 운동에 추가 = 바로 (2026-11-06) · 처음 시작만 순서 창 */
+    case 'askstart': { S.sordIdx=null; const z = live(); if(z && (z.begun || S.pickFromW)){ S.pickFromW = false; const b = document.createElement('button'); b.setAttribute('data-act', 'startgo'); b.style.display = 'none'; document.body.appendChild(b); b.click(); setTimeout(() => b.remove(), 0); return; }      /* 하던 운동에 추가 = 바로 (2026-11-06) · 처음 시작만 순서 창 */
       sheetStart(); return; }
     case 'sord': S.sordIdx=+rest[0]; drawSheet(); return;
     case 'sordend': S.sordIdx=null; drawSheet(); return;
