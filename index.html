@@ -3526,7 +3526,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '561';
+const BUILD = '562';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -5222,9 +5222,14 @@ async function 붙이기실행(){ const j = S.jb; if(!j || j.중) return; let �
   if(D.cmKeys) D.cmKeys.add(j.mid + '|' + T);
   S.jb = null; closeSheet(); save(); toast(대상.n + ' 종목으로 만들었어요'); render(); }
 function 표에종목(nm){ nm = String(nm || '').trim().replace(/:/g, '·').slice(0, 24); if(!nm || !live()) return;
-  const 정 = 정규(nm), 붙 = 별칭주인().get(정), 있 = (붙 && 고를수있나(붙)) ? 붙 : EX.find(e => !e.memo && !e.cardio && 고를수있나(e) && 정규(e.n) === 정);
+  const 정 = 정규(nm), 붙 = 별칭주인().get(정), 있 = EX.find(e => !e.memo && !e.cardio && 고를수있나(e) && 정규(e.n) === 정);
   const 누 = a => { const b = document.createElement('button'); b.setAttribute('data-act', a); b.style.display = 'none'; document.body.appendChild(b); b.click(); b.remove(); };
-  if(있){ 누('add:' + 있.id + ':' + ((vars(있.id)[0] || {}).k || 'a')); return; }      /* 있는 종목 = 그 종목(지난 무게 · 횟수 채움) */
+  if(있){ 누('add:' + 있.id + ':' + ((vars(있.id)[0] || {}).k || 'a')); return; }      /* 같은 이름 = 그 종목(지난 무게 · 횟수 채움) */
+  if(붙 && 고를수있나(붙) && !붙.memo && !붙.cardio){ S.별칭물음 = { nm, id:붙.id }; openSheet(() => `<div class="h2">「${esc(nm)}」 <small>비슷한 종목이 있어요</small></div>
+      <button class="card rowc addpick" data-act="alpick:old"><div><div class="nm">${esc(붙.n)}로 기록</div><div class="sm">「${esc(nm)}」은 ${esc(붙.n)}의 다른 이름으로 등록돼 있어요</div></div><span class="rt">›</span></button>
+      <button class="card rowc addpick q" data-act="alpick:new"><div><div class="nm">「${esc(nm)}」 새 종목으로</div><div class="sm">따로 기록 · 다음부터 모두 검색</div></div><span class="rt">›</span></button>
+      <button class="card rowc addpick" data-act="alpick:memo"><div><div class="nm">간편 추가</div><div class="sm">이름만 남기고 바로 · 볼륨 · 그래프엔 안 들어가요</div></div><span class="rt">›</span></button>
+      <button class="btn ghost sm" data-act="close">닫기</button>`); return; }      /* 별칭으로만 맞으면 트레이너가 고름 (2026-11-06 22:08 대표 「무조건 묶지 말고 트레이너가 선택」) */
   S.exn = { id:'x' + Date.now(), n:nm, p:'기타', e:'', d:'', media:[], files:[], 새:true, 기록:true, 더:true }; 누('exsave'); }      /* 없으면 새 종목(모두 검색 · 웨이트/부위는 나중에) — 오늘 만든 간편 등록과 같은 길 */
 document.addEventListener('keydown', ev => { const t = ev.target; if(!t || !t.classList || !t.classList.contains('plnewin') || ev.isComposing) return; if(ev.key === 'Enter'){ ev.preventDefault(); const v = t.value; t.value = ''; t.blur(); 표에종목(v); } });
 document.addEventListener('focusout', ev => { const t = ev.target; if(t && t.classList && t.classList.contains('plnewin') && t.value.trim()){ const v = t.value; t.value = ''; 표에종목(v); } });
@@ -6403,7 +6408,7 @@ function vPick(){
     <div class="megrp pkg">
     <button class="mrow2 wide" data-exrow="1rm 원알엠 일알엠 원rm 1알엠 1rm측정 측정 최대중량 맥스 max onerepmax" data-part="__1rm" data-eq="" style="display:none" data-act="rmaddpick">
       <span class="mt"><b style="color:var(--gold)">1RM 측정 종목 추가</b><small>추가하면 바로 측정 계획이 열립니다</small></span><em class="pkadd">＋</em></button>
-    <button class="mrow2 wide pknew" id="pknew" data-act="pknew" style="display:none"><span class="mt"><b>＋ 「<span id="pknewq"></span>」 바로 추가</b><small>사전에 없는 종목 · 무게 · 횟수 대신 메모${S.who === 'tr' ? ' · 종목 추가 요청도 같이' : ''}</small></span><em class="pkadd">＋</em></button>
+    <button class="mrow2 wide pknew" id="pknew" data-act="pknew" style="display:none"><span class="mt"><b>＋ 「<span id="pknewq"></span>」 ${S.who === 'tr' ? '새 종목으로' : '바로 추가'}</b><small>${S.who === 'tr' ? '목록에 같은 이름이 없으면 새 종목 · 무게 · 횟수 기록' : '사전에 없는 종목 · 무게 · 횟수 대신 메모'}</small></span><em class="pkadd">＋</em></button>
     ${EX.filter(고를수있나).sort((차례 => S.pickPart === '직접 추가' ? (a, b) => (b.owner === TRAINER) - (a.owner === TRAINER) || 차례(a, b) : 차례)(종목차례())).map(e=>{ const vs=vars(e.id), n=cmOf(S.mid,e.id).length, last=lastSet(e.id), 담 = w ? w.items.slice(처음).filter(it=>it.ex===e.id).length : 0;
       return `<button class="mrow2 ${담?'pson':''}" data-exrow="${esc(exKey(e))}" data-part="${esc(e.p)}"
         data-eq="${esc(e.e||'')}"${e.owner ? ' data-mine="1"' : ''}
@@ -13864,7 +13869,7 @@ function 칠하기(){
   });
   const h=document.getElementById('pickhint'); if(h) h.style.display = q?'none':'';
   const c=document.getElementById('pickcnt'); if(c) c.textContent = 보임 + '개';
-  const nv = document.getElementById('pknew'); if(nv){ const 글 = (S.exq || '').trim(); nv.style.display = 글 && !보임 ? '' : 'none'; const qq = document.getElementById('pknewq'); if(qq) qq.textContent = 글; }      /* 검색 결과가 없으면 「바로 추가」 (2026-10-23 B-2) */
+  const nv = document.getElementById('pknew'); if(nv){ const 글 = (S.exq || '').trim(), 같은이름 = 글 && EX.some(e => 고를수있나(e) && 정규(e.n) === 정규(글)); nv.style.display = 글 && (!보임 || (S.who === 'tr' && !같은이름)) ? '' : 'none'; const qq = document.getElementById('pknewq'); if(qq) qq.textContent = 글; }      /* 결과가 없으면 「바로 추가」 · 트레이너는 같은 이름이 없으면 결과(별칭 · 비슷한 것)가 있어도 함께 — 고르게 (2026-11-06 22:08) */
 }
 /* 사전에 없는 종목 바로 추가 — 이름 · 부위 (2026-10-23 B-2) */
 function sheetNewEx(){ const g = S.nx || (S.nx = { name:(S.exq || '').trim().slice(0, 40), part:'' }), tr = S.who === 'tr';
@@ -15131,6 +15136,10 @@ document.addEventListener('click', async ev=>{
       });
       return; }
     case 'memoadd': sheetMemoAdd(); return;
+    case 'alpick': { const q = S.별칭물음; S.별칭물음 = null; closeSheet(); if(!q) return; const 누 = a => { const b = document.createElement('button'); b.setAttribute('data-act', a); b.style.display = 'none'; document.body.appendChild(b); b.click(); b.remove(); };
+      if(rest[0] === 'old'){ 누('add:' + q.id + ':' + ((vars(q.id)[0] || {}).k || 'a')); return; }
+      if(rest[0] === 'memo'){ sheetMemoAdd(); const el = document.querySelector('[data-k="memo:n"]'); if(el) el.value = q.nm; 누('memogo'); return; }      /* 간편 추가 = 이름만 (대표 22:09) */
+      S.exn = { id:'x' + Date.now(), n:q.nm, p:'기타', e:'', d:'', media:[], files:[], 새:true, 기록:true, 더:true, 별칭무시:true }; 누('exsave'); return; }
 
     case 'pknew': S.nx = null; if(S.who === 'tr'){ 초안지움('exn','exe','exd'); S.exn = { id:'x'+Date.now(), n:(S.exq || '').trim().replace(/:/g, '·').slice(0, 24), p:(S.pickPart && PARTS.includes(S.pickPart)) ? S.pickPart : '기타', e:'', d:'', media:[], files:[], 새:true, 기록:true }; sheetExNew(); return; }      /* 트레이너 = 새 종목 창 그대로 (2026-10-27) */
       sheetNewEx(); return;
@@ -15158,7 +15167,7 @@ document.addEventListener('click', async ev=>{
       const el=document.querySelector('[data-k="memo:n"]');
       const nm=(el&&el.value||'').trim().replace(/:/g,'·').slice(0,40);
       if(!nm){ toast('이름을 입력해 주세요'); return; }
-      { const 붙 = 별칭주인().get(정규(nm)); if(붙 && 고를수있나(붙)){ closeSheet(); if(S.draft) delete S.draft['memo:n']; const b = document.createElement('button'); b.setAttribute('data-act', 'add:' + 붙.id + ':' + ((vars(붙.id)[0] || {}).k || 'a')); b.style.display = 'none'; document.body.appendChild(b); b.click(); b.remove(); toast(붙.n + '로 추가했어요'); return; } }      /* 붙인 옛 이름 = 붙인 종목 (2026-11-05 ②A) */
+      { const 붙 = S.who === 'tr' ? null : 별칭주인().get(정규(nm)); if(붙 && 고를수있나(붙)){      /* 트레이너는 별칭으로 자동 묶지 않음 — 이름만 남기는 간편 추가 그대로 (2026-11-06 22:08) */ closeSheet(); if(S.draft) delete S.draft['memo:n']; const b = document.createElement('button'); b.setAttribute('data-act', 'add:' + 붙.id + ':' + ((vars(붙.id)[0] || {}).k || 'a')); b.style.display = 'none'; document.body.appendChild(b); b.click(); b.remove(); toast(붙.n + '로 추가했어요'); return; } }      /* 붙인 옛 이름 = 붙인 종목 (2026-11-05 ②A) */
       closeSheet();
       if(!live()) newLive('빈 운동', [], '개인운동');
       live().items.push({ ex:'memo', va:nm, rest:60, locked:false, sec:0,
