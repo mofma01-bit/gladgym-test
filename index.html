@@ -628,6 +628,8 @@ body{word-break:keep-all;overflow-wrap:break-word}
 @media (max-width:400px){ .plr{grid-template-columns:30% 1fr} .plr.pl3, .plh.pl3h{grid-template-columns:30% 1fr 26px} }      /* 좁은 폰 — 이름 칸 조금 넓게(낱말 중간 줄바꿈 막음 · 11/06) */
 .plnew .pln{padding:4px 6px}.plnewin{width:100%;min-width:0;background:rgba(255,252,248,.04);border:1.5px dashed rgba(255,252,248,.62);border-radius:8px;color:var(--cream,#fffcf8);font:inherit;font-size:13.5px;font-weight:800;padding:6px 7px}.plnewin::placeholder{color:#e9e2d6;font-weight:700}      /* 점선 · 글 밝게 (대표 19:06 「너무 회색 · 더 하얗게」) */.plnewin:focus{outline:none;border-style:solid;border-color:var(--gold)}.plc.nil{opacity:.35}
 .btn.addmore{background:#2f6f9e;color:#f2fafd;border:0}
+#imgzoom{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:16px;cursor:zoom-out;animation:zin .15s ease}#imgzoom img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;background:#fff}@keyframes zin{from{opacity:0}to{opacity:1}}
+.mx-top img[data-zoom]{cursor:zoom-in}
 .mx-foot .mx-ask{background:#2f6f9e;color:#f2fafd;border:0;display:inline-flex;align-items:center;gap:6px}.mx-ask em{font-style:normal;font-size:12px;font-weight:800;background:rgba(255,255,255,.2);border-radius:999px;padding:1px 7px}
 .kpdel{border-radius:999px;border:1px solid #4a463d;background:#1d1c1a;color:#c6bdb2;font:inherit;font-size:13px;font-weight:700;padding:3px 12px;cursor:pointer}
 .pill.nxl{background:#e2c184;color:#2a1c14;font-weight:900}
@@ -3524,7 +3526,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '560';
+const BUILD = '561';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -7412,7 +7414,7 @@ function 회원종목창(i){ const w = live(), it = w && w.items[i]; if(!it) ret
   openSheet(() => { const cms = cmOf(wmid, it.ex, it.va), nw = cms.filter(c => !c.read).length, 자료 = cms.flatMap(c => (c.media || []).map(m => Object.assign({ c }, m)));
     const 사진 = 자료.filter(m => m.kind !== 'video'), 영상 = 자료.filter(m => m.kind === 'video'), 지 = lastRuns(it.ex, it.va, wmid, 1)[0], 탭 = S.mxTab === '설명' ? '설명' : '직전';
     const 설명 = String(((vars(it.ex) || []).find(v => v.k === it.va) || (vars(it.ex) || [])[0] || {}).desc || '').trim(), 그림 = 종목그림주소(e);
-    return `<div class="mx-top">${그림 ? `<img src="${esc(그림)}" alt="">` : `<span class="mx-noimg">${esc(e.p || '')}</span>`}</div>
+    return `<div class="mx-top">${그림 ? `<img src="${esc(그림)}" alt="" data-zoom="${esc(그림)}" title="누르면 크게">` : `<span class="mx-noimg">${esc(e.p || '')}</span>`}</div>
       <div class="h2 mx-h">${esc(e.n || exName(it.ex, it.va))}</div>
       <div class="mx-main"><button class="${사진.length ? '' : 'off'}" ${사진.length ? `data-act="mxmed:p:${i}"` : 'disabled'}><b>📷 사진 보기</b><small>${사진.length ? '트레이너 피드백 ' + 사진.length + '장' : '아직 없어요'}</small></button>
         <button class="${영상.length ? '' : 'off'}" ${영상.length ? `data-act="mxmed:v:${i}"` : 'disabled'}><b>🎬 영상 보기</b><small>${영상.length ? '트레이너 피드백 ' + 영상.length + '개' : '아직 없어요'}</small></button></div>
@@ -16125,6 +16127,10 @@ function 담은만다시(ex){ const m = document.getElementById('main'), w = liv
   m.querySelectorAll('[data-act^="add:' + ex + ':"]').forEach(b => { b.classList.toggle('pson', !!담); const em = b.querySelector('.pkadd'); if(em) em.textContent = 담 ? '✓' + (담 > 1 ? 담 : '') : '＋'; });
   const f = document.getElementById('foot'); if(f && 새) f.innerHTML = ''; }
 function 검색칸다시(){ const el = document.querySelector('#main [data-k="exq"]'); if(!el) return; try{ el.focus({ preventScroll:true }); const n = el.value.length; el.setSelectionRange(n, n); }catch(e){} }
+/* 사진 크게 — data-zoom 그림을 누르면 화면 가득 · 아무 데나 누르면 닫힘 (2026-11-06 21:59 대표 「사진 누르면 확대되게」) */
+document.addEventListener('click', ev => { const im = ev.target && ev.target.closest && ev.target.closest('[data-zoom]'); if(!im) return; ev.preventDefault(); ev.stopPropagation();
+  const o = document.createElement('div'); o.id = 'imgzoom'; o.innerHTML = '<img alt="">'; o.querySelector('img').src = im.dataset.zoom; o.addEventListener('click', () => o.remove()); document.body.appendChild(o); }, true);
+document.addEventListener('keydown', ev => { if(ev.key === 'Escape'){ const o = document.getElementById('imgzoom'); if(o){ o.remove(); ev.stopPropagation(); } } }, true);
 const isTyping = () => { const a=document.activeElement; return a && (a.tagName==='TEXTAREA'||a.tagName==='INPUT'); };
 let pollSig='';
 setInterval(async ()=>{
