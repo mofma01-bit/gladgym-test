@@ -679,7 +679,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
 .tk{display:flex;flex-direction:column;gap:6px;padding:6px 0 16px;color:#1f2329}
 .tk-day{align-self:center;background:rgba(40,55,70,.22);color:#fff;font-size:13px;font-weight:600;border-radius:999px;padding:3px 12px;margin:10px 0 4px}
 .tk-m{display:flex;gap:8px;align-items:flex-start;max-width:100%}.tk-m.me{flex-direction:row-reverse}
-.tk-av{width:38px;height:38px;border-radius:14px;background:#9fb3c8;color:#fff;display:grid;place-items:center;flex:0 0 auto;font-size:15px;font-weight:800}
+.tk-av{width:38px;height:38px;border-radius:14px;background:#9fb3c8;color:#fff;display:grid;place-items:center;flex:0 0 auto}.tk-av.tr{background:#7d9cc0}.tk-av svg,.ndk .av svg{width:22px;height:22px;color:#fff}      /* 얼굴 원 = 사람 그림 (첫 글자 안 씀 · 11/07) */
 .tk-col{display:flex;flex-direction:column;gap:3px;min-width:0;max-width:76%}.tk-m.me .tk-col{align-items:flex-end;max-width:80%}
 .tk-nm{font-size:13px;color:#3d4a57;font-weight:600;padding-left:2px}
 .tk-ln{display:flex;gap:5px;align-items:flex-end}.tk-m.me .tk-ln{flex-direction:row-reverse}
@@ -3606,7 +3606,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '571';
+const BUILD = '573';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -5247,7 +5247,7 @@ const 붙일후보 = j => EX.filter(e => !e.memo && e.id !== j.src && !붙은곳
 function 비슷한종목(j){ return 붙일후보(j).filter(e => !e.owner).map(e => ({ e, s: Math.max(닮음(j.nm, e.n), ...(e.aliases || []).map(a => 닮음(j.nm, a))) }))
   .filter(o => o.s > 0.2).sort((a, b) => b.s - a.s).slice(0, 3).map(o => o.e); }
 function 붙일목록(){ const j = S.jb; if(!j) return ''; const 후 = j.q ? 붙일후보(j).filter(e => 검색맞음(e, j.q)).sort((a, b) => (a.owner ? 1 : 0) - (b.owner ? 1 : 0)).slice(0, 8) : 비슷한종목(j);
-  if(!후.length) return j.q ? '<div class="jbnone"><b>찾는 종목이 없습니다</b>아래 「＋ 목록에 없으면 새 종목」으로 추가해 주세요</div>' : '<div class="jbnone"><b>이름이 비슷한 종목이 없습니다</b>위 검색칸에서 찾아 주세요</div>';
+  if(!후.length) return j.q ? '<div class="jbnone"><b>찾는 종목이 없습니다</b>아래 「＋ 목록에 없으면 새 종목」으로 추가해 주세요</div>' : '<div class="jbnone"><b>이름이 비슷한 종목이 없습니다</b>위 검색칸에서 검색해 주세요</div>';
   return 후.map(e => `<button class="jbopt${j.pick === e.id ? ' on' : ''}" data-act="jbpick:${esc(e.id)}"><i></i><span>${esc(e.n)}</span></button>`).join(''); }
 function 붙이기창(){ openSheet(() => { const j = S.jb; if(!j) return ''; const n = 같은줄(j).length;
   if(j.새){ const 스 = j.kind === '스트레칭', 끝 = 스 ? 2 : 3, 쪽 = j.단 === 3 ? 끝 : j.단 || 1;
@@ -5279,7 +5279,7 @@ async function 붙이기실행(){ const j = S.jb; if(!j || j.중) return; let �
       try{ await spost('prep_items', [{ id:pid, trainer:TRAINER, name:이름, time:'', descr:'', media:[], updated_at:new Date().toISOString() }], {on:'id'}); }
       catch(e){ j.중 = false; drawSheet(); return toast('만들지 못했어요' + String.fromCharCode(10) + 오류말(e)); }
       D.pitems = (D.pitems || []).concat([{ id:pid, tr:TRAINER, n:이름, t:'', d:'', media:[] }]); }
-    S.jb = null; closeSheet(); toast('스트레칭 동작으로 만들었어요' + String.fromCharCode(10) + '사진 · 영상은 데스크 스트레칭에서 넣어요'); render(); return; }
+    S.jb = null; closeSheet(); toast('스트레칭 동작으로 만들었어요' + String.fromCharCode(10) + '사진 · 영상은 데스크 스트레칭에서 추가해요'); render(); return; }
   if(j.새){ const 이름 = String(j.newName == null ? j.nm : j.newName).trim().replace(/:/g, '·').slice(0, 40);
     if(!이름) return toast('종목 이름을 입력해 주세요'); if(!j.part) return toast('부위를 선택해 주세요');
     대상 = EX.find(e => !e.memo && e.id !== j.src && !붙은곳(e) && 정규(e.n) === 정규(이름)) || null;
@@ -9001,7 +9001,7 @@ function 피드백톡(mid, L, q){ const 나트 = S.who === 'tr', 회원명 = 나
     const 트 = o.k === 't', 나 = 나트 === 트, 이름 = 트 ? ((o.c.tr || '').trim() + ' 트레이너') : 회원명, 쪽 = 트 ? 't' : 'm', 이어 = !머 && 쪽 === 앞쪽; 앞쪽 = 쪽;
     const 갈 = 트 && o.c.wid ? 'rec:' + o.c.wid : 'exd:' + o.ex + ':' + o.va;
     const 표 = `<span class="tg">${esc(exName(o.ex, o.va))}${트 ? '' : ' · 피드백 요청'}</span>`;
-    return 머 + `<div class="tk-m${나 ? ' me' : ''}">${나 ? '' : `<span class="tk-av"${이어 ? ' style="visibility:hidden"' : ''}>${esc(이름.slice(0, 1))}</span>`}<div class="tk-col">${나 || 이어 ? '' : `<span class="tk-nm">${esc(이름)}</span>`}<div class="tk-ln"><button class="tk-bb" data-act="${갈}">${표}${피칠(o.tx || (트 ? '' : '이 종목 봐 주세요'), q)}${트 && (o.c.pics || o.c.vids) ? `<span class="ph">${o.c.vids ? '영상' : '사진'} 보기 ›</span>` : ''}</button><span class="tk-tm">${나 && 트 && !o.c.read ? '<b>1</b>' : ''}${시분(o.ts)}</span></div></div></div>`; }).join('') + '</div>'; }
+    return 머 + `<div class="tk-m${나 ? ' me' : ''}">${나 ? '' : `<span class="tk-av${트 ? ' tr' : ''}"${이어 ? ' style="visibility:hidden"' : ''}>${사람그림}</span>`}<div class="tk-col">${나 || 이어 ? '' : `<span class="tk-nm">${esc(이름)}</span>`}<div class="tk-ln"><button class="tk-bb" data-act="${갈}">${표}${피칠(o.tx || (트 ? '' : '이 종목 봐 주세요'), q)}${트 && (o.c.pics || o.c.vids) ? `<span class="ph">${o.c.vids ? '영상' : '사진'} 보기 ›</span>` : ''}</button><span class="tk-tm">${나 && 트 && !o.c.read ? '<b>1</b>' : ''}${시분(o.ts)}</span></div></div></div>`; }).join('') + '</div>'; }
 function vFeedback(){
   if(S.fbMode === 'ask') return vFeedbackOld();
   const tr = S.who === 'tr', mid = tr ? subj() : S.mid;
@@ -9028,7 +9028,7 @@ function 피종목몸(){ const mid = subj(), q = (S.fxq2 || '').trim();
   const 요줄 = 요.filter(a => !본.has(a.ex + a.va) && 본.add(a.ex + a.va)), 지줄 = 지.filter(i => !본.has(i.ex + i.va) && 본.add(i.ex + i.va));
   return (요줄.length ? `<div class="tpk-sec">답 안 한 요청</div><div class="tpk-list">${요줄.map(a => 피종목줄(exOf(a.ex), a.va, a.wid, '요청')).join('')}</div>` : '')
     + (지줄.length ? `<div class="tpk-sec">지난 수업 · ${dateTxt(w.date)}</div><div class="tpk-list">${지줄.map(i => 피종목줄(exOf(i.ex), i.va, w.id, '')).join('')}</div>` : '')
-    + (!요줄.length && !지줄.length ? '<div class="tpk-hint">위 검색 칸에서 종목을 찾아 주세요</div>' : ''); }
+    + (!요줄.length && !지줄.length ? '<div class="tpk-hint">위 검색 칸에서 종목을 검색해 주세요</div>' : ''); }
 function 피종목창(){ S.fxq2 = ''; openSheet(() => `<div class="h2">어떤 종목에 남길까요? <small>${esc(subjName())}</small></div>
   <div class="tpk-top one"><input class="search" type="search" data-k="fxq2" placeholder="🔍 종목 검색" autocomplete="off" enterkeyhint="search"></div>
   <div id="fxpbody">${피종목몸()}</div><button class="btn ghost sm" data-act="close">닫기</button>`); }
@@ -9437,7 +9437,7 @@ function vDiet(){
         <span class="bt"><b>사진으로 기록</b><i>날짜·시간이 찍혀요</i></span></button>
       <button class="big2 row b" data-act="fadd:new">
         <span class="ic ring">${svg('h_lens',22)}</span>
-        <span class="bt"><b>검색해서 기록</b><i>음식 이름으로 찾아요</i></span></button>
+        <span class="bt"><b>검색해서 기록</b><i>음식 이름으로</i></span></button>
     </div>`}
     ${seqs.length? seqs.map((m,i)=>{ const t=mealSum(m), 것 = m.items||[];
       return `<div class="mealcd">
@@ -9543,7 +9543,7 @@ function dietStrip(mid, 곡선만){
    「수정」 하나로 끼니 · 사진 · 음식 · 한마디 · 삭제 → 저장(확인 창) 하면 다시 잠김 */
 const 식단회원명 = id => (MEMBERS.find(x => x.id === id) || {}).n || '';
 function 식단톡(m){ const tr = S.who === 'tr', 회 = 식단회원명(m.mid) || '회원', 트 = (TRAINER || '트레이너') + ' 트레이너';
-  const 말 = (내, 이름, 글, 때) => `<div class="m${내 ? ' me' : ''}">${내 ? '' : `<span class="av">${esc(이름.slice(0, 1))}</span>`}<div class="c">${내 ? '' : `<span class="nm">${esc(이름)}</span>`}<div class="ln"><div class="bb">${esc(글)}</div><span class="tm">${esc(때 || '')}</span></div></div></div>`;
+  const 말 = (내, 이름, 글, 때) => `<div class="m${내 ? ' me' : ''}">${내 ? '' : `<span class="av">${사람그림}</span>`}<div class="c">${내 ? '' : `<span class="nm">${esc(이름)}</span>`}<div class="ln"><div class="bb">${esc(글)}</div><span class="tm">${esc(때 || '')}</span></div></div></div>`;
   return `<div class="ndk">${m.memo ? 말(!tr, 회, m.memo, m.at) : ''}${m.note ? 말(tr, 트, m.note, '') : ''}${!m.memo && !m.note ? `<div class="none">${tr ? '아직 나눈 말이 없어요' : '아직 피드백이 없어요'}</div>` : ''}
     ${tr ? (S.mnOpen === m.id ? `<textarea class="mnta" data-k="mn:${m.id}" rows="3" placeholder="식단에 한마디">${esc(m.note || '')}</textarea><div class="mnact"><button class="btn ghost sm" data-act="mnx">닫기</button><button class="btn main sm" data-act="mealnote:${m.id}">보내기</button></div>`
       : `<button class="inp" data-act="mnopen:${m.id}"><span>💬 식단 피드백 남기기…</span><b>↑</b></button>`) : ''}</div>`; }
@@ -12513,7 +12513,7 @@ function 결과지(x, 전, 오름){
     + '<b class="dt">측정일</b>' + 이력.map(z => '<span class="dt' + (z.id === x.id ? ' me' : '') + '">' + String(z.on_date).slice(2).replace(/-/g, '.') + '</span>').join('') + '</div></div>';
   const 왼 = 체성분 + 근지 + 비만 + 부위판 + 변화;
   /* 오른쪽 — 인바디점수 · 체중조절 · 균형 · 복부지방률 · 내장지방 · 연구항목 */
-  const 오 = !원본 ? '<div class="ibnoraw"><b>결과지 원본이 없는 기록이에요</b>손으로 넣은 값이거나 원본을 받기 전의 기록이라 몸무게 · 골격근량 · 체지방량 · 체지방률만 보여요</div>'
+  const 오 = !원본 ? '<div class="ibnoraw"><b>결과지 원본이 없는 기록이에요</b>손으로 입력한 값이거나 원본을 받기 전의 기록이라 몸무게 · 골격근량 · 체지방량 · 체지방률만 보여요</div>'
     : '<div class="ibscore"><div class="ibsh">인바디점수 <small>InBody Score</small></div><div class="big">' + (n('TOT_SCORE') != null ? ib1(n('TOT_SCORE'), 0) : '—') + '<small>/100 점</small></div><div class="hint">※ 체성분 종합점수입니다. 근육이 매우 많은 경우 100점을 넘을 수 있습니다.</div></div>'
     + '<div class="ibs"><div class="ibsh">체중조절 <small>Weight Control</small></div><div class="ibkv"><span>적정체중</span><b>' + ib1(n('TW')) + ' kg</b><span>체중조절</span><b>' + ib1(n('WC')) + ' kg</b><span>지방조절</span><b>' + ib1(n('FC')) + ' kg</b><span>근육조절</span><b>' + ib1(n('MC')) + ' kg</b></div></div>'
     + '<div class="ibs"><div class="ibsh">신체균형평가 <small>Body Balance Evaluation</small></div>' + ((r.EUPPER || r.ELOWER || r.EUPPER_LOWER)
@@ -13088,7 +13088,7 @@ async function bpVidUpload(){
   D.bph = D.bph || [];
   D.bph.push({ id, mid, kind:'vid', pose:'영상', date, path, memo:'' });
   S.bpVid = null;
-  toast('넣었어요'); render();
+  toast('추가했어요'); render();
 }
 
 function shrinkPhoto(file){
@@ -13137,7 +13137,7 @@ async function bpUpload(){
   D.bph.push({ id, mid, kind, pose, date, path, memo:'' });
   S.bpShot = null;
   if(kind !== 'ai'){ S.bpPose = pose; S.bpR = date; }
-  toast('넣었어요'); render();
+  toast('추가했어요'); render();
 }
 
 function sheetBpView(id){
@@ -13233,7 +13233,7 @@ function tToday(){
     ${/* 2026-10-06 융합 — 큰 카드는 「오늘 수업 기록하기」 하나 · 숫자 셋(실제 수) · 나머지 둘은 반쪽 카드 */''}
     <button class="hero photo" data-act="pickmem">
       <span class="tag">수업</span>
-      <div class="ht">회원을 찾아 기록합니다</div>      <!-- 2026-11-03 대표 — 오늘 수업은 아래 예약 명단에서 · 이 카드는 회원을 찾아 자유롭게 -->
+      <div class="ht">회원을 검색해 기록합니다</div>      <!-- 2026-11-03 대표 — 오늘 수업은 아래 예약 명단에서 · 이 카드는 회원을 찾아 자유롭게 -->
       <span class="hgo">회원 검색</span></button>
     ${live.map(x=>`<button class="hline" data-act="tgo:${x.m.id}">${svg('h_clock',18)}<b>${esc(x.m.n)} · 기록 중</b>
         <small>${esc((it=>it?exName(it.ex,it.va):'')(x.w.items[x.w.cur]||x.w.items[0]))}</small><i>›</i></button>`).join('')}
@@ -13489,7 +13489,7 @@ function 회원목록글(){
           <span class="mt"><b>${esc(m.n)}</b><small>${lv?`지금 운동 중 · ${esc((it0=>it0?exName(it0.ex,it0.va):'')(lv.items[lv.cur]||lv.items[0]))}`
             :(last?`${dateTxt(last.date)} · ${esc(last.kind||'')}`:'기록 없음')}${!담 && m.tr ? ' · 담당 ' + esc(m.tr) : ''}</small></span>
           ${lv?'<span class="pill t">진행 중</span>':(nofb?'<span class="nbdot" title="안 본 기록"></span>':'')}<i>›</i></button></div>`;
-  const 빈 = q ? '<div class="empty">찾는 회원이 없습니다<small class="e2">전산에 있는 회원이면 아래 「전산에서 찾아 추가」를 눌러 주세요</small></div>'
+  const 빈 = q ? '<div class="empty">찾는 회원이 없습니다<small class="e2">전산에 있는 회원이면 아래 「전산에서 검색해 추가」를 눌러 주세요</small></div>'
     : 거름 === '★' ? '<div class="empty">아직 즐겨찾기한 회원이 없습니다<small class="e2">회원 이름 옆 별을 눌러 주세요</small></div>'
     : 거름 === '담별' || 거름 === '담당' ? '<div class="empty">담당 회원이 없습니다<small class="e2">위 검색에서 회원을 찾아 별을 눌러 주세요</small></div>' : '<div class="empty">해당하는 회원이 없습니다<small class="e2">다른 칩을 눌러 주세요</small></div>';
   const 남 = 줄.length - 보.length;
@@ -13508,7 +13508,7 @@ function tMembers(){
         <input class="search" type="text" data-tmq="1" placeholder="전체 회원에서 이름으로 검색" autocomplete="off" value="${esc(S.tmq || '')}">
         <div class="chips">${[['담별','담당 + ★'],['담당','담당'],['★','★ 즐겨찾기'],['신규','신규'],['재등록','재등록'],['안봄','안 본 기록']].map(k=>`<button class="chip ${k[0]==='★'?'fav':''} ${거름===k[0]?'on':''}" data-act="tmreg:${k[0]}">${k[1]} ${수(k[0])}</button>`).join('')}</div>
         <div id="tmlist">${회원목록글()}</div>
-        <button class="hline" data-act="newmem">${svg('h_user',18)}<b>전산에서 찾아 추가</b><small>앱에 없는 회원 · 이름이나 전화 뒷자리</small></button>` };
+        <button class="hline" data-act="newmem">${svg('h_user',18)}<b>전산에서 검색해 추가</b><small>앱에 없는 회원 · 이름이나 전화 뒷자리</small></button>` };
 }
 document.addEventListener('input', ev => { const f = ev.target.closest && ev.target.closest('[data-tmq]'); if(!f) return; S.tmq = f.value; S.tmPg = 10; const el = document.getElementById('tmlist'); if(el) el.innerHTML = 회원목록글(); });      /* 다시 그리지 않고 목록만 — 치는 중 글자칸이 안 끊긴다 */
 function tMember(){
@@ -14361,7 +14361,7 @@ document.addEventListener('click', async ev=>{
         src:'회원', by_mid:S.mid };
       spost('foods',[f],{ret:true}).then(r=>{ if(r && r[0]) f.id = r[0].id; }).catch(e=>console.error(e));
       if(S.draft) ['name','brand','unit','kcal','amount','carb','protein','fat'].forEach(k=>delete S.draft['nf:'+k]);
-      toast('음식장에 넣었어요');
+      toast('음식장에 추가했어요');
       sheetFoodQty(f); return; }
     case 'fdel': sheetItemEdit(rest[0], rest[1]); return;
     case 'fsave': {
@@ -15030,7 +15030,7 @@ document.addEventListener('click', async ev=>{
       const ta=document.querySelector('textarea[data-k="cm:'+K+'"]');
       const tx=(ta&&ta.value||'').trim(), A=att(K);
       const 파일=A.files||[], 사진=파일.filter(x=>x.kind==='photo'), 영상=파일.filter(x=>x.kind==='video');
-      if(!tx && !파일.length){ toast('적거나 붙인 것이 없어요'); return; }
+      if(!tx && !파일.length){ toast('입력하거나 붙인 것이 없어요'); return; }
       if(S.보내는중) return;
       S.보내는중 = true; drawSheet();
       (async () => {
@@ -15969,7 +15969,7 @@ document.addEventListener('click', async ev=>{
     case 'recaddgo': { const E = S.recEdit; if(!E) return; const e = exOf(rest[0]); if(!e) return; const va = (vars(e.id)[0] || {}).k || 'a', w = D.workouts.find(x => x.id === E.wid);
       const 지 = w && w.mid ? 지난한것(w.mid, e.id, va) : null, 첫 = 지 || { kg:0, reps: e.cardio ? 0 : 10 };
       E.items.push({ _id:null, ex:e.id, va, 새:true, sets:[{ kg:Number(첫.kg) || 0, reps:Number(첫.reps) || (e.cardio ? 0 : 10), spd:첫.spd }] });
-      closeSheet(); toast(e.n + ' 추가했어요\n세트를 고치고 「수정 완료」를 눌러야 반영됩니다'); render(); return; }
+      closeSheet(); toast(e.n + ' 추가했어요\n세트를 수정하고 「수정 완료」를 눌러야 반영됩니다'); render(); return; }
     case 'raddset': {
       const i = Number(rest[0]), it = S.recEdit.items[i];
       const last = it.sets[it.sets.length-1] || { kg:0, reps:10 };
@@ -16032,7 +16032,7 @@ document.addEventListener('click', async ev=>{
     case 'tmfold': S.tmOpen = !S.tmOpen; render(); return;
     case 'tmmore': S.tmN = { mid:rest[0], n:((S.tmN && S.tmN.mid === rest[0]) ? S.tmN.n : 5) + 5 }; render(); return;      /* 지난 기록 5개씩 더 (2026-11-03) */      /* 회원 자료 접기 · 펼치기 (2026-11-03) */
     case 'rtpick': openSheet(() => `<div class="h2">어떤 루틴표를 보낼까요? <small>${esc((MEMBERS.find(x => x.id === rest[0]) || {}).n || '')} 회원에게</small></div>
-      <div class="rtpk"><button class="btn main" data-act="rtsend:${rest[0]}"><b>웨이트 루틴표</b><small>루틴 1 ~ 4 통째로</small></button><button class="btn sub" data-act="psets:${rest[0]}"><b>스트레칭 루틴</b><small>내 루틴에서 골라요</small></button></div>
+      <div class="rtpk"><button class="btn main" data-act="rtsend:${rest[0]}"><b>웨이트 루틴표</b><small>루틴 1 ~ 4 통째로</small></button><button class="btn sub" data-act="psets:${rest[0]}"><b>스트레칭 루틴</b><small>내 루틴에서 선택해요</small></button></div>
       <button class="btn ghost sm" data-act="close">닫기</button>`); return;      /* 루틴표 지정하기 → 웨이트 / 스트레칭 (2026-11-03 대표) */
     case 'rtsend': S.tmid = rest[0]; 루틴표보내기창(rest[0]); return;      /* 웨이트 = 루틴표 단위 (2026-11-03 19:38 시안 확정 · 루틴 낱개 보내기는 「루틴 추가하기」 · 개인운동 지정) */
     case 'shpv': 루틴표미리(rest[0], rest[1]); return;
