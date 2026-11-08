@@ -586,6 +586,28 @@ button{font:inherit;color:inherit;background:none;border:none;padding:0;cursor:p
 .big3{display:flex;gap:7px}.big3 label{flex:1;display:flex;flex-direction:column;gap:3px;font-size:11.5px;color:var(--sub)}
 .fld .fn em{font-style:normal;color:var(--gold);font-size:11px;margin-left:4px}
 .pcms{display:flex;flex-direction:column;gap:7px}
+/* 커뮤니티 글 창 (2026-11-07) — 인스타 배치 · 댓글 판 · 답글 */
+#sheetbox > .ootdimg{flex:none}      /* 글이 길면 판(세로 flex)이 사진을 2px 로 눌렀다 — 사진은 안 줄임 (11/07 시안에서 찾음) */
+.ig-acts{display:flex;align-items:center;gap:14px;padding:10px 2px 4px}.ig-acts button{background:none;border:0;padding:0;color:var(--cream);display:grid;place-items:center}.ig-acts button.on{color:#e8607a}.ig-acts svg{width:26px;height:26px}.ig-acts .sp{flex:1}
+.ig-likes{font-weight:800;font-size:15px;padding:2px 2px 0}
+.ig-cap{font-size:15px;line-height:1.6;padding:8px 2px 0;word-break:keep-all}.ig-cap b{margin-right:6px}
+.ig-when{font-size:13px;color:#8f887e;padding:4px 2px 2px}
+.cm-box{border:1px solid #34332d;background:#1d1c1a;border-radius:14px;padding:2px 14px;margin:4px 0 10px}
+.cm-row{display:flex;gap:11px;padding:12px 0;border-top:1px solid #2c2b27}.cm-row:first-child{border-top:0}
+.cm-row.re{border-top:0;padding:4px 0 12px 47px;position:relative}.cm-row.re::before{content:"";position:absolute;left:18px;top:0;bottom:12px;border-left:2px solid #34332d}
+.cm-av{width:36px;height:36px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;background:#2c2a26;border:1px solid #4a463f}.cm-av svg{width:20px;height:20px;color:#c6bdb2}
+.cm-row.re .cm-av{width:28px;height:28px}.cm-row.re .cm-av svg{width:16px;height:16px}
+.cm-av.tr{background:#1e2a3a;border-color:#3a6aa0}.cm-av.tr svg{color:#9cc8ff}
+.cm-b{flex:1;min-width:0}
+.cm-h{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.cm-h b{font-size:14.5px;font-weight:800}.cm-h u{text-decoration:none;font-size:13px;font-weight:800;color:#9cc8ff;border:1px solid #3a6aa0;border-radius:6px;padding:0 5px}.cm-h span{color:#8f887e;font-size:13px}
+.cm-t{font-size:15px;line-height:1.6;color:#ece6dc;margin:3px 0 0;word-break:keep-all;overflow-wrap:anywhere}.cm-t i{font-style:normal;color:#9cc8ff;font-weight:700;margin-right:4px}
+.cm-act{margin-top:5px;display:flex;gap:14px}.cm-act button{background:none;border:0;padding:0;color:#8f887e;font:inherit;font-size:13px;font-weight:800}
+.cm-none{color:#8f887e;font-size:14px;text-align:center;padding:18px 0}
+.cm-dock{position:sticky;bottom:-16px;margin:6px -16px -16px;padding:8px 16px 14px;background:#232220;border-top:1px solid #34332d;z-index:3}
+.cm-to{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:#c6bdb2;padding:2px 2px 8px}.cm-to b{color:#9cc8ff}.cm-to button{background:none;border:0;color:#c6bdb2;font-size:15px}
+.cm-emo{display:flex;justify-content:space-between;padding:0 2px 8px}.cm-emo button{background:none;border:0;font-size:22px;padding:2px}
+.cm-in{display:flex;gap:10px;align-items:center}.cm-in input{flex:1;min-width:0;border:1px solid #4a463f;background:#1a1917;border-radius:999px;padding:10px 14px;color:var(--cream);font:inherit;font-size:15px}.cm-in input::placeholder{color:#8a847b}
+.cm-in .go{background:none;border:0;color:#9cc8ff;font:inherit;font-size:15px;font-weight:800;padding:6px 2px}
 .pcm{font-size:13px;line-height:1.45}.pcm b{color:var(--gold);margin-right:4px}.pcm small{display:block;color:var(--sub);font-size:11px}
 .pcm small button{color:var(--sub);text-decoration:underline}
 .pcmin{display:flex;gap:7px}.pcmin input{flex:1}
@@ -3606,7 +3628,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '573';
+const BUILD = '574';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -9787,7 +9809,7 @@ function 커뮤니티담기(psts, pcms, plks){
     cap:p.caption||'', vis:p.visibility||'센터', by:p.taken_by||'', hid:p.hidden_at||'', ts:p.created_at||'',
     /* 파트너 모집 (2026-10-02) */
     sex:p.sex||'', career:p.career||'', ptime:p.ptime||'', big3:p.big3||'', parts:p.parts||'', state:p.state||'' }));
-  D.pcm = (pcms||[]).map(c => ({ id:c.id, pid:c.post_id, mid:c.member_id||'', who:c.author||'', body:c.body||'', ts:c.created_at||'' }));
+  D.pcm = (pcms||[]).map(c => ({ id:c.id, pid:c.post_id, mid:c.member_id||'', who:c.author||'', body:c.body||'', ts:c.created_at||'', par:c.parent_id||'' }));      /* par = 답글이면 부모 댓글 (130단계) */
   D.plk = (plks||[]).map(l => ({ pid:l.post_id, mid:l.member_id }));
 }
 async function 커뮤니티받기(){
@@ -10211,23 +10233,28 @@ async function postSend(){
   try{ if(n.url && n.url.startsWith('blob:')) URL.revokeObjectURL(n.url); }catch(e){}
   S.pnew = null; S.tab='community'; S.cmode='피드'; S.cfilt='전체'; toast('올렸어요'); goRoot('community');
 }
-function sheetPost(id){
+function sheetPost(id){      /* 글 창 = 인스타 배치 : 사진 → 아이콘 줄 → 좋아요 n개 → 이름 캡션 → 시간 / 「댓글 n」 → 댓글 판(줄 구분 · 답글 들여쓰기) / 아래 고정 입력 줄 (2026-11-07 대표) */
   const p = (D.posts||[]).find(x=>x.id===id); if(!p) return;
   const 트 = S.who==='tr';
   const 파 = p.kind==='파트너';
-  openSheet(()=>{ const cs = 댓글들(id); return `
-    <div class="h2">${esc(이름of(p.mid))} <small>${파 ? '운동 파트너 모집 · '+(p.state==='마감'?'마감':'모집중') : esc(p.kind)} · ${언제(p.ts)}</small></div>
+  S.pcRe = null;
+  openSheet(()=>{ const 모 = 댓글들(id), 큰 = 모.filter(c => !c.par || !모.some(x => x.id === c.par)), 이름 = c => c.mid ? 이름of(c.mid) : (c.who || '트레이너');
+    const 줄 = (c, re) => { const 내 = (c.mid && c.mid===S.mid && !트) || 트, 부 = re ? 모.find(x => x.id === c.par) : null;
+      return `<div class="cm-row${re ? ' re' : ''}"><span class="cm-av${c.mid ? '' : ' tr'}">${사람그림}</span><div class="cm-b"><div class="cm-h"><b>${esc(이름(c))}</b>${c.mid ? '' : '<u>트레이너</u>'}<span>${언제(c.ts)}</span></div><p class="cm-t">${부 ? '<i>@' + esc(이름(부)) + '</i>' : ''}${esc(c.body)}</p><div class="cm-act"><button data-act="pcre:${c.id}">답글 달기</button>${내 ? `<button data-act="pcdel:${c.id}">삭제</button>` : ''}</div></div></div>`; };
+    const 답 = S.pcRe && 모.find(x => x.id === S.pcRe);
+    return `
+    <div class="h2">${esc(이름of(p.mid))} <small>${파 ? '운동 파트너 모집 · '+(p.state==='마감'?'마감':'모집중') : esc(p.kind)}</small></div>
     ${파 ? `<div class="ptgrid"><i>성별</i><b>${esc(p.sex)}</b><i>운동경력</i><b>${esc(p.career)}</b><i>운동시간</i><b>${esc(p.ptime)}</b><i>3대 중량</i><b>${esc(p.big3)}</b><i>운동부위</i><b>${esc(p.parts)}</b></div>`
         : (식단넘김(p, 0) || `<img class="shot ootdimg" src="${esc(phURL(p.path))}" alt="" onerror="picFail(this)">`)}
-    ${p.cap ? `<div class="pcap">${esc(p.cap)}</div>` : ''}
-    ${파 ? '' : `<div class="pacts">
-      <button class="${내좋아요(id)?'on':''}" data-act="plike:${id}">${svg('h_heart',19)}${좋아요수(id)||''}</button><span class="psp"></span>
-      <button class="ic" data-act="pshare:${id}" aria-label="공유">${svg('h_share',19)}</button><button class="ic" data-act="psave:${id}" aria-label="저장">${svg('h_save',19)}</button></div>`}
-    ${!파 && p.mid===S.mid && !트 ? `<div style="display:flex;gap:9px"><button class="btn sub" style="flex:1" data-act="psave:${id}">갤러리에 저장</button><button class="btn sub" style="flex:1" data-act="pshare:${id}">공유하기</button></div>` : ''}
-    <span class="lbl">댓글 ${cs.length ? '· '+cs.length : ''}</span>
-    ${cs.length ? `<div class="pcms">${cs.map(c=>`<div class="pcm"><b>${esc(c.mid ? 이름of(c.mid) : c.who)}</b> ${esc(c.body)}<small>${언제(c.ts)}${(c.mid && c.mid===S.mid && !트) || 트 ? ` · <button data-act="pcdel:${c.id}">삭제</button>` : ''}</small></div>`).join('')}</div>` : '<div class="note">첫 댓글을 남겨 보세요</div>'}
-    <div class="pcmin"><input class="search" type="text" data-k="pcm:${id}" maxlength="120" placeholder="응원 한마디"><button class="btn main sm" data-act="pcsend:${id}">남기기</button></div>
-    <button class="btn ghost sm" data-act="close">닫기</button>`; });
+    ${파 ? '' : `<div class="ig-acts"><button class="${내좋아요(id)?'on':''}" data-act="plike:${id}" aria-label="좋아요">${svg('h_heart',26)}</button><button data-act="pcfocus:${id}" aria-label="댓글">${svg('h_chat',26)}</button><button data-act="pshare:${id}" aria-label="공유">${svg('h_share',26)}</button><span class="sp"></span><button data-act="psave:${id}" aria-label="저장">${svg('h_save',26)}</button></div>
+      <div class="ig-likes">좋아요 ${좋아요수(id)||0}개</div>`}
+    ${p.cap ? `<div class="ig-cap"><b>${esc(이름of(p.mid))}</b>${esc(p.cap)}</div>` : ''}
+    <div class="ig-when">${언제(p.ts)}</div>
+    <span class="lbl">댓글 ${모.length}</span>
+    <div class="cm-box">${모.length ? 큰.map(c => 줄(c, false) + 모.filter(r => r.par === c.id).map(r => 줄(r, true)).join('')).join('') : '<div class="cm-none">첫 댓글을 남겨 주세요</div>'}</div>
+    <div class="cm-dock">${답 ? `<div class="cm-to"><span><b>${esc(이름(답))}</b>님에게 답글 남기는 중</span><button data-act="pcrex">✕</button></div>` : ''}
+      <div class="cm-emo">${['❤️','🔥','👏','💪','😍','👍','🙌','😂'].map(e => `<button data-act="pcemo:${id}:${e}">${e}</button>`).join('')}</div>
+      <div class="cm-in"><span class="cm-av${트 ? ' tr' : ''}">${사람그림}</span><input type="text" data-k="pcm:${id}" maxlength="120" placeholder="${답 ? esc(이름(답)) + '님에게 답글 달기…' : '댓글 달기…'}"><button class="go" data-act="pcsend:${id}">게시</button></div></div>`; });
 }
 async function postShareSave(id, 공유){
   const p = (D.posts||[]).find(x=>x.id===id); if(!p) return;
@@ -14216,7 +14243,7 @@ const 지움확인 = {
   bpx:['칠한 것을 모두 삭제할까요?', '모두 삭제'],
   fdelgo:['이 음식을 삭제할까요?', '삭제'], mealdel:['이 식단 사진을 삭제할까요?', '삭제'], rdelitem:['루틴에서 이 종목을 삭제할까요?', '삭제'],
   delcm:['이 피드백을 삭제할까요?<br>회원 화면에서도 사라집니다.', '삭제'], unask:['피드백 요청을 취소할까요?', '요청 취소'], bldel:['이 날의 인바디 기록을 삭제할까요?', '삭제'],
-  wsdel:['이 세트를 삭제할까요?', '삭제'], kpdel:['이 세트를 삭제할까요?', '삭제'], pldel:['이 종목을 삭제할까요?', '삭제'], spdel:['이 종목을 삭제할까요?', '삭제'], clearpick:['추가한 종목을 전부 비울까요?', '전부 비우기'], pcdel:['이 댓글을 삭제할까요?', '삭제'],
+  wsdel:['이 세트를 삭제할까요?', '삭제'], kpdel:['이 세트를 삭제할까요?', '삭제'], pldel:['이 종목을 삭제할까요?', '삭제'], spdel:['이 종목을 삭제할까요?', '삭제'], clearpick:['추가한 종목을 전부 비울까요?', '전부 비우기'], pcdel:['이 댓글을 삭제할까요?<br>달린 답글도 같이 삭제돼요', '삭제'],
   rsetdel:['이 세트를 삭제할까요?', '삭제'], psrm:['세트에서 이 종목을 삭제할까요?', '삭제'], mkclear:['표시를 모두 삭제할까요?', '모두 삭제'], rcartclr:['추가한 것을 전부 비울까요?', '비우기'],
   grpdel:['이 그룹을 삭제할까요?<br>안에 있던 루틴은 남습니다.', '삭제'], phdreq:['이 사진의 완전 삭제를 요청할까요?', '삭제 요청'], ootddel:['이 사진을 삭제할까요?<br>되돌릴 수 없습니다.', '삭제'],
   exdel:['이 종목을 삭제할까요?', '삭제'],
@@ -15909,13 +15936,19 @@ document.addEventListener('click', async ev=>{
       sv(sdel('posts','id=eq.'+p.id), '글 삭제');
       if(p.path && p.path.startsWith('posts/')) fetch(SB_URL+'/storage/v1/object/media/'+p.path, {method:'DELETE',headers:{apikey:SB_KEY,Authorization:'Bearer '+수파열쇠()}}).catch(()=>{});
       closeSheet(); toast('삭제했어요'); render(); return; }
-    case 'pcsend': { const el=document.querySelector('[data-k="pcm:'+rest[0]+'"]'); const body=el?el.value.trim():''; if(!body){ toast('한마디를 입력해 주세요'); return; }
+    case 'pcre': { const c = (D.pcm||[]).find(x => x.id === rest[0]); if(!c) return; S.pcRe = c.par && (D.pcm||[]).some(x => x.id === c.par) ? c.par : c.id;      /* 답글은 한 겹 — 답글에 답하면 같은 부모 아래로 (인스타처럼) */
+      drawSheet(); setTimeout(() => { const el = document.querySelector('#sheet [data-k^="pcm:"]'); if(el){ el.focus(); const n = el.value.length; el.setSelectionRange(n, n); } }, 30); return; }
+    case 'pcrex': S.pcRe = null; drawSheet(); return;
+    case 'pcfocus': { const el = document.querySelector('#sheet [data-k="pcm:' + rest[0] + '"]'); if(el) el.focus(); return; }
+    case 'pcemo': { const el = document.querySelector('#sheet [data-k="pcm:' + rest[0] + '"]'); if(el){ el.value += rest.slice(1).join(':'); el.focus(); } return; }
+    case 'pcsend': { const el=document.querySelector('[data-k="pcm:'+rest[0]+'"]'); const body=el?el.value.trim():''; if(!body){ toast('댓글을 입력해 주세요'); return; }
       el.value = ''; 초안지움('pcm:'+rest[0]);      /* 남긴 글은 칸에서 지운다 (2026-10-25 대표 「다른 사진에도 자동으로 타이핑」) */
       const g=글쓴이(), id='pc'+Date.now(), ts=new Date().toISOString();
-      (D.pcm=D.pcm||[]).push({ id, pid:rest[0], mid:g.mid, who:g.who, body, ts });
-      sv(spost('post_comments',[{ id, post_id:rest[0], member_id:g.mid||null, author:g.who, body }]), '댓글');
+      const par = S.pcRe && (D.pcm||[]).some(x => x.id === S.pcRe) ? S.pcRe : ''; S.pcRe = null;
+      (D.pcm=D.pcm||[]).push({ id, pid:rest[0], mid:g.mid, who:g.who, body, ts, par });
+      sv(spost('post_comments',[Object.assign({ id, post_id:rest[0], member_id:g.mid||null, author:g.who, body }, par ? { parent_id:par } : {})]), par ? '답글' : '댓글');      /* parent_id 는 답글일 때만 보냄 (130단계 전에도 댓글은 그대로) */
       drawSheet(); render(); return; }
-    case 'pcdel': { D.pcm=(D.pcm||[]).filter(c=>c.id!==rest[0]); sv(sdel('post_comments','id=eq.'+rest[0]), '댓글 삭제'); drawSheet(); render(); return; }
+    case 'pcdel': { D.pcm=(D.pcm||[]).filter(c=>c.id!==rest[0] && c.par!==rest[0]);      /* 답글도 같이 (서버는 on delete cascade) */ sv(sdel('post_comments','id=eq.'+rest[0]), '댓글 삭제'); drawSheet(); render(); return; }
     case 'pair': pairPick(rest[0]); return;
     case 'pairre': closeSheet(); pairPick(rest[0]); return;
     case 'pairsave': pairSave(); return;
