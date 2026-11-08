@@ -3628,7 +3628,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '574';
+const BUILD = '575';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -3892,7 +3892,7 @@ async function boot(){
     sget('meal_items?select=*&order=sort').catch(()=>[]),
     sget('asks?select=*&order=created_at.desc&limit=200').catch(()=>[]),
     sget('body_photos?select=*&order=on_date').catch(()=>[]),
-    sget('body_logs?select=*&order=on_date').catch(()=>[]),
+    sget('body_logs?select=id,member_id,on_date,w,m,f,fp,note&order=on_date').catch(()=>[]),      /* raw(인바디 원본 · 전체의 86%)는 결과지를 열 때 그 회원 것만 — 11/08 수파베이스 내보내기 사고 */
     sget('body_rounds?select=*&order=on_date').catch(()=>[]),
     /* 커뮤니티 (2026-10-02) — 표가 아직 없어도 앱은 뜬다 */
     sget('posts?select=*&order=created_at.desc&limit=200').catch(()=>[]),
@@ -12577,7 +12577,16 @@ function 변화그래프(오름){
     + '<div class="ibgc"><div class="ibgl">' + 합.map(o => '<b>' + o.nm + ' <i>(kg)</i></b>').join('') + '</div><div class="ibgs">' + 합.map(o => o.svg).join('') + 날 + '</div></div>'
     + 따.map(o => '<div class="ibgc one"><div class="ibgt"><b>' + o.nm + '</b><span>최저 <b>' + ib1(o.lo) + '</b> · 최고 <b>' + ib1(o.hi) + '</b> (kg)</span></div><div class="ibgs">' + o.svg + 날 + '</div></div>').join('') + '</div>';
 }
+/* 인바디 원본(raw)은 처음에 안 받는다 — 결과지를 열면 그 회원 것만 한 번 (2026-11-08 수파베이스 사고 · 트레이너 앱 첫 화면 3.3MB 중 1MB) */
+let 원본받는중 = {};
+async function 몸원본받기(mid){ if(!mid || (D.blogRaw || {})[mid] || 원본받는중[mid]) return; 원본받는중[mid] = true;
+  try{ const rows = await sget('body_logs?select=id,raw&member_id=eq.' + encodeURIComponent(mid)); const m = {}; (rows || []).forEach(r => { m[r.id] = r.raw || null; });
+    ((D.blog || {})[mid] || []).forEach(z => { if(z.id in m) z.raw = m[z.id]; }); (D.blogRaw = D.blogRaw || {})[mid] = true;
+    try{ render(); if(typeof sheetRender === 'function' && sheetRender) drawSheet(); }catch(e){} }
+  catch(e){ console.warn('인바디 원본 못 받음 —', e.message); }
+  finally{ 원본받는중[mid] = false; } }
 function 결과지판(mid){
+  if(((D.blog || {})[mid] || []).length && !(D.blogRaw || {})[mid]) setTimeout(() => 몸원본받기(mid), 0);
   const 목 = ((D.blog || {})[mid] || []).map(z => ({ id:z.id, mid:z.mid, on_date:z.date, w:z.w, m:z.m, f:z.f, fp:z.fp, raw:z.raw || null }));
   if(!목.length) return blPane(mid);
   const 고른 = 목.find(z => z.on_date === S.ibDay2) || 목[목.length - 1], 고비 = 목.find(z => z.on_date === S.ibCmp2 && z !== 고른), 전 = 고비 || 목[목.indexOf(고른) - 1] || null;
@@ -12674,7 +12683,7 @@ async function ibPull(mid){
     try{ const rows = await Promise.race([sget('body_logs?select=*&member_id=eq.' + encodeURIComponent(mid) + '&order=on_date'),
         new Promise((_, no) => setTimeout(() => no(new Error('늦음')), 4000))]);
       D.blog = D.blog || {};
-      D.blog[mid] = rows.map(r => ({ id:r.id, mid:r.member_id, date:r.on_date, w:num0(r.w), m:num0(r.m), f:num0(r.f), fp:num0(r.fp), note:r.note||'', raw:r.raw||null }));
+      D.blog[mid] = rows.map(r => ({ id:r.id, mid:r.member_id, date:r.on_date, w:num0(r.w), m:num0(r.m), f:num0(r.f), fp:num0(r.fp), note:r.note||'', raw:r.raw||null })); (D.blogRaw = D.blogRaw || {})[mid] = true;
       S.ibA = S.ibB = null; }catch(e){}
   }
   await new Promise(r => setTimeout(r, 350));
