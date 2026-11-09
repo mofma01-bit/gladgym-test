@@ -3628,7 +3628,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '575';
+const BUILD = '576';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -3875,7 +3875,7 @@ async function boot(){
   const [exs, vrs, mems, rts, ritems, asg, wks, witems, wsets, cms, mdesc, intk, plns, bdy, cyc, mls, mits, aks, bphs, blgs, brds, psts, pcms, plks, rms, bdgs] = await Promise.all([
     sget('exercises?select=*&order=sort'),
     sget('variants?select=*&order=sort'),
-    sget('members?select=*'),
+    sget('members?select=id,name,trainer,phone4,reg_kind,role,agree_terms_at,agree_privacy_at,agree_sensitive_at,agree_marketing_at,agree_version,sensitive_ask_at,sensitive_ask_kind,noti_seen_at,cm_optout_at'),      /* 회원꼴이 쓰는 칸만 (11/09 받는 양 줄이기) — 새 칸을 회원꼴에 넣으면 여기도 */
     sget('routines?select=*&order=no'),
     sget('routine_items?select=*&order=sort'),
     sget('assignments?select=*'),
@@ -3909,7 +3909,7 @@ async function boot(){
   try{ D.favs = (await sget('trainer_favs?select=trainer,member_id').catch(()=>[])) || []; }catch(e){ D.favs = []; }
   try{ D.ctips = await sget('cardio_tips?select=*&order=created_at.desc&limit=600'); }catch(e){ D.ctips = null; }
   try{ D.rtips = await sget('rest_tips?select=*&order=created_at.desc&limit=600'); }catch(e){ D.rtips = null; }      /* 나머지 운동 지정 (122단계 · 2026-11-03) */
-  try{ D.exfb = await 전부받기('ex_feedback?select=*&order=created_at.desc,id'); }catch(e){ D.exfb = null; }      /* 종목별 추천 피드백 — 직원만 읽힘(103단계 · 회원은 빈 목록) */
+  D.exfb = null; D.exfbOwner = '';      /* 종목별 추천 피드백 — 아래 TRAINER 가 정해진 뒤 그 선생님 것만 받는다(11/09 · 전부 받으면 첫 화면 577KB) */
   try{ D.exfavs = (await sget('ex_favs?select=trainer,ex_id').catch(()=>[])) || []; }catch(e){ D.exfavs = []; }      /* 종목 즐겨찾기 (107단계) */
   try{ D.sheets = (await sget('routine_sheets?select=id,kind,title,owner,note,hidden,cover').catch(()=>[])) || []; D.gives = (await sget('sheet_gives?select=*').catch(()=>[])) || []; }catch(e){ D.sheets = []; D.gives = []; }      /* 받은 루틴표 (84단계) */      /* 유산소 넣어주기 (59단계) — 표가 없으면 null = 기능 숨김 */
   /* 트레이너가 올린 스트레칭·운동 종목 사진/영상도 주소를 미리 받아 둔다 — 버킷을 잠가도 보이게 (2026-10-07) */
@@ -3936,6 +3936,7 @@ async function boot(){
   { const au = 로그인기억.읽() || {}, 직원 = !!(au.who && au.who !== 'member' && !au.mid);      /* 직원 줄은 직원으로 들어왔을 때만 — 전엔 회원도 첫 직원(양인수)이 붙어 직원 폰으로 보였다 (2026-10-25) */
     const t = 직원 ? 직원들.find(m => m.n === au.name) : null; if(t) TRAINER = t.n; else if(직원 && au.name) TRAINER = au.name;
     직원줄 = t || null; }
+  await exfb받기(TRAINER);      /* 지난목 은 내 것(owner = 나)만 쓴다 — 내 것만 받기 */
 
   루틴칸 = rts.length ? ('hidden' in rts[0]) : true;      /* `29단계_SQL` 을 실행하기 전에는 by · made_at · hidden 칸이 없다 — 없는 칸을 보내면 저장이 통째로 실패하므로 있을 때만 보낸다 */
   D.routines = rts.map(r => ({ id:r.id, mid:r.member_id, no:r.no, n:r.name, purpose:r.purpose||r.sub||'', grp:r.grp||'', by:r.by||'', at:r.made_at||'', hid:!!r.hidden, sheet:r.sheet_id||null, prep:r.prep_id||'',      /* 묶은 운동 전 스트레칭 (127단계 · 2026-11-05) */
@@ -7642,7 +7643,14 @@ function 추천칩(exid, K){ if(!exid) return ''; const n = 지난.글 ? 지난�
   return `<button class="btn sub sm jfopen" data-act="jfopen:${esc(exid)}:${esc(K)}">지난 피드백${n ? ' ' + n : ''}</button>`; }
 
 const 지난날 = s => s ? (+String(s).slice(5, 7)) + '/' + (+String(s).slice(8, 10)) : '';
-function 지난목(exid, 나){ const 묶 = new Map();      /* 같은 글은 한 장 · n번 씀 · 마지막 쓴 날 */
+/* 종목별 추천 피드백 — 그 선생님(owner) 것만 · 선생님이 바뀌면 다시 (11/09 첫 화면 줄이기) */
+let exfb받는중 = '';
+async function exfb받기(나){ if(!나){ D.exfb = D.exfb || []; return; } if(D.exfbOwner === 나 || exfb받는중 === 나) return; exfb받는중 = 나;
+  try{ D.exfb = await 전부받기('ex_feedback?select=*&owner=eq.' + encodeURIComponent(나) + '&order=created_at.desc,id'); D.exfbOwner = 나; }
+  catch(e){ D.exfb = D.exfb || []; D.exfbOwner = 나; }      /* 못 받아도 다시 그릴 때마다 또 부르지 않게 */
+  finally{ exfb받는중 = ''; } }
+function 지난목(exid, 나){ const 묶 = new Map();
+  if(나 && D.exfbOwner !== 나 && exfb받는중 !== 나) exfb받기(나).then(() => { try{ render(); if(typeof sheetRender === 'function' && sheetRender) drawSheet(); }catch(e){} });      /* 같은 글은 한 장 · n번 씀 · 마지막 쓴 날 */
   (지난.글 || []).forEach(c => { if(String(c.variant_id || '').split(':')[0] !== exid) return; const b = String(c.body || '').trim(); if(!b) return;
     const o = 묶.get(b) || { body:b, n:0, last:'' }; o.n += 1; if(String(c.created_at || '') > o.last) o.last = String(c.created_at || ''); 묶.set(b, o); });
   (D.exfb || []).forEach(x => { if(x.ex_id !== exid || x.owner !== 나) return; const b = String(x.body || '').trim(), o = 묶.get(b);
