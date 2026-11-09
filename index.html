@@ -3628,7 +3628,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '576';
+const BUILD = '577';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -3848,6 +3848,10 @@ async function 주소받기(paths){
     }catch(e){ /* 조용히 넘어가지 않게 콘솔에만 */ console.warn('사진 주소 못 받음', e); }
   }
 }
+/* 피드백 사진 · 영상 목록 = 사진 · 영상이 붙은 그 댓글 것만 (2026-11-09 받는 양 줄이기 — 전엔 센터 전체 최근 2,000줄 · 206KB) · 80개씩 */
+async function 댓글첨부받기(rows){ const ids = (rows || []).filter(c => (+c.pics || 0) + (+c.vids || 0) > 0).map(c => c.id), 다 = [];
+  for(let i = 0; i < ids.length; i += 80) 다.push(...(await sget('comment_media?select=*&comment_id=in.(' + ids.slice(i, i + 80).map(x => '"' + x + '"').join(',') + ')&order=id&limit=1000') || []));
+  return 다; }
 function mapCm(rows){
   return rows.map(c => { const [ex,va] = splitV(c.variant_id);
     return { id:c.id, mid:c.member_id, ex, va, tr:c.trainer, at:agoTxt(c.created_at),
@@ -3953,7 +3957,7 @@ async function boot(){
       .push({ rid:a.routine_id, at:a.on_date, slot: a.on_date===RECO1 ? '먼저 추천' : '나중 추천' });
   });
   D.workouts = mapWorkouts(wks, witems, wsets);
-  CMEDIA = await sget('comment_media?select=*&order=id.desc&limit=2000').catch(()=>[]);
+  CMEDIA = await 댓글첨부받기(cms).catch(()=>[]);      /* 처음 받은 댓글 300줄에 붙은 것만 — 회원 화면에서 그 회원 옛 피드백은 회원피드백받기 가 같이 받는다 */
   /* 사진 주소를 **그리기 전에** 한꺼번에 받아 둔다 — 그려 놓고 받으면 빈칸이 먼저 보인다.
      지금은 공개 버킷이라 실패해도 그만이다(공개 주소로 돈다). 버킷을 잠그면 이 줄이 일한다. */
   try{
@@ -16371,27 +16375,33 @@ document.addEventListener('click', ev => { const im = ev.target && ev.target.clo
   const o = document.createElement('div'); o.id = 'imgzoom'; o.innerHTML = '<img alt="">'; o.querySelector('img').src = im.dataset.zoom; o.addEventListener('click', () => o.remove()); document.body.appendChild(o); }, true);
 document.addEventListener('keydown', ev => { if(ev.key === 'Escape'){ const o = document.getElementById('imgzoom'); if(o){ o.remove(); ev.stopPropagation(); } } }, true);
 const isTyping = () => { const a=document.activeElement; return a && (a.tagName==='TEXTAREA'||a.tagName==='INPUT'); };
-let pollSig='';
+let pollSig='', 폴번 = 0;
 setInterval(async ()=>{
   if(document.hidden || S.screen==='boot' || S.screen==='err' || !MEMBERS.length) return;
   const 물은때 = Date.now();
   try{
-    const [cms, wks, mls] = await Promise.all([
-      sget('comments?select=*&order=created_at.desc&limit=300'),
-      sget('workouts?select=*&order=on_date.desc&limit=80'),
-      sget('meals?select=*&order=created_at.desc&limit=300')
+    /* ⭐ 2026-11-09 받는 양 줄이기 — 4초마다 댓글 · 운동 · 식단 통째(≈346KB)를 받던 것을, 「바뀌었나」 판정에 쓰는 칸만(≈25KB) 받고
+       판정(sig)이 바뀌었을 때만 통째로 받는다 · 판정 식은 그대로라 화면에 뜨는 때도 그대로 · 식단은 판정 밖 수정(메모 · 사진)도 있어 5번에 한 번(20초) 통째로 */
+    const 식단통째 = (폴번 = (폴번 + 1) % 5) === 0 || !D.meals;
+    const [c0, w0, m0] = await Promise.all([
+      sget('comments?select=id,read_at&order=created_at.desc&limit=300'),
+      sget('workouts?select=id,done,dur&order=on_date.desc&limit=80'),
+      sget(식단통째 ? 'meals?select=*&order=created_at.desc&limit=300' : 'meals?select=id,trainer_note&order=created_at.desc&limit=300')
     ]);
-    const oldM = {}; (D.meals||[]).forEach(x=>{ oldM[x.id]=x.items||[]; });
-    D.meals = (mls||[]).map(m => ({ id:m.id, mid:m.member_id, date:m.on_date, slot:m.slot,
-      seq:m.seq||0, at:m.at||'', path:m.path, memo:m.memo||'', note:m.trainer_note||'',
-      kcal:m.kcal||0, carb:m.carb||0, protein:m.protein||0, fat:m.fat||0, items: oldM[m.id]||[] }));
-    const sig = cms.map(c=>c.id+(c.read_at?'1':'0')).join(',') + '|' +
-                wks.map(w=>w.id+(w.done?'1':'0')+w.dur).join(',') + '|' +
-                (mls||[]).map(m=>m.id+(m.trainer_note?'1':'0')).join(',');
-    if(sig===pollSig) return;
+    const sig = c0.map(c=>c.id+(c.read_at?'1':'0')).join(',') + '|' +
+                w0.map(w=>w.id+(w.done?'1':'0')+w.dur).join(',') + '|' +
+                (m0||[]).map(m=>m.id+(m.trainer_note?'1':'0')).join(',');
+    const 바뀜 = sig !== pollSig;
+    const mls = 식단통째 ? m0 : 바뀜 ? await sget('meals?select=*&order=created_at.desc&limit=300') : null;
+    if(mls){ const oldM = {}; (D.meals||[]).forEach(x=>{ oldM[x.id]=x.items||[]; });
+      D.meals = (mls||[]).map(m => ({ id:m.id, mid:m.member_id, date:m.on_date, slot:m.slot,
+        seq:m.seq||0, at:m.at||'', path:m.path, memo:m.memo||'', note:m.trainer_note||'',
+        kcal:m.kcal||0, carb:m.carb||0, protein:m.protein||0, fat:m.fat||0, items: oldM[m.id]||[] })); }
+    if(!바뀜) return;
+    const [cms, wks] = await Promise.all([sget('comments?select=*&order=created_at.desc&limit=300'), sget('workouts?select=*&order=on_date.desc&limit=80')]);
     const first = !pollSig;
     pollSig=sig;
-    CMEDIA = await sget('comment_media?select=*&order=id.desc&limit=2000').catch(()=>CMEDIA);
+    CMEDIA = await 댓글첨부받기(cms).then(새 => { const 있 = new Set(새.map(m => m.id)); return 새.concat((CMEDIA || []).filter(m => !있.has(m.id))); }).catch(()=>CMEDIA);      /* 그 회원 옛 피드백 첨부(회원피드백받기)는 지우지 않고 둔다 */
     D.cm = 옛피드백붙임(mapCm(cms));
     /* 첨부가 아직 덜 올라온 새 피드백이 있으면 다음 번에 다시 받는다 (10분 안의 것만) */
     if(D.cm.some(c => ((+c.pics||0)+(+c.vids||0)) > c.media.length
