@@ -2531,6 +2531,7 @@ textarea:focus,input:focus,button:focus-visible{outline:2px solid var(--gold);ou
   background:var(--dark-3);min-width:150px;text-align:center}
 .wkhd button{width:34px;height:34px;border-radius:50%;color:var(--sub);font-size:18px;line-height:1}
 .wkhd button:active{background:var(--dark-3)}
+.wkhd button.d{width:auto;min-width:150px;height:auto;white-space:nowrap}      /* 날짜 단추는 글자만큼 — 위 34px 동그라미 꼴이 날짜에도 걸려 「11월 10일 (화)」(두 자리 날) 이 칸 밖으로 나갔다 (11/10 점검 글넘침) */
 .wkd{display:grid;grid-template-columns:repeat(7,1fr);gap:1px}
 .wkd>button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 0 6px;border-radius:11px}
 .wkd .dn{font-size:11.5px;font-weight:700;color:#7d766e}
@@ -3628,7 +3629,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '577';
+const BUILD = '578';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -3719,7 +3720,12 @@ function 프로필얹기(profs){ (profs || []).forEach(x => { if(!x || !x.member
   if(!pf.nick && x.nick) pf.nick = x.nick; if(!pf.avatar && x.avatar) pf.avatar = x.avatar; }); }
 const 사전표들 = ['exercises', 'variants', 'foods'];
 /* 서버는 한 번에 1000줄만 준다(2026-11-02 실측 · limit=5000 → 1000) — 표 전체가 필요하면 이걸로 쪽쪽이 받는다 */
-async function 전부받기(q){ const 다 = []; for(let o = 0; o < 100000; o += 1000){ const r = await sget(q + '&limit=1000&offset=' + o); 다.push(...(r || [])); if(!r || r.length < 1000) break; } return 다; }
+/* 1000줄씩 쪽을 4개씩 동시에 받는다 (2026-11-10 — 하나씩 기다리면 6쪽 = 6번 기다림 · 데스크 633 과 같은 꼴) */
+async function 쪽나눠받기(받기, 끝){ const 다 = [], 첫 = await 받기(0); 다.push(...(첫 || [])); if(!첫 || 첫.length < 1000) return 다;
+  for(let 쪽 = 1; 쪽 < 끝; 쪽 += 4){ const 묶 = await Promise.all([0, 1, 2, 3].filter(i => 쪽 + i < 끝).map(i => 받기(쪽 + i)));
+    let 끝남 = false; for(const r of 묶){ if(끝남) break; 다.push(...(r || [])); if(!r || r.length < 1000) 끝남 = true; } if(끝남) break; }
+  return 다; }
+async function 전부받기(q){ return 쪽나눠받기(n => sget(q + '&limit=1000&offset=' + (n * 1000)), 100); }
 async function sget(q){
   if(RP묶음){ const t = q.split('?')[0]; if(Array.isArray(RP묶음[t])) return RP묶음[t]; if(!사전표들.includes(t)) return []; }
   const r = await 수파fetch(SB_URL + '/rest/v1/' + q, { headers: SB_H, cache: 'no-store' });
@@ -3876,6 +3882,13 @@ async function boot(){
   await 증표새로();      /* RLS — 내 증표로 읽어야 내 자료가 온다 */
   { const k = new URLSearchParams(location.search).get('rp');      /* 로그인 없이 리포트 링크로 — 그 한 장의 자료만 */
     if(k && k.length >= 20 && 수파열쇠() === SB_KEY){ try{ const b = await srpc('report_bundle', { k }); if(b && b.wid) RP묶음 = b; }catch(e){ console.warn('리포트 묶음 못 받음 —', e.message); } } }
+  /* 뒤쪽 받기 — 큰 묶음과 같이 시작해 둔다(2026-11-10 · 전엔 큰 묶음이 끝난 뒤 하나씩 기다려 폰에서 5~9초) · 실패 = 전과 같은 기본값 */
+  const 뒤 = (p, 기본) => p.then(v => ({ ok:true, v }), () => ({ ok:false, v:기본 }));
+  const 뒤받기 = Promise.all([뒤(sget('prep_sets?select=*&order=created_at'), []), 뒤(sget('prep_items?select=*&order=created_at'), []),
+    뒤(sget('trainer_favs?select=trainer,member_id'), []), 뒤(sget('cardio_tips?select=*&order=created_at.desc&limit=600'), null),
+    뒤(sget('rest_tips?select=*&order=created_at.desc&limit=600'), null), 뒤(sget('ex_favs?select=trainer,ex_id'), []),
+    뒤(sget('routine_sheets?select=id,kind,title,owner,note,hidden,cover'), []), 뒤(sget('sheet_gives?select=*'), []),
+    뒤(전부받기('comments?select=member_id,variant_id&order=id'), null)]);
   const [exs, vrs, mems, rts, ritems, asg, wks, witems, wsets, cms, mdesc, intk, plns, bdy, cyc, mls, mits, aks, bphs, blgs, brds, psts, pcms, plks, rms, bdgs] = await Promise.all([
     sget('exercises?select=*&order=sort'),
     sget('variants?select=*&order=sort'),
@@ -3908,14 +3921,15 @@ async function boot(){
   D.badges = (bdgs||[]).map(b => ({ mid:b.member_id, key:b.key, at:b.earned_at||'' }));
   D.profs = []; if(!RP묶음 && 수파열쇠() !== SB_KEY){ try{ D.profs = (await srpc('public_profiles', {})) || []; }catch(e){ D.profs = []; } }      /* 남의 닉네임 · 사진 — 아래 GOALS 를 채운 뒤 빈 곳에만 얹는다 */
   커뮤니티담기(psts, pcms, plks);
-  try{ 세트담기(await sget('prep_sets?select=*&order=created_at').catch(()=>[])); }catch(e){ D.psets = []; }
-  try{ 종목담기(await sget('prep_items?select=*&order=created_at').catch(()=>[])); }catch(e){ D.pitems = []; }
-  try{ D.favs = (await sget('trainer_favs?select=trainer,member_id').catch(()=>[])) || []; }catch(e){ D.favs = []; }
-  try{ D.ctips = await sget('cardio_tips?select=*&order=created_at.desc&limit=600'); }catch(e){ D.ctips = null; }
-  try{ D.rtips = await sget('rest_tips?select=*&order=created_at.desc&limit=600'); }catch(e){ D.rtips = null; }      /* 나머지 운동 지정 (122단계 · 2026-11-03) */
+  const 뒤것 = await 뒤받기;
+  try{ 세트담기(뒤것[0].v || []); }catch(e){ D.psets = []; }
+  try{ 종목담기(뒤것[1].v || []); }catch(e){ D.pitems = []; }
+  D.favs = 뒤것[2].v || [];
+  D.ctips = 뒤것[3].v;
+  D.rtips = 뒤것[4].v;      /* 나머지 운동 지정 (122단계 · 2026-11-03) */
   D.exfb = null; D.exfbOwner = '';      /* 종목별 추천 피드백 — 아래 TRAINER 가 정해진 뒤 그 선생님 것만 받는다(11/09 · 전부 받으면 첫 화면 577KB) */
-  try{ D.exfavs = (await sget('ex_favs?select=trainer,ex_id').catch(()=>[])) || []; }catch(e){ D.exfavs = []; }      /* 종목 즐겨찾기 (107단계) */
-  try{ D.sheets = (await sget('routine_sheets?select=id,kind,title,owner,note,hidden,cover').catch(()=>[])) || []; D.gives = (await sget('sheet_gives?select=*').catch(()=>[])) || []; }catch(e){ D.sheets = []; D.gives = []; }      /* 받은 루틴표 (84단계) */      /* 유산소 넣어주기 (59단계) — 표가 없으면 null = 기능 숨김 */
+  D.exfavs = 뒤것[5].v || [];      /* 종목 즐겨찾기 (107단계) */
+  D.sheets = 뒤것[6].v || []; D.gives = 뒤것[7].v || [];      /* 받은 루틴표 (84단계) */      /* 유산소 넣어주기 (59단계) — 표가 없으면 null = 기능 숨김 */
   /* 트레이너가 올린 스트레칭·운동 종목 사진/영상도 주소를 미리 받아 둔다 — 버킷을 잠가도 보이게 (2026-10-07) */
   try{ await 주소받기([].concat((D.pitems||[]).flatMap(x => x.media.map(m => m.path)),
       (D.psets||[]).flatMap(x => x.items.flatMap(i => (i.media||[]).map(m => m.path))),
@@ -3940,7 +3954,7 @@ async function boot(){
   { const au = 로그인기억.읽() || {}, 직원 = !!(au.who && au.who !== 'member' && !au.mid);      /* 직원 줄은 직원으로 들어왔을 때만 — 전엔 회원도 첫 직원(양인수)이 붙어 직원 폰으로 보였다 (2026-10-25) */
     const t = 직원 ? 직원들.find(m => m.n === au.name) : null; if(t) TRAINER = t.n; else if(직원 && au.name) TRAINER = au.name;
     직원줄 = t || null; }
-  await exfb받기(TRAINER);      /* 지난목 은 내 것(owner = 나)만 쓴다 — 내 것만 받기 */
+  const exfb기다림 = exfb받기(TRAINER);      /* 지난목 은 내 것(owner = 나)만 쓴다 — 내 것만 받기 · 댓글 첨부와 같이 받고 아래에서 기다림 (11/10) */
 
   루틴칸 = rts.length ? ('hidden' in rts[0]) : true;      /* `29단계_SQL` 을 실행하기 전에는 by · made_at · hidden 칸이 없다 — 없는 칸을 보내면 저장이 통째로 실패하므로 있을 때만 보낸다 */
   D.routines = rts.map(r => ({ id:r.id, mid:r.member_id, no:r.no, n:r.name, purpose:r.purpose||r.sub||'', grp:r.grp||'', by:r.by||'', at:r.made_at||'', hid:!!r.hidden, sheet:r.sheet_id||null, prep:r.prep_id||'',      /* 묶은 운동 전 스트레칭 (127단계 · 2026-11-05) */
@@ -3957,7 +3971,7 @@ async function boot(){
       .push({ rid:a.routine_id, at:a.on_date, slot: a.on_date===RECO1 ? '먼저 추천' : '나중 추천' });
   });
   D.workouts = mapWorkouts(wks, witems, wsets);
-  CMEDIA = await 댓글첨부받기(cms).catch(()=>[]);      /* 처음 받은 댓글 300줄에 붙은 것만 — 회원 화면에서 그 회원 옛 피드백은 회원피드백받기 가 같이 받는다 */
+  CMEDIA = (await Promise.all([댓글첨부받기(cms).catch(()=>[]), exfb기다림.catch(()=>{})]))[0];      /* 처음 받은 댓글 300줄에 붙은 것만 — 회원 화면에서 그 회원 옛 피드백은 회원피드백받기 가 같이 받는다 */
   /* 사진 주소를 **그리기 전에** 한꺼번에 받아 둔다 — 그려 놓고 받으면 빈칸이 먼저 보인다.
      지금은 공개 버킷이라 실패해도 그만이다(공개 주소로 돈다). 버킷을 잠그면 이 줄이 일한다. */
   try{
@@ -3967,7 +3981,7 @@ async function boot(){
       (bphs||[]).map(r => r.path)));
   }catch(e){ console.warn('사진 주소 받기 건너뜀', e); }
   D.cm = mapCm(cms);
-  try{ D.cmKeys = new Set((await 전부받기('comments?select=member_id,variant_id&order=id')).map(c => c.member_id + '|' + c.variant_id)); }catch(e){ D.cmKeys = null; }
+  D.cmKeys = 뒤것[8].ok ? new Set((뒤것[8].v || []).map(c => c.member_id + '|' + c.variant_id)) : null;      /* 위 뒤받기에서 같이 받음 (11/10) */
   D.desc = {}; mdesc.forEach(m => { const [ex,va] = splitV(m.variant_id); D.desc[m.member_id+':'+ex+':'+va] = m.descr; });
   D.intake = {}; intk.forEach(r => D.intake[r.member_id] = r.data || {});
   GOALS = {}; plns.forEach(r => GOALS[r.member_id] = r.data || {});
