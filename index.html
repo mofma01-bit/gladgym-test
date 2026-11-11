@@ -3149,6 +3149,36 @@ body.kpon #main{padding-bottom:380px}
 
 .fxd{display:flex;align-items:center;gap:8px;border:1px solid #5a4a2c;background:var(--gold-dim);border-radius:12px;padding:8px 10px;margin-bottom:10px}.fxd span{flex:1;text-align:center}.fxd b{display:block;font-size:16px}.fxd small{font-size:12px;color:#b9b1a3}.fxd button{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#26241f;color:var(--cream);font-size:16px}.fxd button:disabled{opacity:.3}
 .fxadd{flex:none;border:1px solid var(--gold-2) !important;color:var(--gold) !important;background:var(--gold-dim) !important}
+
+/* ── 사진 꾸미기 창 (앱 · 데스크 같은 코드 · 2026-11-11) ── */
+#ggdz{position:fixed;inset:0;z-index:2147483600;background:#000;display:flex;flex-direction:column;touch-action:none;user-select:none;-webkit-user-select:none;color:#fff;font-family:inherit}
+#ggdz .bar{display:flex;align-items:center;gap:4px;padding:calc(8px + env(safe-area-inset-top,0px)) max(10px,env(safe-area-inset-right,0px)) 8px max(10px,env(safe-area-inset-left,0px))}
+#ggdz .bar .sp{flex:1}
+#ggdz .tools{display:flex;justify-content:center;gap:4px;padding:8px 8px 0}
+#ggdz .tb{flex:1;max-width:76px;height:56px;border:0;border-radius:12px;background:transparent;color:#fff;font:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0}
+#ggdz .tb i{font-style:normal;font-size:21px;line-height:1}#ggdz .tb small{font-size:13px;color:#cfc8bb}
+#ggdz .tb.on{background:#2c2a25;box-shadow:inset 0 0 0 1.5px #d6b87e}#ggdz .tb.on small{color:#f0d3a0}
+#ggdz .un{height:38px;padding:0 13px;border:1px solid #4a473f;border-radius:999px;background:#26241f;color:#fff;font:inherit;font-size:14px;font-weight:700;margin-right:8px}#ggdz .un:disabled{opacity:.35}
+#ggdz .ok{height:38px;padding:0 16px;border:0;border-radius:999px;background:#f0d3a0;color:#2a2214;font:inherit;font-weight:900;font-size:14px}
+#ggdz .cx{width:40px;height:40px;border-radius:50%;border:0;background:#26241f;color:#fff;font-size:18px}
+#ggdz .st{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:0}
+#ggdz canvas{max-width:100%;max-height:100%;touch-action:none;display:block}
+#ggdz .sz{position:absolute;left:max(10px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;background:rgba(20,20,18,.55);border-radius:999px;padding:12px 6px}
+#ggdz .sz input{writing-mode:vertical-lr;direction:rtl;width:28px;height:180px;accent-color:#f0d3a0}
+#ggdz .sz .dot{border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.4)}
+#ggdz .cols{display:flex;gap:10px;justify-content:center;padding:10px max(12px,env(safe-area-inset-left,0px)) calc(12px + env(safe-area-inset-bottom,0px));flex-wrap:wrap}
+#ggdz .cl{width:30px;height:30px;border-radius:50%;border:2px solid #fff;padding:0}#ggdz .cl.on{outline:2.5px solid #f0d3a0;outline-offset:2px}
+#ggdz .txin{position:absolute;left:0;right:0;bottom:0;display:flex;gap:8px;padding:10px;background:rgba(0,0,0,.85)}
+#ggdz .txin input{flex:1;height:42px;border-radius:10px;border:1px solid #d6b87e;background:#1e1e1b;color:#fff;font:inherit;font-size:16px;padding:0 12px}
+#ggdz .ask{position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center}
+#ggdz .ask>div{background:#282824;border:1px solid #3c3b36;border-radius:14px;padding:18px;width:min(320px,86vw);text-align:center}
+#ggdz .ask b{display:block;font-size:16px;margin-bottom:4px}#ggdz .ask small{color:#c6bdb2;font-size:13px}
+#ggdz .ask .r{display:flex;gap:8px;margin-top:14px}#ggdz .ask button{flex:1;height:42px;border-radius:10px;border:1px solid #3c3b36;background:#33332e;color:#fff;font:inherit;font-weight:800}
+#ggdz .ask button.y{background:#f0d3a0;color:#2a2214;border:0}
+#ggdz .hint{position:absolute;left:50%;top:8px;transform:translateX(-50%);background:rgba(0,0,0,.6);color:#e6dfd3;font-size:13px;white-space:nowrap;border-radius:999px;padding:4px 12px;pointer-events:none}
+.attth button.dz{top:auto;right:0;left:0;bottom:0;width:auto;height:24px;border-radius:0;background:rgba(20,20,18,.8);color:var(--gold);font:inherit;font-size:13px;font-weight:800;padding:0;display:flex;align-items:center;justify-content:center}
+.attth.ph .no{bottom:auto;top:4px}.attth.mk{border-color:var(--gold-2);box-shadow:0 0 0 1.5px var(--gold-2)}.attth.mk button.dz{background:var(--gold);color:#2a2214}
+.vu-th .dz{position:absolute;left:0;right:0;bottom:0;height:26px;border:0;background:rgba(20,20,18,.82);color:var(--gold);font:inherit;font-size:13px;font-weight:800}.vu-th.mk{box-shadow:0 0 0 2px var(--gold-2)}.vu-th.mk .dz{background:var(--gold);color:#2a2214}.vu-th.mk small{display:none}
 </style>
 
 </head>
@@ -3642,7 +3672,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '583';
+const BUILD = '584';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -3705,12 +3735,14 @@ function 앱설치누름(){ const p = window.__설치신호; if(!p) return; wind
 })();
 
 /* 홈 아이콘으로 들어와도 옛 화면에 머물지 않게 — 새 판이 있으면 한 번만 다시 받는다 */
+function 새로고침미룸(){ try{ return !!꾸밈 || 안보낸것() > 0 || !!(S.bulk && (S.bulk.rows || []).some(r => !r.off)); }catch(e){ return false; } }
 async function checkBuild(){
   try{
     const t = await fetch('index.html?ts=' + Date.now(), { cache:'no-store' }).then(r=>r.text());
     const m = t.match(/const BUILD = '([^']+)'/);
     if(!m) return;
     if(m[1] === BUILD){ try{ sessionStorage.removeItem('gg_rl'); }catch(e){} return; }
+    if(새로고침미룸()) return;      /* 꾸미는 중 · 안 보낸 사진 · 몰아서 올리는 중 = 새로고침하면 붙인 사진이 사라진다 → 다음에 (2026-11-11) */
     let tried = ''; try{ tried = sessionStorage.getItem('gg_rl') || ''; }catch(e){}
     if(tried === m[1]) return;                      /* 이미 한 번 시도했으면 그만 */
     try{ sessionStorage.setItem('gg_rl', m[1]); }catch(e){}
@@ -4421,6 +4453,7 @@ function histArm(){ if(!histOn) return; try{ history.pushState({ gg:1 }, ''); }c
 function histInit(){ try{ if(window.parent !== window && window.parent.__연습) return; }catch(e){}      /* 연습 프로그램 안 = 브라우저 「뒤로」 기록을 안 씀 — 화면 둘이 같은 기록을 나눠 써서 트레이너 「뒤로」가 회원 화면을 되돌렸다 (2026-11-06) */
   try{ history.replaceState({ gg:0 }, ''); histOn = true; histArm(); }catch(e){} }
 window.addEventListener('popstate', ()=>{
+  if(꾸밈){ histArm(); 꾸밈.뒤로(); return; }      /* 꾸미는 중 = 「버릴까요?」 먼저 (2026-11-11) */
   if(!histOn) return;
   if(sheetRender){ closeSheet(); histArm(); return; }              /* 팝업이 열려 있으면 팝업만 닫는다 */
   if(S.stack && S.stack.length){ popScreen(); histArm(); return; }  /* 직전 화면으로 */
@@ -5174,16 +5207,98 @@ function 루틴줄(it, e){
 function 루틴채움(items, mid){            /* 공통 루틴을 회원에게 추가할 때 — 빈 무게 · 횟수를 그 회원의 지난 기록으로 */
   return items.map(it => { const 지 = (빈값(it.kg) || 빈값(it.reps)) && !exOf(it.ex).cardio ? 지난한것(mid, it.ex, it.va) : null;
     return Object.assign({}, it, 지 ? { kg: 빈값(it.kg) ? 지.kg : it.kg, reps: 빈값(it.reps) ? 지.reps : it.reps } : {}); }); }
+/* ═══ 사진 꾸미기 — 앱 · 데스크 같은 코드 (2026-11-11 대표 「피드백 사진 올리고 꾸미기 · 옵션 · 펜 굵기 · 색 · 자유펜 · 직선 · 기본 기능 · 저장 · 다시 불러와도 안 꺼지게」 · 시안 꾸미기_1111)
+   x = 붙인 사진 { blob | file , url } → 「완료」 하면 꾸민 사진으로 바뀌고 x.orig(원본) · x.marks(획) 이 붙는다
+   ① 화면 다시 그리기와 따로 뜬다(body 바로 아래) — 뒤에서 자료를 다시 받아도 안 닫힘
+   ② 그리는 중 획은 x.marksDraft 에 — 창이 닫혀도 다시 열면 이어서 · 원본 위에 다시 그림(덧칠 없음)
+   ③ 긴 쪽 2048px 로 줄여 그림 — 폰 메모리 · ④ 꾸미는 중 · 안 보낸 사진이 있으면 새 버전 새로고침을 미룬다(앱 새로고침미룸) */
+const 꾸밈색 = ['#ffffff', '#111111', '#ff3b30', '#ff9500', '#ffd60a', '#34c759', '#0a84ff', '#bf5af2'];
+let 꾸밈 = null;
+function 꾸미기열기(x, 끝){
+  if(꾸밈 || !x) return;
+  const 원 = x.orig || x.blob || x.file; if(!원) return;
+  const z = document.createElement('div'); z.id = 'ggdz';
+  z.innerHTML = '<div class="bar"><button class="cx" data-z="x" aria-label="닫기">✕</button><span class="sp"></span><button class="un" data-z="undo">↶ 되돌리기</button><button class="ok" data-z="ok">완료</button></div>'
+    + '<div class="st"><canvas></canvas><div class="sz"><span class="dot"></span><input type="range" min="2" max="40" step="1" aria-label="굵기"></div><div class="hint" hidden></div></div>'
+    + '<div class="tools">' + [['text', 'Aa', '글자'], ['pen', '✏', '펜'], ['line', '／', '직선'], ['arrow', '↗', '화살표'], ['erase', '⌫', '지우개']].map(t => '<button class="tb" data-z="t:' + t[0] + '"><i>' + t[1] + '</i><small>' + t[2] + '</small></button>').join('') + '</div>'
+    + '<div class="cols">' + 꾸밈색.map(c => '<button class="cl" data-z="c:' + c + '" style="background:' + c + '" aria-label="색"></button>').join('') + '</div>';
+  document.body.appendChild(z); const 옛넘침 = document.body.style.overflow; document.body.style.overflow = 'hidden';
+  ['pointerdown', 'mousedown', 'touchstart', 'keydown', 'keyup', 'input', 'change'].forEach(t => z.addEventListener(t, e => e.stopPropagation()));      /* 뒤 화면 손잡이(팝업 닫기 · 자판 등)가 못 받게 */
+  const cv = z.querySelector('canvas'), g = cv.getContext('2d'), 층 = document.createElement('canvas'), lg = 층.getContext('2d'), 그림 = new Image();
+  const 획 = (x.marksDraft || x.marks || []).map(o => JSON.parse(JSON.stringify(o))), 처음 = JSON.stringify(x.marks || []);
+  const 상 = 꾸밈 = { x, z, 획, 도구: x.꾸밈도구 || 'pen', 색: x.꾸밈색 || '#ff3b30', 굵기: x.꾸밈굵기 || 8, 지금: null, 끌기: null, 비: 1, url: URL.createObjectURL(원) };
+  const 저장초안 = () => { x.marksDraft = 상.획.slice(); x.꾸밈도구 = 상.도구; x.꾸밈색 = 상.색; x.꾸밈굵기 = 상.굵기; };
+  const 그려 = () => { if(!그림.naturalWidth) return; g.clearRect(0, 0, cv.width, cv.height); g.drawImage(그림, 0, 0, cv.width, cv.height);
+    lg.clearRect(0, 0, 층.width, 층.height); 상.획.concat(상.지금 ? [상.지금] : []).forEach(o => 획그리기(lg, o, 상.비)); g.drawImage(층, 0, 0); };
+  상.그려 = 그려;
+  const 단추 = () => { z.querySelectorAll('.tb').forEach(b => b.classList.toggle('on', b.dataset.z === 't:' + 상.도구));
+    z.querySelectorAll('.cl').forEach(b => b.classList.toggle('on', b.dataset.z === 'c:' + 상.색));
+    z.querySelector('[data-z="undo"]').disabled = !상.획.length; z.querySelector('.sz input').value = 상.굵기;
+    const d = z.querySelector('.sz .dot'), k = Math.max(6, Math.min(28, 상.굵기)); d.style.width = d.style.height = k + 'px'; d.style.background = 상.도구 === 'erase' ? 'transparent' : 상.색; d.style.borderColor = 상.도구 === 'erase' ? '#fff' : 'rgba(0,0,0,.4)';
+    const h = z.querySelector('.hint'); h.hidden = 상.도구 !== 'text'; h.textContent = '넣을 곳을 누르세요 · 넣은 글자는 끌어서 옮겨요'; };
+  그림.onload = () => { const s = Math.min(1, 2048 / Math.max(그림.naturalWidth, 그림.naturalHeight));
+    cv.width = 층.width = Math.max(1, Math.round(그림.naturalWidth * s)); cv.height = 층.height = Math.max(1, Math.round(그림.naturalHeight * s)); 상.비 = cv.width / 1000; 상.됨 = true; 그려(); };
+  그림.onerror = () => { 닫기(); toast('사진을 열지 못했어요'); };
+  그림.src = 상.url;
+  const 점 = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; };
+  const 글자찾기 = p => { for(let i = 상.획.length - 1; i >= 0; i--){ const o = 상.획[i]; if(o.t !== 'text') continue; lg.font = 꾸밈글꼴(o, 상.비); const w = lg.measureText(o.txt).width, h = (22 + o.s * 3) * 상.비 * 1.1;
+      if(p[0] >= o.x - w / 2 - 10 && p[0] <= o.x + w / 2 + 10 && p[1] >= o.y - h / 2 - 10 && p[1] <= o.y + h / 2 + 10) return o; } return null; };
+  cv.addEventListener('pointerdown', e => { if(z.querySelector('.ask, .txin') || !그림.naturalWidth) return; e.preventDefault(); try{ cv.setPointerCapture(e.pointerId); }catch(_){} const p = 점(e);
+    if(상.도구 === 'text'){ const o = 글자찾기(p); if(o){ 상.끌기 = { o, dx: p[0] - o.x, dy: p[1] - o.y, 움: false }; return; } 글자입력(p); return; }
+    상.지금 = { t: 상.도구, c: 상.색, s: 상.굵기 * 상.비, p: [p] }; 그려(); });
+  cv.addEventListener('pointermove', e => { if(!상.끌기 && !상.지금) return; const p = 점(e);
+    if(상.끌기){ 상.끌기.o.x = p[0] - 상.끌기.dx; 상.끌기.o.y = p[1] - 상.끌기.dy; 상.끌기.움 = true; 그려(); return; }
+    if(상.지금.t === 'pen' || 상.지금.t === 'erase') 상.지금.p.push(p); else 상.지금.p[1] = p; 그려(); });
+  const 뗌 = () => { if(상.끌기){ if(상.끌기.움) 저장초안(); 상.끌기 = null; return; }
+    if(!상.지금) return; const o = 상.지금; 상.지금 = null; if(o.p.length < 2) o.p.push([o.p[0][0] + .1, o.p[0][1] + .1]); 상.획.push(o); 저장초안(); 단추(); 그려(); };
+  cv.addEventListener('pointerup', 뗌); cv.addEventListener('pointercancel', 뗌);
+  function 글자입력(p){ const w = document.createElement('div'); w.className = 'txin'; w.innerHTML = '<input maxlength="40" placeholder="글자 입력"><button class="ok">확인</button>'; z.querySelector('.st').appendChild(w);
+    const i = w.querySelector('input'); setTimeout(() => i.focus(), 30); const 넣 = () => { const t = i.value.trim(); w.remove(); if(t){ 상.획.push({ t: 'text', c: 상.색, s: 상.굵기, x: p[0], y: p[1], txt: t }); 저장초안(); 단추(); 그려(); } };
+    w.querySelector('button').onclick = 넣; i.onkeydown = e => { if(e.isComposing) return; if(e.key === 'Enter') 넣(); if(e.key === 'Escape') w.remove(); }; }
+  function 묻기(제목, 설명, 예, 아니오, 예함){ const a = document.createElement('div'); a.className = 'ask'; a.innerHTML = '<div><b>' + 제목 + '</b><small>' + 설명 + '</small><div class="r"><button>' + 아니오 + '</button><button class="y">' + 예 + '</button></div></div>'; z.appendChild(a);
+    const [n, y] = a.querySelectorAll('button'); n.onclick = () => a.remove(); y.onclick = () => { a.remove(); 예함(); }; }
+  function 닫기(){ try{ URL.revokeObjectURL(상.url); }catch(_){} z.remove(); 꾸밈 = null; document.body.style.overflow = 옛넘침; document.removeEventListener('keydown', 키, true); }
+  상.닫기 = 닫기;
+  상.뒤로 = () => { const a = z.querySelector('.ask'), t = z.querySelector('.txin'); if(a){ a.remove(); return; } if(t){ t.remove(); return; }
+    if(JSON.stringify(상.획) === 처음){ delete x.marksDraft; 닫기(); return; }
+    묻기('꾸민 것을 버릴까요?', '버리면 이번에 그린 것이 사라져요', '버리기', '계속 꾸미기', () => { delete x.marksDraft; 닫기(); }); };
+  const 키 = e => { if(z.querySelector('.txin') && e.key !== 'Escape') return; if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); 상.뒤로(); }
+    else if((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z')){ e.preventDefault(); e.stopPropagation(); if(상.획.length){ 상.획.pop(); 저장초안(); 단추(); 그려(); } } };
+  document.addEventListener('keydown', 키, true);
+  z.querySelector('.sz input').addEventListener('input', e => { 상.굵기 = +e.target.value; 저장초안(); 단추(); });
+  z.addEventListener('click', async e => { e.stopPropagation(); const b = e.target.closest('[data-z]'); if(!b) return; const zz = b.dataset.z, k = zz.split(':')[0], v = zz.slice(zz.indexOf(':') + 1);
+    if(k === 't'){ 상.도구 = v; 저장초안(); 단추(); return; }
+    if(k === 'c'){ 상.색 = v; if(상.도구 === 'erase') 상.도구 = 'pen'; 저장초안(); 단추(); return; }
+    if(k === 'undo'){ 상.획.pop(); 저장초안(); 단추(); 그려(); return; }
+    if(k === 'x'){ 상.뒤로(); return; }
+    if(k === 'ok'){ b.disabled = true;
+      try{ const 이름 = String(x.name || '사진').replace(/\.[^.]+$/, '') + '.jpg';
+        if(!상.획.length){ if(x.orig){ try{ if(x.url) URL.revokeObjectURL(x.url); }catch(_){} if('file' in x) x.file = x.orig; else x.blob = x.orig; x.url = URL.createObjectURL(x.orig); } delete x.orig; delete x.marks; delete x.marksDraft; }
+        else { 그려(); const nb = await new Promise((ok, no) => cv.toBlob(bb => bb ? ok(bb) : no(new Error('사진을 만들지 못했어요')), 'image/jpeg', .9));
+          if(!x.orig) x.orig = 원; try{ if(x.url) URL.revokeObjectURL(x.url); }catch(_){}
+          if('file' in x) x.file = new File([nb], 이름, { type: 'image/jpeg' }); else x.blob = nb;
+          x.url = URL.createObjectURL(nb); x.marks = 상.획.slice(); delete x.marksDraft; }
+        닫기(); if(끝) 끝(x); }catch(err){ b.disabled = false; toast('저장하지 못했어요\n다시 시도해 주세요'); console.error(err); } } });
+  단추();
+}
+const 꾸밈글꼴 = (o, 비) => '900 ' + Math.round((22 + o.s * 3) * (비 || 1)) + 'px -apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif';
+function 획그리기(c, o, 비){ c.save(); c.lineCap = c.lineJoin = 'round'; c.strokeStyle = c.fillStyle = o.c; c.lineWidth = o.s;
+  if(o.t === 'erase'){ c.globalCompositeOperation = 'destination-out'; c.strokeStyle = '#000'; }
+  if(o.t === 'pen' || o.t === 'erase'){ c.beginPath(); c.moveTo(o.p[0][0], o.p[0][1]); for(let i = 1; i < o.p.length - 1; i++){ const m = [(o.p[i][0] + o.p[i + 1][0]) / 2, (o.p[i][1] + o.p[i + 1][1]) / 2]; c.quadraticCurveTo(o.p[i][0], o.p[i][1], m[0], m[1]); } const L = o.p[o.p.length - 1]; c.lineTo(L[0], L[1]); c.stroke(); }
+  else if(o.t === 'line' || o.t === 'arrow'){ const [a, b] = o.p; c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.stroke();
+    if(o.t === 'arrow'){ const ang = Math.atan2(b[1] - a[1], b[0] - a[0]), h = Math.max(o.s * 4.5, 26); c.beginPath(); c.moveTo(b[0], b[1]); c.lineTo(b[0] - h * Math.cos(ang - .45), b[1] - h * Math.sin(ang - .45)); c.lineTo(b[0] - h * Math.cos(ang + .45), b[1] - h * Math.sin(ang + .45)); c.closePath(); c.fill(); } }
+  else if(o.t === 'text'){ c.font = 꾸밈글꼴(o, 비); c.textAlign = 'center'; c.textBaseline = 'middle'; c.lineWidth = Math.max(4, (22 + o.s * 3) * .16 * (비 || 1)); c.strokeStyle = o.c === '#111111' ? '#fff' : '#000'; c.strokeText(o.txt, o.x, o.y); c.fillText(o.txt, o.x, o.y); }
+  c.restore(); }
 function att(k){ S.att=S.att||{}; return S.att[k]||(S.att[k]={}); }
 /* 붙인 것 — 사진·영상을 **붙인 차례 한 줄**로 둔다. 그 차례대로 올리고, 그 차례대로 넘겨 본다 */
 function 붙인것(K){
   const fs = att(K).files || [];
   if(!fs.length) return '';
-  return `<div class="attrow">${fs.map((x,i)=>`<span class="attth${x.kind==='video'?' v':''}">
+  return `<div class="attrow">${fs.map((x,i)=>`<span class="attth${x.kind==='video'?' v':' ph'}${x.marks?' mk':''}">
       ${x.kind==='video' ? `<video src="${x.url}#t=0.1" controls playsinline preload="metadata" muted></video>`
                          : `<img src="${x.url}" alt="">`}
       <b class="no">${i+1}</b>
-      <button data-act="attx:f:${K}:${i}" aria-label="삭제">✕</button></span>`).join('')}</div>`;
+      <button data-act="attx:f:${K}:${i}" aria-label="삭제">✕</button>${x.kind==='video' ? '' : `<button class="dz" data-act="attdz:${K}:${i}">${x.marks ? '✏ 수정' : '✏ 꾸미기'}</button>`}</span>`).join('')}</div>`;      /* 꾸미기 = 선택 (2026-11-11) */
 }
 function 넘겨보기(전부, cid){
   const np = 전부.filter(m=>m.kind!=='video').length, nv = 전부.length - np;
@@ -5403,7 +5518,7 @@ function 몰아창(){ const b = S.bulk; if(!b) return; const 종 = 몰아종목(
     return `<div class="h2">피드백 몰아서 올리기 <small>${esc(dateTxt((D.workouts.find(w => w.id === b.wid) || live() || {}).date || TODAY))} · ${쓸.length}개</small></div>
     <div class="vu-band"><div class="t">오늘 루틴 종목</div><div class="r">${종.map((o, i) => { const k = o.ex + '|' + o.va, c = 수(k); return `<span class="${c ? '' : 'no'}"><i>${i + 1}</i>${esc(o.n)}${c ? ` <em>${c}</em>` : ''}</span>`; }).join('')}</div></div>
     ${b.rows.length ? '' : '<div class="empty">아직 선택한 사진 · 영상이 없습니다<br>아래 「＋ 더 선택」을 눌러 주세요</div>'}
-    ${b.rows.map((r, j) => { const [ex] = (r.k || '|').split('|'); return `<div class="vu-row${r.off ? ' off' : ''}"><div class="vu-th">${r.kind === 'video' ? `<video src="${r.url}#t=0.1" muted playsinline preload="metadata"></video><b>▶</b>` : `<img src="${r.url}" alt="">`}<small>${r.kind === 'video' ? '영상' : '사진'} ${j + 1}</small></div><div class="vu-b">
+    ${b.rows.map((r, j) => { const [ex] = (r.k || '|').split('|'); return `<div class="vu-row${r.off ? ' off' : ''}"><div class="vu-th${r.marks ? ' mk' : ''}">${r.kind === 'video' ? `<video src="${r.url}#t=0.1" muted playsinline preload="metadata"></video><b>▶</b>` : `<img src="${r.url}" alt=""><button class="dz" data-act="bkdz:${j}">${r.marks ? '✏ 수정' : '✏ 꾸미기'}</button>`}<small>${r.kind === 'video' ? '영상' : '사진'} ${j + 1}</small></div><div class="vu-b">
       <div class="vu-c">${종.map(o => { const k = o.ex + '|' + o.va; return `<button class="${k === r.k ? 'on' : ''}" data-act="bkk:${j}:${esc(k)}">${esc(o.n)}</button>`; }).join('')}${r.k && !종.some(o => o.ex + '|' + o.va === r.k) ? `<button class="on">✓ ${esc(exName(...r.k.split('|')))}</button>` : ''}</div>
       <div class="vu-s"><input data-bkq="${j}" value="${esc(r.nm || '')}" placeholder="${종.length ? '다른 종목이면 이름 직접 쓰기' : '종목 이름 (필수 · 편하게 써도 돼요)'}" autocomplete="off"></div>
       <div class="mu-one"><input data-k="bk:${j}" value="${esc(r.tx || '')}" oninput="S.bulk && S.bulk.rows[${j}] && (S.bulk.rows[${j}].tx = this.value)" placeholder="이 종목 피드백 한 줄 (안 써도 돼요)"><button data-act="jfopen:${esc(ex)}:bk:${j}">💬 인용</button></div>
@@ -15041,6 +15156,7 @@ document.addEventListener('click', async ev=>{
     case 'attx2': { const o = document.getElementById('ospick'); if(o) o.remove(); return; }
     case 'bulkopen': { const wid = rest[0], w = (live() && live().id === wid) ? live() : D.workouts.find(x => x.id === wid); if(!w) return; S.bulk = { wid, mid: w.mid || S.tmid || S.mid, rows:[] }; 올리기고르기('both', 'bulk'); return; }
     case 'bkk': { const r = S.bulk && S.bulk.rows[+rest[0]]; if(r){ r.k = rest.slice(1).join(':'); r.q = ''; r.nm = ''; 몰아창(); } return; }      /* 칩을 누르면 직접 쓴 이름은 비움 */
+    case 'bkdz': { const r = S.bulk && S.bulk.rows[+rest[0]]; if(r && r.kind === 'photo') 꾸미기열기(r, () => drawSheet()); return; }      /* 몰아서 올리기 — 원하는 사진만 꾸미기 (2026-11-11) */
     case 'bkoff': { const r = S.bulk && S.bulk.rows[+rest[0]]; if(r){ r.off = !r.off; 몰아창(); } return; }
     case 'bksend': { const b = S.bulk; if(!b || b.중) return; b.rows.forEach((r, j) => { const el = document.querySelector('[data-bkq="' + j + '"]'); if(el) r.nm = el.value; });
       if(!b.rows.some(r => !r.off && (r.k || String(r.nm || '').trim()))) return; b.중 = true; 몰아창();
@@ -15121,6 +15237,7 @@ document.addEventListener('click', async ev=>{
       return; }
     case 'csk': { S.cmf = S.cmf || {};
       S.cmf[rest[0]] = S.cmf[rest[0]]===rest[1] ? '' : rest[1]; drawSheet(); return; }
+    case 'attdz': { const i = +rest.pop(), K = rest.join(':'), x = (att(K).files || [])[i]; if(x && x.kind === 'photo') 꾸미기열기(x, () => drawSheet()); return; }      /* 사진 꾸미기 (2026-11-11) */
     case 'attx': { (att(rest[1]).files||[]).splice(+rest[2], 1); drawSheet(); return; }
     case 'csl': { const t = el.closest('.cmslide') && el.closest('.cmslide').querySelector('.cs-track');
       if(!t) return;
