@@ -3632,7 +3632,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '581';
+const BUILD = '582';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -13455,14 +13455,18 @@ function tRoutineTab(){
     <div class="megrp">${줄('routine', '루틴 만들기 · 지정', 'tromake')}${줄('prep', '준비운동 만들기', 'psets', 내세트().length + '개')}${줄('h_hands', '나만의 스트레칭 종목 만들기', 'pitems', 내종목().length + '개')}</div>` };
 }
 /* ══ 상담 탭 ══ (2026-11-04 대표 시안2 「검색창이 가장 위 · 바로 아래 종이 상담지 올리기」) — 상담지는 데스크와 같은 A4 모양(상담지종이 · 맞춰 보기 · 크게 보기) */
+/* 상담 탭을 누른 자리의 회원 — 기록 중이면 그 회원 · 회원 화면(그 회원 기록 · 상담지 포함)이면 그 회원 · 아니면 없음 */
+function 상담탭회원(){ const 있 = m => m && MEMBERS.some(x => x.id === m) ? m : null;
+  if(S.screen === 'workout' && D.live && D.live.mid) return 있(D.live.mid);
+  if(['t_member', 't_live', 'record', 'intake', 'plan', 'diet', 'body'].includes(S.screen)) return 있(S.tmid || S.subj);
+  return null; }
 function tConsult(){
-  const 작 = m => 상담작성(D.intake[m.id] || {}), 최근 = MEMBERS.filter(m => 작(m).n > 3).sort((a, b) => 작(b).p - 작(a).p).slice(0, 10);
+  const 작 = m => 상담작성(D.intake[m.id] || {});      /* 「최근 상담」(다른 회원 목록) 뺌 — 11/11 대표 「다른 회원 상담지 볼 필요 없다」 */
   const 줄 = (m, 숨) => `<button class="mrow2${숨 ? ' csr' : ''}" data-csnm="${esc(m.n)}" data-act="csopen:${m.id}"${숨 ? ' style="display:none"' : ''}>${갈래원(m.id)}<span class="mt"><b>${esc(m.n)}</b><small>${(a => a.n > 3 ? a.p + '% 작성 · ' + a.n + ' / ' + a.모두 + '항목' : '아직 작성 전')(작(m))}${m.tr ? ' · 담당 ' + esc(m.tr) : ''}</small></span><em class="go">보기 ›</em></button>`;
   return { top: bar('상담'), body:`
     <input class="search" type="text" data-csq="1" placeholder="상담지 열 회원 검색" autocomplete="off">
     <button class="hline gold" data-act="csscan">${svg('h_note',18)}<b>종이 상담지 올리기</b><small>찍거나 앨범에서 · 읽어서 채워요</small></button>
-    <span class="lbl" id="cslbl">최근 상담 <small>${최근.length}</small></span>
-    <div class="megrp" id="csrecent">${최근.length ? 최근.map(m => 줄(m)).join('') : '<div class="fe">아직 작성한 상담지가 없습니다<br>위에서 회원을 검색해 상담지를 열어 주세요</div>'}</div>
+    <div class="fe" id="csrecent">회원 이름으로 검색해 상담지를 열어 주세요<br>수업 기록 · 회원 화면에서 상담 탭을 누르면 그 회원 상담지가 바로 열려요</div>
     <div class="megrp" id="csall" style="display:none">${MEMBERS.map(m => 줄(m, true)).join('')}<div class="fe" id="csnone" style="display:none">찾는 회원이 없습니다<br>이름을 다시 확인해 주세요</div></div>` };
 }
 document.addEventListener('input', ev => { const f = ev.target.closest && ev.target.closest('[data-csq]'); if(!f) return;      /* 상담 탭 검색 — 치면 전체 회원에서 · 비우면 최근 상담 */
@@ -14315,7 +14319,9 @@ document.addEventListener('click', async ev=>{
     case 'retry': S.screen='boot'; render(); start(); return;
     case 'switch': 로그인기억.씀(null); D.live = null; save(); try{ localStorage.removeItem('gg_live_park'); }catch(e){} S.lg = null; S.stack=[]; S.who=null; S.mid=null; S.self=false; S.tmid=null; go('login'); return;      /* 나가면 기억도 지운다 — 다음에는 다시 문자 인증 */
     case 'back': goBack(); return;
-    case 'ttab': S.ttab=rest[0]; if(rest[0]==='t_community') S.cmode=''; goRoot(rest[0]);
+    case 'ttab': S.ttab=rest[0]; if(rest[0]==='t_community') S.cmode='';
+      if(rest[0]==='t_consult'){ const 그 = 상담탭회원(); if(그){ S.subj = 그; S.tmid = 그; S.stack = []; closeSheet(); go('intake'); return; } }      /* 기록 중 · 회원 화면에서 상담 탭 = 그 회원 상담지 바로 (2026-11-11 대표 「해당 고객의 데이터만」) */
+      goRoot(rest[0]);
       if(rest[0]==='t_community') 커뮤니티받기().then(()=>{ if(S.screen==='t_community') render(); });
       return;
     case 'tfm': S.tfeed=rest[0]; render(); return;
