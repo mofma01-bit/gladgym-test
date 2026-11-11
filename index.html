@@ -3139,6 +3139,16 @@ body.kpon #main{padding-bottom:380px}
 
 .ctrtag{display:inline-block;margin-left:5px;font-size:12px;font-weight:800;padding:0 6px;border-radius:6px;background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-2);vertical-align:1px;white-space:nowrap}
 .chip.ctrchip{border-color:var(--gold-2);color:var(--gold)}.chip.ctrchip.on{background:var(--gold);color:#1a1a18}
+
+.rjst{display:flex;gap:6px;margin:4px 0 12px}.rjst button{flex:1;border:0;border-radius:9px;background:#242321;color:var(--sub);font:inherit;font-size:13px;font-weight:900;padding:8px 0}.rjst .on{background:var(--gold);color:#1a1a18}.rjst .ok{background:var(--gold-dim);color:var(--gold)}
+.rjsh{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--dark-3,#242321);padding:8px;margin-bottom:6px;color:var(--cream,#fdfaf6);font:inherit}.rjsh .rjcv{width:42px;height:54px;border-radius:7px;object-fit:cover;flex:none;display:flex;align-items:center;justify-content:center;font-size:10px;background:#3a2f1c}.rjsh span{flex:1;min-width:0}.rjsh b{display:block;font-size:15px}.rjsh small{font-size:12.5px;color:#b9b1a3}.rjsh i{font-style:normal;color:var(--sub)}
+.rjex{display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--dark-3,#242321);overflow:hidden;margin-bottom:8px;padding:0;color:var(--cream,#fdfaf6);font:inherit}.rjex .bar{display:block;font-size:12.5px;font-weight:900;padding:5px 10px}.rjex .bar.cl{background:#f0d3a0;color:#1a1a18}.rjex .bar.pe{background:color-mix(in srgb,#a9d8e6 30%,#1a1917);color:#a9d8e6}.rjex .bar.no{color:var(--sub);font-weight:700}.rjex .bar.ms{background:color-mix(in srgb,#c98a3a 30%,#1a1917);color:#e8b46a}
+.rjex .bd{display:block;padding:8px 10px}.rjex b em{font-style:normal;font-size:12px;color:var(--sub);margin-right:5px}.rjex .g,.rjmb .rjg{display:flex;gap:4px;margin-top:6px}.rjex .g i,.rjmb .rjg i{width:44px;height:44px;border-radius:7px;background:#fff;overflow:hidden}.rjex .g i img,.rjmb .rjg i img{width:100%;height:100%;object-fit:contain}.rjex.cl{border-color:#f0d3a0}.rjex.pe{border-color:#5d8b98}
+.rjwhen,.rjkind{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.rjwhen button,.rjwhen label,.rjkind button{border:1px solid var(--line);border-radius:10px;background:var(--dark-3,#242321);color:#cfc7b8;font:inherit;font-size:13.5px;font-weight:800;padding:9px 12px}.rjwhen .on{border-color:var(--gold);background:var(--gold-dim);color:var(--gold)}.rjwhen input{background:none;border:0;color:inherit;font:inherit}.rjkind button{flex:1}.rjkind .on.cl{background:#f0d3a0;border-color:#f0d3a0;color:#1a1a18}.rjkind .on.pe{background:color-mix(in srgb,#a9d8e6 25%,transparent);border-color:#a9d8e6;color:#a9d8e6}
+.rjmiss{border-color:#c98a3a !important;background:color-mix(in srgb,#c98a3a 12%,#1a1917) !important}.rjmiss .lbl{color:#e8b46a}.rjmiss .lbl small{color:#b9b1a3;font-weight:600}.rjmb{padding:4px 2px}.rjmb b{display:block;font-size:16px}.rjmb .rjbt{display:flex;gap:6px;margin-top:10px}.rjmb .rjbt .btn{flex:1}
+
+.fxd{display:flex;align-items:center;gap:8px;border:1px solid #5a4a2c;background:var(--gold-dim);border-radius:12px;padding:8px 10px;margin-bottom:10px}.fxd span{flex:1;text-align:center}.fxd b{display:block;font-size:16px}.fxd small{font-size:12px;color:#b9b1a3}.fxd button{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#26241f;color:var(--cream);font-size:16px}.fxd button:disabled{opacity:.3}
+.fxadd{flex:none;border:1px solid var(--gold-2) !important;color:var(--gold) !important;background:var(--gold-dim) !important}
 </style>
 
 </head>
@@ -3632,7 +3642,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '582';
+const BUILD = '583';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -3967,6 +3977,9 @@ async function boot(){
 
   D.today = {}; asg.forEach(a => { if(a.on_date === TODAY) D.today[a.member_id] = { rid:a.routine_id, kind:a.kind, by:a.assigned_by }; });
   D.next = {}; asg.forEach(a => { if(a.on_date === NEXT_LESSON) D.next[a.member_id] = { rid:a.routine_id, kind:'수업', by:a.assigned_by }; });
+  /* 날짜 지정 하나로 (2026-11-11 대표 「루틴 주기 · 지정 통일 · 날짜로만」) — 앞날 「수업」 지정은 다음 수업으로 · 지난 날 안 한 것은 「진행 안 된 지정 루틴」 */
+  D.asgAll = asg.filter(a => /^\d{4}-\d{2}-\d{2}$/.test(String(a.on_date || '')) && !String(a.on_date).startsWith('9999')).map(a => ({ mid:a.member_id, on:a.on_date, rid:a.routine_id, kind:a.kind || '개인운동', by:a.assigned_by }));
+  D.asgAll.filter(a => a.kind === '수업' && a.on > TODAY).sort((x, y) => x.on < y.on ? -1 : 1).forEach(a => { if(!D.next[a.mid]) D.next[a.mid] = { rid:a.rid, kind:'수업', by:a.by, on:a.on }; });
   /* 다음 개인운동 추천 — 먼저 추천된 것이 위 */
   D.reco = {};
   asg.filter(a=>isReco(a.on_date)).sort((a,b)=> a.on_date < b.on_date ? 1 : -1).forEach(a=>{
@@ -7439,11 +7452,54 @@ const 검색맞음 = (e, q) => { const k = s => String(s || '').replace(/\s/g, '
 /* 홈 — 트레이너가 지정한 것 (2026-11-05 19:38 대표) · 지정 루틴은 묶음과 따로(「개인운동 나올 때 미리 지정한 운동이 뜨는 거니까 합치면 안 돼」) 「트레이너가 지정한 개인운동 / 지정 루틴 하러가기」
    · 유산소 · 근력 = 「수업 후 마무리 운동」 묶음 「유산소 20분」 · 「마무리 근력운동」 · 큰 글씨 = 무엇을 · 얼마나 / 작은 줄 = 누가 지정 · 종목 이름 · 속도는 누른 뒤 운동 화면 */
 const 지정한이 = by => (by && by !== '트레이너' ? by + ' 트레이너가 지정' : '트레이너가 지정');
+const 날뒤 = (d, n) => { const t = new Date(d + 'T12:00:00'); t.setDate(t.getDate() + n); return t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0'); };
+const 짧은날 = d => { const t = new Date(String(d) + 'T12:00:00'); return isNaN(t) ? String(d || '') : (t.getMonth() + 1) + '/' + t.getDate() + ' (' + '일월화수목금토'[t.getDay()] + ')'; };
+const 지정했나A = a => (D.workouts || []).some(w => w.mid === a.mid && w.rid != null && String(w.rid) === String(a.rid) && w.done && String(w.date) >= String(a.on));
+const 밀린지정 = (mid, 개만) => (D.asgAll || []).filter(a => a.mid === mid && a.on < TODAY && a.on >= 날뒤(TODAY, -30) && (!개만 || a.kind !== '수업') && rOf(a.rid) && !지정했나A(a)).sort((x, y) => x.on < y.on ? -1 : 1);
+const 운동이름A = r => r ? (r.sheet ? '운동 ' : '루틴 ') + r.no + ' ' + r.n : '';
+/* ══ 루틴 주기 창 (트레이너) ══ 루틴표 → 운동 → 언제(날짜 · 수업/개인운동) — 데스크와 같은 세 걸음 (2026-11-11 대표 「주기 · 지정 하나로 · 세부 입력 없이」) */
+function 루틴주기창(mid, 미리){ S.rj = Object.assign({ mid, 단계:1, sid:'', rid:'', 날:TODAY, 종류:'개인운동', 고침:'' }, 미리 || {}); openSheet(루틴주기그림); }
+function 루틴주기그림(){ const o = S.rj; if(!o) return ''; const m = MEMBERS.find(x => x.id === o.mid) || { n:'' }, 받 = new Set((D.gives || []).filter(g => g.member_id === o.mid).map(g => g.sheet_id));
+  const 걸 = `<div class="rjst">${[['① 루틴표', 1], ['② 운동', 2], ['③ 언제', 3]].map(([t, n]) => `<button class="${o.단계 === n ? 'on' : o.단계 > n ? 'ok' : ''}" ${o.단계 > n ? `data-act="rjback:${n}"` : 'disabled'}>${t}${o.단계 > n ? ' ✓' : ''}</button>`).join('')}</div>`;
+  const 그림 = r => (r.items || []).slice(0, 4).map(it => { const u = 종목그림주소(exOf(it.ex)); return `<i>${u ? `<img src="${u}" alt="">` : ''}</i>`; }).join('');
+  if(o.단계 === 1){ const 표 = (D.sheets || []).filter(x => !x.hidden && x.kind !== '스트레칭' && 표루틴(x.id).length), 받목 = 표.filter(x => 받.has(x.id)), 센 = 표.filter(x => !받.has(x.id));
+    const 줄 = x => `<button class="rjsh" data-act="rj1:${x.id}">${표지칸(x, 'rjcv')}<span><b>${esc(x.title || '루틴표')}</b><small>운동 ${표루틴(x.id).length}개${받.has(x.id) ? ' · 받은 루틴표' : x.owner ? ' · ' + esc(x.owner) : ''}</small></span><i>›</i></button>`;
+    return `<div class="h2">${esc(m.n)} · 루틴 주기 <small>루틴표 → 운동 → 날짜</small></div>${걸}
+      ${받목.length ? `<span class="lbl">받은 루틴표</span>${받목.map(줄).join('')}` : ''}<span class="lbl">센터 루틴표</span>${센.length ? 센.map(줄).join('') : '<div class="note">보낼 루틴표가 없어요 · 데스크 「루틴표 · 스트레칭」에서 만들어 주세요</div>'}
+      <button class="btn ghost" data-act="close">닫기</button>`; }
+  if(o.단계 === 2){ const x = (D.sheets || []).find(z => z.id === o.sid); if(!x){ o.단계 = 1; return 루틴주기그림(); }
+    return `<div class="h2">${esc(x.title || '')} <small>운동을 누르면 날짜를 정해요</small></div>${걸}
+      ${표루틴(x.id).map(r => { const a = (D.asgAll || []).find(z => z.mid === o.mid && String(z.rid) === String(r.id) && (z.on >= TODAY || !지정했나A(z))), 못 = a && a.on < TODAY;
+        return `<button class="rjex${a ? (a.kind === '수업' ? ' cl' : ' pe') : ''}" data-act="rj2:${r.id}">${a ? `<span class="bar ${a.kind === '수업' ? 'cl' : 'pe'}${못 ? ' ms' : ''}">📅 ${짧은날(a.on)} ${esc(a.kind)}${못 ? ' · 못함' : '으로 지정'}</span>` : '<span class="bar no">지정 안 함</span>'}<span class="bd"><b><em>운동 ${r.no}</em>${esc(r.n)}</b><span class="g">${그림(r)}</span></span></button>`; }).join('')}
+      ${받.has(x.id) ? '' : `<button class="btn sub" data-act="rjgive">날짜 없이 루틴표만 주기</button>`}<button class="btn ghost" data-act="close">닫기</button>`; }
+  const r = rOf(o.rid); if(!r){ o.단계 = 2; return 루틴주기그림(); }
+  const 날들 = [[TODAY, '오늘'], [날뒤(TODAY, 1), '내일'], [날뒤(TODAY, 2), '모레']];
+  return `<div class="h2">${esc(운동이름A(r))} <small>언제 할까요 · 그날 회원 앱 맨 위에 떠요</small></div>${걸}
+    <span class="lbl">날짜</span><div class="rjwhen">${날들.map(([d, t]) => `<button class="${o.날 === d ? 'on' : ''}" data-act="rjday:${d}">${t} ${짧은날(d)}</button>`).join('')}<label class="${날들.some(z => z[0] === o.날) ? '' : 'on'}">📅 <input type="date" id="rjdate" min="${TODAY}" value="${esc(o.날)}"></label></div>
+    <span class="lbl">무엇으로</span><div class="rjkind">${['수업', '개인운동'].map(k => `<button class="${o.종류 === k ? 'on ' + (k === '수업' ? 'cl' : 'pe') : ''}" data-act="rjkind:${k}">${k}</button>`).join('')}</div>
+    <button class="btn main" data-act="rjsave">지정 — ${짧은날(o.날)} ${esc(o.종류)} · ${esc(운동이름A(r))}</button>
+    ${o.고침 ? `<button class="btn ghost" data-act="rjoff">${짧은날(o.고침)} 지정 풀기</button>` : ''}<button class="btn ghost" data-act="close">닫기</button>`; }
+document.addEventListener('change', ev => { const t = ev.target; if(t && t.id === 'rjdate' && S.rj && t.value){ S.rj.날 = t.value; drawSheet(); } });
+async function 루틴주기저장A(){ const o = S.rj; if(!o) return; const r = rOf(o.rid), m = MEMBERS.find(x => x.id === o.mid) || { n:'' }; if(!r) return;
+  if(!o.날 || o.날 < TODAY) return toast('오늘이나 앞날만 지정할 수 있어요');
+  const sid = r.sheet, 줄안 = sid && !(D.gives || []).some(g => g.member_id === o.mid && g.sheet_id === sid);
+  확인창(`${m.n} 회원 ${짧은날(o.날)} ${o.종류}으로\n「${운동이름A(r)}」 지정할까요?` + (줄안 ? `\n루틴표도 같이 줘요` : ''), '지정', async () => {
+    if(줄안){ const 메 = (D.gives || []).filter(g => g.member_id === o.mid).sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')))[0];
+      const 줄 = { member_id:o.mid, sheet_id:sid, mode:'', days:{}, seq:[], by:TRAINER, at: 메 && 메.at ? new Date(new Date(메.at).getTime() - 1000).toISOString() : new Date().toISOString() };      /* 지정하며 준 루틴표는 메인을 안 바꿈 */
+      await sv(spost('sheet_gives', [줄], { on:'member_id,sheet_id' }), '루틴표 주기'); D.gives = (D.gives || []).filter(g => !(g.member_id === o.mid && g.sheet_id === sid)).concat([줄]); }
+    if(o.고침 && o.고침 !== o.날){ await sv(sdel('assignments', 'member_id=eq.' + o.mid + '&on_date=eq.' + o.고침), '지정 옮김'); D.asgAll = (D.asgAll || []).filter(a => !(a.mid === o.mid && a.on === o.고침)); }
+    await sv(spost('assignments', [{ member_id:o.mid, on_date:o.날, routine_id:r.id, kind:o.종류, assigned_by:'트레이너' }], { on:'member_id,on_date' }), '지정 저장');
+    D.asgAll = (D.asgAll || []).filter(a => !(a.mid === o.mid && a.on === o.날)).concat([{ mid:o.mid, on:o.날, rid:r.id, kind:o.종류, by:'트레이너' }]);
+    if(o.날 === TODAY) D.today[o.mid] = { rid:r.id, kind:o.종류, by:'트레이너' };
+    if(o.종류 === '수업' && o.날 > TODAY && (!D.next[o.mid] || !D.next[o.mid].on || o.날 <= D.next[o.mid].on)) D.next[o.mid] = { rid:r.id, kind:'수업', by:'트레이너', on:o.날 };
+    S.rj = null; closeSheet(); toast(`${짧은날(o.날)} ${o.종류}으로 지정했어요`); render(); }); }
 function 지정묶음(mid, t, r){ const 수 = t && t.kind === '수업';      /* 수업 = 금색 · 개인운동 = 청록 — 바로 알게 (2026-11-05 19:41 대표 「지정한 [수업루틴] 색 변화 혹은 강조」) */
   const 누구 = t && t.by && t.by !== '트레이너' ? t.by : '';
   const 준 = r && r.prep && (D.psets || []).some(x => x.id === r.prep && x.items.length);      /* 지정 루틴에 준비운동이 묶였으면 한 줄로 — 준비운동부터 (2026-11-10) */
   const 루 = 준 ? `<button class="zbtn zmh1 zone" data-act="prepfirst:${r.id}"><span class="e">🧘</span><span>준비운동 → 지정 루틴 <i class="znew">NEW</i><small>준비운동이 끝나면 바로 지정 루틴으로</small></span><span class="go">›</span></button>`
-    : r ? `<button class="zbtn zmh1 zone" data-act="rt:${r.id}"><span class="e">📋</span><span>지정 루틴 하러가기 <i class="znew">NEW</i></span><span class="go">›</span></button>` : '';
+    : r ? `<button class="zbtn zmh1 zone" data-act="rt:${r.id}"><span class="e">📋</span><span>오늘 지정 루틴 · ${esc(운동이름A(r))} <i class="znew">NEW</i></span><span class="go">이대로 시작 ›</span></button>` : '';
+  const 밀 = !r && 밀린지정(mid, S.who !== 'tr')[0], 밀r = 밀 && rOf(밀.rid);      /* 지정 없는 날 — 지난 날 안 한 지정 (11/11 대표 「진행 안 된 지정 루틴이 남아 있어요 · 이대로 시작」) */
+  if(밀r) return `<div class="zmh zone rjmiss"><span class="lbl">진행 안 된 지정 루틴이 남아 있어요 <small>${짧은날(밀.on)} · ${esc(밀.kind)}</small></span><div class="rjmb"><b>${esc(운동이름A(밀r))}</b><span class="rjg">${(밀r.items || []).slice(0, 4).map(it => { const u = 종목그림주소(exOf(it.ex)); return `<i>${u ? `<img src="${u}" alt="">` : ''}</i>`; }).join('')}</span><div class="rjbt"><button class="btn main sm" data-act="rt:${밀r.id}">이대로 시작</button><button class="btn ghost sm" data-act="go:start">다른 운동</button></div></div></div>` + 팁카드(mid);
   const 위 = 루 ? `<div class="zmh zone"><span class="lbl">트레이너가 지정한 운동${누구 ? ` <small>${esc(누구)} 트레이너</small>` : ''}</span>${루}</div>` : '';
   return 위 + 팁카드(mid); }
 function 팁카드(mid){ const 오늘 = 오늘날(), 나 = (D.rtips || []).filter(t => t.member_id === mid && t.on_date === 오늘 && !t.done_at);      /* 회원 홈 — 유산소 하기 · 나머지 웨이트 하기 (2026-11-03) */
@@ -9006,6 +9062,12 @@ const 피문장 = t => String(t || '').split(/\n+|(?<=[.!?~…])\s+/).map(x => x
 const 피칠 = (t, q) => { const s = esc(t); if(!q) return s; const k = esc(q).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); return s.replace(new RegExp(k, 'gi'), m => '<mark>' + m + '</mark>'); };
 const 피부위 = o => (exOf(o.ex) || {}).p || '기타';
 function 피드백몸(){ const F = S.fx, tr = S.who === 'tr', mid = tr ? subj() : S.mid, q = (F.q || '').trim(), 새 = S.fx새 || new Set();
+  if(tr && F.보기 === '지난'){ const ws = D.workouts.filter(w => w.mid === mid && w.done && w.items.some(i => i.sets.length)).sort((a, b) => a.date < b.date ? 1 : -1);      /* 지난 수업 (2026-11-11 대표 「앱 · 데스크 맞춰 피드백 톡 · 종목별 · 지난 수업별로 기록」) */
+    if(!ws.length) return { tabs:'', body:'<div class="fe">아직 마친 수업 · 개인운동 기록이 없어요<br>기록을 마치면 여기서 종목마다 피드백을 남겨요</div>' };
+    const n = Math.min(Math.max(0, +S.fxDay || 0), ws.length - 1), w = ws[n], 피 = (D.cm || []).filter(c => c.mid === mid);
+    return { tabs:'', body:`<div class="fxd"><button data-act="fxday:${n + 1}" ${n + 1 >= ws.length ? 'disabled' : ''}>‹</button><span><b>${dateTxt(w.date)}</b><small>${esc(w.kind || '')} · 종목 ${w.items.filter(i => i.sets.length).length}</small></span><button data-act="fxday:${n - 1}" ${n <= 0 ? 'disabled' : ''}>›</button></div>`
+      + w.items.filter(i => i.sets.length && !isMemo(i.ex)).map(i => { const e = exOf(i.ex) || {}, 그 = 피.filter(c => c.ex === i.ex && (!c.wid || c.wid === w.id)).slice(-1)[0];
+        return `<div class="fx-card"><div class="fx-hd"><span class="pic">${카드그림(e)}</span><span class="mt"><b>${esc(exName(i.ex, i.va))}</b><small>${i.sets.map(x => (x.kg != null ? x.kg + '×' : '') + (x.reps || '')).join(' · ')}</small>${그 ? `<small style="color:#e6dfd3">「${esc(String(그.tx || '').slice(0, 40))}」</small>` : ''}</span><button class="btn sm fxadd" data-act="fxp:${esc(i.ex + '|' + (i.va || 'a') + '|' + w.id)}">＋ 피드백</button></div></div>`; }).join('') }; }
   const 모두 = 대화줄들(mid).filter(o => o.ex !== 'memo').map(o => Object.assign(o, { tx: o.k === 't' ? (o.c.tx || '') : (o.a.note || '') }));
   const 맞 = o => !q || 정규(exName(o.ex, o.va)).includes(정규(q)) || 정규(o.tx).includes(정규(q));
   const 걸 = 모두.filter(맞), 탭들 = ['전체'].concat(PARTS.filter(p => 걸.some(o => 피부위(o) === p))).concat(걸.some(o => !PARTS.includes(피부위(o))) ? ['기타'] : []), 탭 = 탭들.includes(F.탭) ? F.탭 : '전체';
@@ -9037,7 +9099,7 @@ function vFeedback(){
   setTimeout(() => { const el = document.getElementById('main'); if(!el) return; el.classList.toggle('tkbg', !!m.톡); if(m.톡 && !S.fbKeep) el.scrollTop = el.scrollHeight; S.fbKeep = false; }, 0);      /* 톡 = 카톡처럼 최근 말이 아래 */
   return { top: bar('피드백', `<span class="sub">${tr ? esc(subjName()) + ' · ' : ''}${cms.length}개</span>`, tr ? 'tm:' + mid : null), tabs: tr ? 0 : 1, keepScroll: !!S.fbKeep,
     foot: tr ? (F.보기 === '톡' ? '<button class="tk-inp" data-act="fxw"><span>💬 피드백 남기기…</span><b>↑</b></button>' : '') : `<button class="btn blue go" data-act="askpick">피드백 요청하기</button>`,
-    body: `<div class="fx-stick"><div class="fx-r1"><div class="fx-seg"><button class="${F.보기 === '톡' ? '' : 'on'}" data-act="fxv:종목"><i>▦</i>종목별</button><button class="${F.보기 === '톡' ? 'on' : ''}" data-act="fxv:톡"><i>💬</i>톡</button></div><input class="fx-q" type="search" data-k="fxq" placeholder="🔍 종목 · 내용 검색" value="${esc(F.q || '')}" autocomplete="off"></div><div class="fx-tabs" id="fxtabs">${m.tabs}</div></div><div id="fxbody">${m.body}</div>` };
+    body: `<div class="fx-stick"><div class="fx-r1"><div class="fx-seg">${tr ? `<button class="${F.보기 === '지난' ? 'on' : ''}" data-act="fxv:지난"><i>🗓</i>지난 수업</button>` : ''}<button class="${F.보기 === '톡' || F.보기 === '지난' ? '' : 'on'}" data-act="fxv:종목"><i>▦</i>종목별</button><button class="${F.보기 === '톡' ? 'on' : ''}" data-act="fxv:톡"><i>💬</i>톡</button></div><input class="fx-q" type="search" data-k="fxq" placeholder="🔍 종목 · 내용 검색" value="${esc(F.q || '')}" autocomplete="off"></div><div class="fx-tabs" id="fxtabs">${m.tabs}</div></div><div id="fxbody">${m.body}</div>` };
 }
 document.addEventListener('input', ev => { const t = ev.target; if(!t || !t.dataset || t.dataset.k !== 'fxq' || !S.fx) return; S.fx.q = t.value; S.fx.열 = {};      /* 칸은 그대로 · 탭 · 목록만 갈아 끼움 */
   const m = 피드백몸(), a = document.getElementById('fxtabs'), b = document.getElementById('fxbody'); if(a) a.innerHTML = m.tabs; if(b) b.innerHTML = m.body;
@@ -13373,7 +13435,8 @@ const 예약종류 = x => ({ PT:'PT', 서비스:'서비스', 가이드:'운동�
 function 지정두줄(mid){ const 예 = 수업예약(mid), 개 = 개인지정(mid), 루 = x => x && rOf(x.rid) ? `루틴 ${rOf(x.rid).no} ${esc(rOf(x.rid).n)}` : '';
   if(!루(예) && !루(개)) return '지정한 루틴이 아직 없어요';
   return [루(예) ? `<span class="asgl su">다음 수업</span>${루(예)}` : '', 루(개) ? `<span class="asgl pe">개인운동</span>${루(개)}` : ''].filter(Boolean).join('<br>'); }
-function 지정갈래창(rid){ const r = rOf(rid); if(!r) return; const 예 = 수업예약(r.mid), 개 = 개인지정(r.mid), 예됨 = !!(예 && 예.rid === r.id), 개됨 = !!(개 && 개.rid === r.id);
+function 지정갈래창(rid){ const r = rOf(rid); if(!r) return; const 지 = (D.asgAll || []).find(a => a.mid === r.mid && String(a.rid) === String(r.id) && a.on >= TODAY);
+  return 루틴주기창(r.mid || S.tmid, { 단계:3, sid:r.sheet || '', rid:r.id, 날: 지 ? 지.on : TODAY, 종류: 지 ? 지.kind : '개인운동', 고침: 지 ? 지.on : '' });      /* 루틴 주기 창 하나로 (11/11) — 아래 옛 창은 안 씀 */ const 예 = 수업예약(r.mid), 개 = 개인지정(r.mid), 예됨 = !!(예 && 예.rid === r.id), 개됨 = !!(개 && 개.rid === r.id);
   openSheet(() => `<div class="h2">루틴 ${r.no} · ${esc(r.n)} <small>어떻게 지정할까요</small></div>
     <button class="asgbig su${예됨 ? ' on' : ''}" data-act="assigno:${r.id}:수업:${예됨 ? 'off' : 'on'}"><b>${예됨 ? '✓ 다음 수업 지정됨' : '다음 수업 지정'}</b><small>${예됨 ? '누르면 풀려요' : '수업 시작 창 맨 위 · 다음 수업까지 남아요'}${!예됨 && 예 && rOf(예.rid) ? ' · 지금 루틴 ' + rOf(예.rid).no + ' 대신' : ''}</small></button>
     <button class="asgbig pe${개됨 ? ' on' : ''}" data-act="assigno:${r.id}:개인운동:${개됨 ? 'off' : 'on'}"><b>${개됨 ? '✓ 개인운동 지정됨' : '개인운동 지정'}</b><small>${개됨 ? '누르면 풀려요' : '오늘 회원 앱 홈에 떠요'}${!개됨 && 개 && rOf(개.rid) ? ' · 지금 루틴 ' + rOf(개.rid).no + ' 대신' : ''}</small></button>
@@ -13567,7 +13630,7 @@ function tMember(){
           <i><b>${이번주}${목 ? `<u>/${목}</u>` : ''}</b><small>이번 주</small></i></span>
         <div class="tmb">${lv
           ? `<button class="g" data-act="tgo:${m.id}">이어서 기록하기</button><button class="t" data-act="tlive:${m.id}">종목별 피드백</button>`
-          : `<button class="g" data-act="tstartask:${m.id}">수업 시작</button><button class="t tasg2" data-act="tasgmode:${m.id}">루틴 지정<small>개인운동 · 다음 수업</small></button><button class="r" data-act="rmstart:${m.id}">1RM 측정</button>`}</div>
+          : `<button class="g" data-act="tstartask:${m.id}">수업 시작</button><button class="t tasg2" data-act="rjopen:${m.id}">루틴 주기<small>루틴표 → 운동 → 날짜</small></button><button class="r" data-act="rmstart:${m.id}">1RM 측정</button>`}</div>
         <div class="tmf">${lv ? `지금 운동 중 · ${esc(lv.title||'')}` : 지정두줄(m.id)}</div>
       </div>`; })()}
     ${지난기록카드(m, ws)}
@@ -13590,7 +13653,7 @@ function tMember(){
         ['h_user','체형분석 기록', `${Object.keys(checksOf(m.id)).length}개 표시 · ${roundsOf(m.id).length}회차`, 'tposture:'+m.id, '']]
         .map(x=>`<button class="mrow2" data-act="${x[3]}"><span class="mi">${svg(x[0],19)}</span>
           <span class="mt"><b>${x[1]}</b><small>${x[2]}</small></span>${x[4]?`<em class="nb w">${x[4]}</em>`:''}<i>›</i></button>`).join(''); })()}</div>` : ''}
-    <button class="btn sub tmrt" data-act="rtpick:${m.id}">루틴표 지정하기</button>      <!-- 웨이트 / 스트레칭 고르는 창 (2026-11-03 대표) -->
+      <!-- 웨이트 / 스트레칭 고르는 창 (2026-11-03 대표) -->
     ${(n => `<button class="card rowc" data-act="tfbchat:${m.id}"><div><div class="nm">피드백 대화</div><div class="sm">${n ? n + '개 · 카톡처럼 날짜 순서로' : '아직 나눈 피드백이 없어요'}</div></div><span class="rt">›</span></button>`)(대화줄들(m.id).length)}
 ` };      /* 「모두 보기」 창 대신 지난 기록 「더 보기」 (2026-11-03) */
 }
@@ -15343,7 +15406,8 @@ document.addEventListener('click', async ev=>{
       return; }
     case 'memoadd': sheetMemoAdd(); return;
     case 'plall': 오늘루틴창(); return;
-    case 'fxv': S.fx = S.fx || { 보기:'종목', 탭:'전체', 열:{}, q:'' }; S.fx.보기 = rest[0] === '톡' ? '톡' : '종목'; S.fbKeep = false; render(); return;      /* 피드백 [종목별 | 톡] (2026-11-07) */
+    case 'fxday': S.fxDay = Math.max(0, +rest[0] || 0); S.fbKeep = false; render(); return;
+    case 'fxv': S.fx = S.fx || { 보기:'종목', 탭:'전체', 열:{}, q:'' }; S.fx.보기 = rest[0] === '톡' ? '톡' : rest[0] === '지난' ? '지난' : '종목'; S.fbKeep = false; render(); return;      /* 피드백 [종목별 | 톡] (2026-11-07) */
     case 'fxt': if(S.fx){ S.fx.탭 = rest.join(':'); S.fbKeep = true; render(); } return;
     case 'fxo': if(S.fx){ S.fx.열[rest.slice(1).join(':')] = rest[0] !== '1'; S.fbKeep = true; render(); } return;
     case 'fxw': 피종목창(); return;
@@ -16176,6 +16240,15 @@ document.addEventListener('click', async ev=>{
       setGrp(rid, g); toast(g?`「${g}」 그룹으로`:'그룹에서 삭제했어요'); render(); return; }
     case 'assign': sheetAssign(rest[0], rest[1]); return;
     case 'asgpick': 지정갈래창(rest[0]); return;
+    case 'rjopen': 루틴주기창(rest[0]); return;      /* 루틴 주기 (11/11) */
+    case 'rj1': if(S.rj){ S.rj.sid = rest[0]; S.rj.단계 = 2; drawSheet(); } return;
+    case 'rj2': if(S.rj){ S.rj.rid = rest[0]; S.rj.단계 = 3; drawSheet(); } return;
+    case 'rjback': if(S.rj){ S.rj.단계 = +rest[0]; drawSheet(); } return;
+    case 'rjday': if(S.rj){ S.rj.날 = rest[0]; drawSheet(); } return;
+    case 'rjkind': if(S.rj){ S.rj.종류 = rest[0]; drawSheet(); } return;
+    case 'rjsave': await 루틴주기저장A(); return;
+    case 'rjgive': if(S.rj){ const o = S.rj; S.rj = null; closeSheet(); 루틴표보내기창(o.mid); } return;
+    case 'rjoff': if(S.rj && S.rj.고침){ const o = S.rj; 확인창(`${짧은날(o.고침)} 지정을 풀까요?\n이미 한 기록은 남아요`, '풀기', async () => { await sv(sdel('assignments', 'member_id=eq.' + o.mid + '&on_date=eq.' + o.고침), '지정 풀기'); D.asgAll = (D.asgAll || []).filter(a => !(a.mid === o.mid && a.on === o.고침)); if(o.고침 === TODAY) delete D.today[o.mid]; if(D.next[o.mid] && D.next[o.mid].on === o.고침) delete D.next[o.mid]; S.rj = null; closeSheet(); toast('지정을 풀었어요'); render(); }); } return;
     case 'assigno': {
       const r=rOf(rest[0]), kind=rest[1], on=(rest[2]==='on');
       closeSheet();
