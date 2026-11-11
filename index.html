@@ -3632,7 +3632,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '580';
+const BUILD = '581';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -6501,7 +6501,9 @@ const 종목순서 = () => { try{ const v = localStorage.getItem('gg_pksort'); r
 const 내별종목 = () => new Set((D.exfavs || []).filter(f => f.trainer === TRAINER).map(f => f.ex_id));
 /* 우리 센터 기구 = 우리가 찍은 기구 사용법 영상(vid/…)이 있는 종목 · 데스크에서 「센터에 있음」 체크한 종목(at_center · 나중)
    (2026-11-11 트레이너 의견 「부위를 누르면 수많은 운동만 떠서 · 센터 기구가 먼저 · 센터 기구만 모아보기」 · 대표 「시안대로」) — 어느 순서로 보든 센터 기구가 먼저 */
-const 센터기구 = e => !!e && (e.at_center === true || (e.vars || []).some(v => 영상시범(v)));
+/* 설명 영상은 아직 없지만 기구 사용법 영상 폴더(원본 촬영)에 있는 센터 기구 — 하이로우 · 백 익스텐션(45° 벤치) (2026-11-11 17:09 대표 「넣어」) */
+const 센터기구더 = new Set(['hir', 'bk21']);
+const 센터기구 = e => !!e && (e.at_center === true || 센터기구더.has(e.id) || (e.vars || []).some(v => 영상시범(v)));
 const 센터딱 = e => 센터기구(e) ? '<span class="ctrtag">센터 기구</span>' : '';
 const 종목차례 = () => { const 바탕 = 종목차례0(); return (a, b) => (센터기구(b) - 센터기구(a)) || 바탕(a, b); };
 const 종목차례0 = () => { const 순 = 종목순서(), 별 = 내별종목(), 이름순 = (a, b) => String(a.n || '').localeCompare(String(b.n || ''), 'ko'), 그림 = e => 그림있음.has(e.id) ? 1 : 0;
