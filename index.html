@@ -3136,6 +3136,9 @@ body.kpon #main{padding-bottom:380px}
 .ctn b{min-width:86px;text-align:center;font-size:24px;font-variant-numeric:tabular-nums}.ctn b small{font-size:13px;color:var(--sub);margin-left:2px}
 .ctcard{background:#231e16;border:1px solid #8a7a5c;border-radius:16px;padding:14px;margin-bottom:12px}.ctcard .k{font-size:13px;color:var(--gold);font-weight:800}.ctcard .v{font-size:19px;font-weight:900;margin:2px 0}.ctcard .s{font-size:13.5px;color:var(--sub);margin-bottom:8px}
 .ctlast{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 10px}.ctlast b{font-size:13.5px}
+
+.ctrtag{display:inline-block;margin-left:5px;font-size:12px;font-weight:800;padding:0 6px;border-radius:6px;background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-2);vertical-align:1px;white-space:nowrap}
+.chip.ctrchip{border-color:var(--gold-2);color:var(--gold)}.chip.ctrchip.on{background:var(--gold);color:#1a1a18}
 </style>
 
 </head>
@@ -3629,7 +3632,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '579';
+const BUILD = '580';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -6496,7 +6499,12 @@ function EQS(){
 const 순서종류 = [['그림', '그림있음'], ['이름', '가나다'], ['기구', '기구별'], ['별', '즐겨찾기']], 기구차례 = ['머신', '덤벨', '밴드', '바벨', '케이블', '스미스', '케틀벨', '맨몸'], 기구번호 = e => { const i = 기구차례.indexOf(e.e || ''); return i < 0 ? 기구차례.length : i; };      /* 종목 고르기 순서 (2026-10-30 대표) */
 const 종목순서 = () => { try{ const v = localStorage.getItem('gg_pksort'); return 순서종류.some(x => x[0] === v) ? v : '그림'; }catch(e){ return '그림'; } };
 const 내별종목 = () => new Set((D.exfavs || []).filter(f => f.trainer === TRAINER).map(f => f.ex_id));
-const 종목차례 = () => { const 순 = 종목순서(), 별 = 내별종목(), 이름순 = (a, b) => String(a.n || '').localeCompare(String(b.n || ''), 'ko'), 그림 = e => 그림있음.has(e.id) ? 1 : 0;
+/* 우리 센터 기구 = 우리가 찍은 기구 사용법 영상(vid/…)이 있는 종목 · 데스크에서 「센터에 있음」 체크한 종목(at_center · 나중)
+   (2026-11-11 트레이너 의견 「부위를 누르면 수많은 운동만 떠서 · 센터 기구가 먼저 · 센터 기구만 모아보기」 · 대표 「시안대로」) — 어느 순서로 보든 센터 기구가 먼저 */
+const 센터기구 = e => !!e && (e.at_center === true || (e.vars || []).some(v => 영상시범(v)));
+const 센터딱 = e => 센터기구(e) ? '<span class="ctrtag">센터 기구</span>' : '';
+const 종목차례 = () => { const 바탕 = 종목차례0(); return (a, b) => (센터기구(b) - 센터기구(a)) || 바탕(a, b); };
+const 종목차례0 = () => { const 순 = 종목순서(), 별 = 내별종목(), 이름순 = (a, b) => String(a.n || '').localeCompare(String(b.n || ''), 'ko'), 그림 = e => 그림있음.has(e.id) ? 1 : 0;
   return 순 === '그림' ? (a, b) => 그림(b) - 그림(a) || 이름순(a, b) : 순 === '기구' ? (a, b) => 기구번호(a) - 기구번호(b) || 이름순(a, b) : 순 === '별' ? (a, b) => 별.has(b.id) - 별.has(a.id) || 이름순(a, b) : 이름순; };
 const 순서줄 = () => `<div class="pkview"><span>순서</span>${순서종류.filter(([k]) => k !== '별' || S.who === 'tr').map(([k, n]) => `<button class="${종목순서() === k ? 'on' : ''}" data-act="pksort:${k}">${n}</button>`).join('')}</div>`;
 const 보기종류 = [['g3', '바둑판'], ['big', '크게'], ['list', '목록']];      /* 종목 선택 보기 (2026-10-28 노션 낮) */
@@ -6515,7 +6523,7 @@ function vPick(){
   const 맨위 = 담은띠(w);
   return { top: bar('종목 선택','', (w&&w.begun)?'go:workout':'go:start'), body:`${맨위}
     <input class="search" type="text" data-k="exq" placeholder="종목 검색 · 예) 스쿼트, bp, 코어">
-    <div class="pkparts">${['전체'].concat(PARTS).map(x=>`<button class="chip ${x===S.pickPart?'on':''}" data-act="part:${x}">${x}</button>`).join('')}${추가운동().length ? `<button class="chip mine ${S.pickPart==='직접 추가'?'on':''}" data-act="part:직접 추가">직접 추가 ${추가운동().length}</button>` : ''}</div>
+    <div class="pkparts"><button class="chip ctrchip ${S.pickPart==='우리 센터'?'on':''}" data-act="part:우리 센터">🏋 우리 센터</button>${['전체'].concat(PARTS).map(x=>`<button class="chip ${x===S.pickPart?'on':''}" data-act="part:${x}">${x}</button>`).join('')}${추가운동().length ? `<button class="chip mine ${S.pickPart==='직접 추가'?'on':''}" data-act="part:직접 추가">직접 추가 ${추가운동().length}</button>` : ''}</div>
     <div class="pkmini" id="pickhint">      ${''/* 차례 = 간편추가 · 새 종목 · 1RM · 기구 · 추가 단추는 파랑 (2026-11-05 대표 시안 ⑦ 「+종목 간편추가 , +새 종목 / 1rm 종목 / 기구-전체 · 추가버튼은 푸른색으로」 · 기타운동 = 간편추가로 합침) */}
       ${S.who==='tr' ? `<button class="b" data-act="pknew">＋ 이름만 추가</button>` : ''}      ${''/* 간편추가 · 새 종목 → 하나 · 부위 · 세부는 수업 끝나고 지난 기록 「종목 만들기」 (2026-11-07 12:22 대표) */}
       <button class="g" data-act="rmaddpick">${svg('h_crown',14)} 1RM 종목</button>
@@ -6531,10 +6539,10 @@ function vPick(){
     <div class="empty" id="pknone" style="display:none;grid-column:1/-1">찾는 종목이 없어요<small class="e2">다른 이름으로 검색하거나 트레이너에게 말해 주세요</small></div>
     ${EX.filter(고를수있나).sort((차례 => S.pickPart === '직접 추가' ? (a, b) => (b.owner === TRAINER) - (a.owner === TRAINER) || 차례(a, b) : 차례)(종목차례())).map(e=>{ const vs=vars(e.id), n=cmOf(S.mid,e.id).length, last=lastSet(e.id), 담 = w ? w.items.slice(처음).filter(it=>it.ex===e.id).length : 0;
       return `<button class="mrow2 ${담?'pson':''}" data-exrow="${esc(exKey(e))}" data-part="${esc(e.p)}"
-        data-eq="${esc(e.e||'')}"${e.owner ? ' data-mine="1"' : ''}
-        style="${((S.pickPart==='전체' || (S.pickPart==='직접 추가' ? !!e.owner : e.p===S.pickPart)) && (S.pickEq==='전체'||e.e===S.pickEq))?'':'display:none'}"
+        data-eq="${esc(e.e||'')}"${e.owner ? ' data-mine="1"' : ''}${센터기구(e) ? ' data-ctr="1"' : ''}
+        style="${((S.pickPart==='전체' || (S.pickPart==='직접 추가' ? !!e.owner : S.pickPart==='우리 센터' ? 센터기구(e) : e.p===S.pickPart)) && (S.pickEq==='전체'||e.e===S.pickEq))?'':'display:none'}"
         data-act="add:${e.id}:${(vars(e.id)[0] || {}).k || 'a'}">${카드그림(e)}${S.who === 'tr' ? `<span class="pkstar ${내별종목().has(e.id) ? 'on' : ''}" data-act="pkfav:${e.id}" aria-label="즐겨찾기">★</span>` : ''}
-        <span class="mt"><b>${esc(e.n)}</b>
+        <span class="mt"><b>${esc(e.n)}</b>${센터딱(e)}
           <small>${esc(e.e)}${last?` · 지난번 ${setTxt(e.id,last)}`:''}${n?` · 피드백 ${n}`:''}${vs.length>1?` · <u>하는 법 ${vs.length}가지</u>`:''}</small></span>
         <em class="pkadd">${담 ? '✓' + (담>1 ? 담 : '') : '＋'}</em></button>`; }).join('')}
     </div>`,
@@ -13966,11 +13974,11 @@ function sheetRecentPick(mid){
 /* ── 루틴에 담을 종목 고르기 ── */
 function tPickEx(){
   const r=rOf(S.redit); if(!r) return tRoutines();
-  const list = EX.filter(e=>(S.pickPart==='전체' || e.p===S.pickPart) && 고를수있나(e)).sort(종목차례());
+  const list = EX.filter(e=>(S.pickPart==='전체' || (S.pickPart==='우리 센터' ? 센터기구(e) : e.p===S.pickPart)) && 고를수있나(e)).sort(종목차례());
   const cnt = k => r.items.filter(it=>VID(it.ex,it.va)===k).length;
   return { top: bar('종목 추가', `<span class="sub">추가한 ${r.items.length}개</span>`, 're:'+r.id), keepScroll:true, body:`
     <input class="search" type="text" data-filter="1" placeholder="종목 이름으로 검색">
-    <div class="pkparts">${['전체'].concat(PARTS).map(x=>`<button class="chip ${x===S.pickPart?'on':''}" data-act="rpart:${x}">${x}</button>`).join('')}</div>${순서줄()}
+    <div class="pkparts"><button class="chip ctrchip ${S.pickPart==='우리 센터'?'on':''}" data-act="rpart:우리 센터">🏋 우리 센터</button>${['전체'].concat(PARTS).map(x=>`<button class="chip ${x===S.pickPart?'on':''}" data-act="rpart:${x}">${x}</button>`).join('')}</div>${순서줄()}
     <div class="pkmini"><button class="g" data-act="exnew">${svg('h_dumb',15)} ＋ 새 종목</button></div>
     <div class="megrp pkg">${list.map(e=>vars(e.id).map(v=>{ const k=VID(e.id,v.k), n=cnt(k), just=(S.just===k);
       return `<button class="mrow2 ${n?'pson':''} ${just?'pkjust':''}" data-nm="${esc(e.n+' '+(v.n||''))}" data-act="raddv:${r.id}:${e.id}:${v.k}">${카드그림(e)}
@@ -14040,7 +14048,7 @@ function 칠하기(){
     const 맞음 = q
       ? (찾음(el.getAttribute('data-exrow'), q) && 기구맞음)
       : S.exqOn ? false      /* 검색칸에 들어가면 샘플(전체) 종목은 숨기고 친 것만 (2026-11-05 22:01 대표) */
-      : ((S.pickPart==='전체' || (S.pickPart==='직접 추가' ? el.getAttribute('data-mine')==='1' : el.getAttribute('data-part')===S.pickPart)) && 기구맞음);
+      : ((S.pickPart==='전체' || (S.pickPart==='직접 추가' ? el.getAttribute('data-mine')==='1' : S.pickPart==='우리 센터' ? el.getAttribute('data-ctr')==='1' : el.getAttribute('data-part')===S.pickPart)) && 기구맞음);
     el.style.display = 맞음 ? '' : 'none';
     if(맞음) 보임++;
   });
