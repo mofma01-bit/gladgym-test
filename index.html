@@ -242,7 +242,7 @@ button{font:inherit;color:inherit;background:none;border:none;padding:0;cursor:p
 .frow2{display:flex;align-items:baseline;gap:9px;padding:9px 14px;border-top:1px solid #f0e8db;width:100%;text-align:left}
 .frow2 .fn2{flex:1;min-width:0;font-size:13.5px;font-weight:600;color:#2b231c}
 .frow2 .fq{font-size:11.5px;font-weight:600;color:#a0917f;flex:none}
-.frow2 .fk{font-size:13px;font-weight:800;color:#8a5a2b;flex:none;font-variant-numeric:tabular-nums}
+.frow2 .fk{font-size:13px;font-weight:800;color:#8a5a2b;flex:none;font-variant-numeric:tabular-nums}.frow2 .fk i{font-style:normal;font-size:13px;font-weight:600;opacity:.8}.ai-n{margin:8px 0 6px;padding:10px 14px;border-radius:12px;background:#3a2f10;border:1px solid #f2c94c;color:#ffd866;font-size:14px;font-weight:700;line-height:1.45}.ai-n small{display:block;margin-top:3px;font-size:13px;font-weight:500;color:#f3e2a8}.frow2.ai-r{align-items:center}.ai-r .ai-nm{display:flex;align-items:center;gap:9px;flex:1;min-width:0;text-align:left;background:none;border:0;padding:0;color:inherit;font:inherit;cursor:pointer}.ai-r .fn2 small{display:block;font-size:13px;font-weight:500;color:#9a8b78;margin-top:2px}.ai-r .btn{flex:none;margin-left:4px}
 /* ── 사진 위 음식 표시 ── 인스타 태그처럼 */
 .tagwrap{position:relative;display:block;flex:none;line-height:0;border-radius:14px;overflow:hidden}
 .tagwrap .tagph{width:100%;display:block;border-radius:14px}
@@ -3678,7 +3678,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '587';
+const BUILD = '588';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -9363,7 +9363,7 @@ function 태그판(m, 다는중){
     ${것.map(v=>`<b class="ftag ${v.p.x>56?'lft':''}" style="left:${v.p.x}%;top:${v.ly}%"
         ${다는중?`data-act="fdel:${m.id}:${v.x.id}"`:''}>${음식그림(v.x.name)} ${esc(v.x.name)}
       <em>${Math.round(v.x.kcal)}</em></b>`).join('')}
-    ${다는중 && !것.length ? `<span class="taghint">사진 속 음식을 눌러 주세요</span>` : ''}
+    ${다는중 && !것.length && !(m.items || []).some(x => x.ai) && m.ai !== '중' ? `<span class="taghint">사진 속 음식을 눌러 주세요</span>` : ''}
   </div>`;
 }
 /* 표시 안 하고 그냥 담긴 것 (사진 없이 검색으로 담은 것 포함) */
@@ -9408,14 +9408,10 @@ function sheetTagPhoto(mealId){
       ${미리?`<span class="lbl">어느 끼니인가요?</span><div class="nd-slot">${SLOTS.map(x=>`<button class="${S.shotSlot===x?'on':''}" data-act="slot:${x}">${x}</button>`).join('')}</div><div class="nd-hint">지금 시간 끼니로 해 뒀어요 · 다르면 다른 끼니를 눌러 주세요</div>`:''}
       ${태그판(m, 1)}
 
-      ${밖.length?`<span class="lbl">검색해서 추가한 음식</span>
-        ${밖.map(x=>`<button class="frow2" data-act="fdel:${m.id}:${x.id}">
-          <span class="fe">${음식그림(x.name)}</span>
-          <span class="fn2">${esc(x.name)}</span>
-          <span class="fk">${Math.round(x.kcal)}</span></button>`).join('')}`:''}
+      ${담은줄(m, 밖)}
       ${t.kcal?`<div class="msum"><b>${Math.round(t.kcal)} kcal</b>
         <span>탄 ${Math.round(t.carb)}g · 단 ${Math.round(t.protein)}g · 지 ${Math.round(t.fat)}g</span></div>`:''}
-      <button class="btn sub sm" data-act="fadd:${m.id}">검색해서 음식 추가</button>
+      <button class="btn sub sm" data-act="fadd:${m.id}">${밖.some(x => x.ai) ? '＋ 음식 추가' : '검색해서 음식 추가'}</button>
       ${미리
         ? `<textarea data-k="mmemo" rows="1" style="min-height:0;height:46px;flex:none;resize:none" placeholder="한마디 (안 써도 돼요)">${esc(S.mmemo||'')}</textarea>
            <div class="stickup"><button class="btn ghost" data-act="shotcancel">취소</button><button class="btn main" data-act="shotup">올리기</button></div>`
@@ -10970,6 +10966,61 @@ async function 사진표시(id, 칸, 값){
   await sv(spatch('body_photos','id=eq.'+id, { [열]: 값 || null }), 칸==='hid' ? '사진 숨기기' : '삭제 요청');
 }
 
+/* ══ 사진 → 음식 · 양 자동 입력 ══ 2026-11-13 대표 「사진 찍으면 자동으로 채우고 직접 수정도 가능하게」 · 시안 설계서/시험페이지/사진칼로리_1113
+   서버(중앙 창구)가 사진을 AI 에 보내 { items:[{ name, grams, portion, kcal_100g?, carb_100g?, protein_100g?, fat_100g? }] } 를 돌려준다.
+   칼로리는 AI 가 짓지 않고 음식장(식약처 DB · foodFind)으로 계산한다 — 같은 음식이 매번 다른 칼로리로 나오지 않게.
+   음식장에 없을 때만 AI 가 준 100g 당 값을 쓴다. 약속 = 설계서/사진분석_창구_약속.md
+   주소가 비어 있으면 끔 — 지금처럼 「검색해서 음식 추가」로 담는다 (중앙 창구 · API 키가 생기면 주소만 넣고 올린다) */
+const MEAL_AI = { url: '' };
+function 분석용사진(url){      /* 긴 변 1092px · JPEG 0.8 — 원본 그대로 보내면 토큰(돈)이 최대 4배 */
+  return new Promise((res, rej) => { const img = new Image();
+    img.onload = () => { const sc = Math.min(1, 1092 / Math.max(img.naturalWidth, img.naturalHeight)), cv = document.createElement('canvas');
+      cv.width = Math.round(img.naturalWidth * sc); cv.height = Math.round(img.naturalHeight * sc); cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      res(cv.toDataURL('image/jpeg', 0.8).split(',')[1]); };
+    img.onerror = rej; img.src = url; }); }
+async function AI음식(x){
+  const 이름 = String((x && x.name) || '').trim(), g = Math.max(0, Math.round(Number(x && x.grams) || 0));
+  if(!이름) return null;
+  let f = null;
+  try{ const 후 = await foodFind(이름) || []; f = 후.find(y => y.name === 이름) || 후[0] || null; }catch(e){ console.error(e); }
+  if(!f && Number(x.kcal_100g) > 0) f = { id:null, name:이름, brand:'', unit:'100g', amount:100, kcal:Number(x.kcal_100g), carb:Number(x.carb_100g) || 0, protein:Number(x.protein_100g) || 0, fat:Number(x.fat_100g) || 0 };
+  if(!f) return null;
+  const amt = Number(f.amount) || 0, q = (g && amt) ? Math.round(g / amt * 1000) / 1000 : 1, r1 = v => Math.round((Number(v) || 0) * q * 10) / 10;
+  return { id:'a' + Date.now() + Math.random().toString(36).slice(2, 6), fid:f.id || null, name:f.name, brand:f.brand || '', qty:q, unit:f.unit || '',
+    kcal:r1(f.kcal), carb:r1(f.carb), protein:r1(f.protein), fat:r1(f.fat), ai:{ f, 양:String((x && x.portion) || '').trim(), g:g || Math.round(amt * q) } };
+}
+const AI양글 = x => [x.ai && x.ai.양, x.ai && x.ai.g ? '약 ' + x.ai.g + 'g' : ''].filter(Boolean).join(' · ');
+async function 사진자동입력(){
+  const dm = S.dm; if(!MEAL_AI.url || !dm || dm.id !== 'draft' || !S.shot) return;
+  const 다시 = () => { if(S.dm === dm && document.querySelector('#sheet.open [data-meal="draft"]')) drawSheet(); };
+  dm.ai = '중'; 다시();
+  try{
+    const r = await fetch(MEAL_AI.url, { method:'POST', headers:{ 'Content-Type':'application/json', Authorization:'Bearer ' + 수파열쇠() },
+      body: JSON.stringify({ member_id:S.mid, image: await 분석용사진(S.shot) }) });
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    const j = await r.json(), 담 = [];
+    for(const x of ((j && Array.isArray(j.items)) ? j.items.slice(0, 12) : [])){ const it = await AI음식(x); if(it) 담.push(it); }
+    if(S.dm !== dm) return;      /* 그새 취소했거나 다른 사진 */
+    const n0 = (dm.items || []).length;
+    dm.items = (dm.items || []).concat(담.map((it, i) => Object.assign(it, { pos:n0 + i })));
+    dm.ai = 담.length ? '됨' : '없음';
+  }catch(e){ console.error(e); if(S.dm === dm) dm.ai = '실패'; }
+  다시();
+}
+/* 담은 음식 줄 — AI 가 채운 것은 「양 · 수정」, 검색해서 담은 것은 예전처럼 줄을 눌러 수정 · 삭제 */
+function 담은줄(m, 밖){
+  const AI = 밖.some(x => x.ai);
+  return (m.ai === '중' ? '<div class="empty"><span class="gdots"><i></i><i></i><i></i></span>AI가 음식을 읽는 중이에요</div>' : '')
+    + (m.ai === '실패' || m.ai === '없음' ? '<div class="nd-hint">사진에서 음식을 못 읽었어요 · 아래에서 검색해 추가해 주세요</div>' : '')
+    + (!밖.length ? '' : (AI ? '<div class="ai-n">⚠ AI 자동 입력으로 실제와 다를 수 있어요<small>아래 「수정」으로 음식 양을 맞춰 주세요</small></div>' : '<span class="lbl">검색해서 추가한 음식</span>')
+      + 밖.map(x => x.ai
+        ? `<div class="frow2 ai-r"><button class="ai-nm" data-act="fdel:${m.id}:${x.id}"><span class="fe">${음식그림(x.name)}</span><span class="fn2">${esc(x.name)}<small>${esc(AI양글(x))}</small></span></button><span class="fk">${Math.round(x.kcal)}<i> kcal</i></span><button class="btn sub sm" data-act="aiqty:${m.id}:${x.id}">수정</button></div>`
+        : `<button class="frow2" data-act="fdel:${m.id}:${x.id}">
+          <span class="fe">${음식그림(x.name)}</span>
+          <span class="fn2">${esc(x.name)}</span>
+          <span class="fk">${Math.round(x.kcal)}<i> kcal</i></span></button>`).join(''));
+}
+
 /* 사진 찍기 → 글래드짐 프레임 → 올리기 */
 function shotPick(){
   const inp = document.createElement('input');
@@ -10986,7 +11037,7 @@ function shotPick(){
          아직 서버에 안 올린 상태라 담은 것을 S.dm 에 들고 있다가 마지막에 한꺼번에 쓴다. */
       S.dm = { id:'draft', path:null, items:[] };
       S.tagXY = null; S.shotSlot = null; S.mmemo = '';
-      sheetTagPhoto('draft'); }
+      sheetTagPhoto('draft'); 사진자동입력(); }
     catch(e){ console.error(e); toast('사진을 읽지 못했어요'); }
   });
   inp.click();
@@ -11036,7 +11087,7 @@ function stampPhoto(file){
 
 /* 음식 찾아 담기 */
 function sheetFoodPick(mealId){
-  S.fpMeal = mealId; S.fpQ = S.fpQ || ''; S.fpRes = S.fpRes || null; S.fpPick = null;
+  S.aiEd = null; S.fpMeal = mealId; S.fpQ = S.fpQ || ''; S.fpRes = S.fpRes || null; S.fpPick = null;
   openSheet(()=>{
     const rec = recentFoods(S.mid);
     const res = S.fpRes;
@@ -11065,8 +11116,8 @@ function sheetFoodPick(mealId){
 }
 
 /* 얼마나 먹었는지 */
-function sheetFoodQty(f){
-  S.fpPick = f; S.fpQty = 1; S.fpMode = (S.fpMode==='g' && Number(f.amount)>0) ? 'g' : 'unit';
+function sheetFoodQty(f, q0){
+  S.fpPick = f; S.fpQty = q0 || 1; S.fpMode = (S.fpMode==='g' && Number(f.amount)>0) ? 'g' : 'unit';
   openSheet(()=>{
     const q = S.fpQty, k = f.kcal*q;
     const amt = Number(f.amount)||0;                 /* 1인분이 몇 g인지 */
@@ -11104,8 +11155,9 @@ function sheetFoodQty(f){
         <div class="krow"><span class="k">칼로리</span><span class="v" style="color:var(--gold)">${Math.round(k)} kcal</span></div>
         <div class="krow"><span class="k">탄수 · 단백 · 지방</span><span class="v">${Math.round(f.carb*q)} · ${Math.round(f.protein*q)} · ${Math.round(f.fat*q)} g</span></div>
       </div>
-      <button class="btn main" data-act="fput">이 식사에 추가</button>
-      <button class="btn ghost sm" data-act="fadd:${S.fpMeal}">뒤로</button>`;
+      ${S.aiEd ? `<button class="btn main" data-act="fput">저장</button>
+      <button class="btn ghost sm" data-act="aiback">뒤로</button>` : `<button class="btn main" data-act="fput">이 식사에 추가</button>
+      <button class="btn ghost sm" data-act="fadd:${S.fpMeal}">뒤로</button>`}`;
   });
 }
 
@@ -11164,6 +11216,11 @@ async function putFood(){
   /* 아직 안 올린 사진에 담는 중 — 서버에 쓰지 않고 들고만 있다가 「올리기」에서 한꺼번에 쓴다 */
   if(S.fpMeal === 'draft'){
     S.dm = S.dm || { id:'draft', path:null, items:[] };
+    if(S.aiEd){ const it = (S.dm.items || []).find(x => x.id === S.aiEd); S.aiEd = null;
+      if(it){ const r1 = v => Math.round((Number(v) || 0) * q * 10) / 10;
+        Object.assign(it, { qty:q, kcal:r1(f.kcal), carb:r1(f.carb), protein:r1(f.protein), fat:r1(f.fat) });
+        if(it.ai){ it.ai.양 = ''; it.ai.g = Math.round((Number(f.amount) || 0) * q); } }      /* 「1인분」 글은 고친 양과 안 맞으니 지우고 g 만 */
+      closeSheet(); toast('수정했어요'); sheetTagPhoto('draft'); return; }
     S.dm.items.push({ id:'d'+Date.now()+Math.random().toString(36).slice(2,6), fid:f.id||null,
       name:f.name, brand:f.brand||'', qty:q, unit:f.unit||'',
       kcal:Math.round(f.kcal*q*10)/10, carb:Math.round(f.carb*q*10)/10,
@@ -14624,6 +14681,9 @@ document.addEventListener('click', async ev=>{
       toast('음식장에 추가했어요');
       sheetFoodQty(f); return; }
     case 'fdel': sheetItemEdit(rest[0], rest[1]); return;
+    case 'aiqty': { const it = rest[0] === 'draft' && S.dm && (S.dm.items || []).find(x => String(x.id) === String(rest[1]));
+      if(!it || !it.ai) return; S.aiEd = it.id; S.fpMeal = 'draft'; S.fpMode = Number(it.ai.f.amount) > 0 ? 'g' : 'unit'; sheetFoodQty(it.ai.f, it.qty); return; }      /* AI 음식 양 수정 (11/13) */
+    case 'aiback': S.aiEd = null; sheetTagPhoto('draft'); return;
     case 'fsave': {
       const [mealId, itemId] = rest;
       const m = (mealId==='draft') ? S.dm : (D.meals||[]).find(x=>x.id===mealId); if(!m) return;
