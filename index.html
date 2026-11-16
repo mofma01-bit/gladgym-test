@@ -1882,7 +1882,8 @@ body .prephd .ph1{font-size:21px}
 .prg .prow .kd{flex:none;align-self:flex-start;margin-top:5px;font-size:10.5px;letter-spacing:0;border:1px solid currentColor;border-radius:999px;padding:1px 8px;opacity:.85}
 .tmsum.btn3 b .td안{font-style:normal;font-size:10.5px;font-weight:700;color:var(--teal);margin-left:6px;white-space:nowrap}
 .rtb{flex:1;min-width:0}.rvths{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0 8px}.rvth{aspect-ratio:1;border-radius:9px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center}.rvth img{width:100%;height:100%;object-fit:contain;display:block}.rvth.ph{background:#26241f}.rvth.ph svg{width:60%;height:60%}.rvth.m{background:#26241f;color:var(--gold);font-weight:800;font-size:15px}.rvex{font-size:13.5px;line-height:1.45;margin-bottom:4px;overflow-wrap:anywhere}.rvex1,.mrow2 .mt small.rvex1{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-style:normal;white-space:normal;line-height:1.4;text-overflow:clip}.shc-go .btn{display:flex;flex-direction:column;align-items:flex-start;height:auto;min-height:44px;padding:8px 12px;text-align:left;gap:2px;width:100%}.shc-go .btn small{font-size:13px;font-weight:500;opacity:.85;white-space:normal;line-height:1.35}
-.recnote{font-size:13px;color:var(--mute,#a9a294)}.recday{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px}.recday>span{flex:0 0 100%;font-size:13px;font-weight:700;color:var(--mute,#a9a294)}.recday input{flex:0 1 150px;min-width:0;height:34px;padding:0 8px;font-size:13px}.recband{margin:0 0 10px;padding:8px 12px;border-radius:10px;background:rgba(230,196,135,.12);color:var(--gold);font-size:13px;font-weight:700}
+.recnote{font-size:13px;color:var(--mute,#a9a294)}.recday{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px}.recday>span{flex:0 0 100%;font-size:13px;font-weight:700;color:var(--mute,#a9a294)}.recday input{flex:0 1 150px;min-width:0;height:34px;padding:0 8px;font-size:13px}.recband{position:sticky;top:6px;z-index:6;flex:none;display:flex;align-items:center;gap:9px;margin:0;padding:9px 12px;border-radius:14px;border:1.5px solid var(--gold);background:#2a2216;box-shadow:0 6px 18px rgba(0,0,0,.45);color:#f2ead9;font-size:14px;font-weight:800}.recband i{width:9px;height:9px;border-radius:50%;background:var(--gold);flex:none;animation:recp 1.4s ease-in-out infinite}.recband small{display:block;font-size:13px;color:#d9c9a5;font-weight:600}@keyframes recp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}@media (prefers-reduced-motion:reduce){.recband i{animation:none}}
+.ssday.fix{border:1.5px solid var(--gold);background:#2a2216}.tmrc.none{border-style:dashed;border-color:#8a7a5c}.tmrc .tlh .tlfix{margin-left:auto;flex:none}.tmrc .tlno{margin-left:auto;font-size:13px;font-weight:800;color:#f0b46a}.tmrc .tlnone{padding:8px 2px 2px;font-size:14px;color:#e4ddd1}.tmrc .tlnone b{display:block;font-size:15px}.tmrc .tlnone small{font-size:13px;color:var(--mute,#a9a294)}.tmrc .tlnb{display:flex;gap:8px;margin-top:10px}.tmrc .tlnb .btn{margin:0}.tmrc .tlnb .main{flex:1}
 .pkparts .chip.mine{border-color:var(--gold);color:var(--gold)}.pkparts .chip.mine.on{background:var(--gold);color:#1a1408}
 .rtpics{display:flex;gap:8px;overflow-x:auto;margin:4px 0 8px}.rtpics span{flex:none;width:120px;text-align:center}.rtpics img{width:120px;height:120px;object-fit:contain;background:#fff;border-radius:10px;display:block}.rtpics small{font-size:12px;color:var(--sub)}
 .pkparts{display:flex;gap:7px;overflow-x:auto;flex:none;width:100%;scrollbar-width:none;padding-bottom:1px}.pkparts::-webkit-scrollbar{display:none}
@@ -3695,7 +3696,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '589';
+const BUILD = '590';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -3861,7 +3862,7 @@ let S = { who:null, mid:null, screen:'boot', tab:'home', pickPart:'전체', pick
 const 데스크끼움 = (() => { try{ const q = new URLSearchParams(location.search); if(q.get('desk') !== '1' || window.parent === window) return null;
   const 목 = JSON.parse(sessionStorage.getItem('gg_desk_accs') || '[]') || [], on = sessionStorage.getItem('gg_desk_on') || '', a = 목.find(x => x && x.name === on) || null;
   if(!a || !a.token) return null;
-  return { mid: q.get('m') || '', r: q.get('r') || '', au: { token: a.token, who: a.who || 'trainer', name: a.name || '', sb: a.access_token || '', sbexp: Math.floor((+a.exp || 0) / 1000) } }; }catch(e){ return null; } })();
+  return { mid: q.get('m') || '', r: q.get('r') || '', fix: q.get('fix') || '', au: { token: a.token, who: a.who || 'trainer', name: a.name || '', sb: a.access_token || '', sbexp: Math.floor((+a.exp || 0) / 1000) } }; }catch(e){ return null; } })();
 if(데스크끼움) document.documentElement.classList.add('deskin');      /* 폰 테두리 · 아래 탭 · 여는 그림 없이 창을 꽉 채운다 */
 const 데스크알림 = 몸 => { try{ if(데스크끼움) window.parent.postMessage(Object.assign({ gg: 'deskrec' }, 몸), '*'); }catch(e){} };
 const LIVEKEY = 데스크끼움 ? 'gladgym_live_desk' : 'gladgym_live_v1';
@@ -4134,7 +4135,7 @@ async function boot(){
     const mid = 데스크끼움.mid;
     if(S.who === 'tr' && mid && 데스크끼움.r && D.workouts.some(w => w.id === 데스크끼움.r)){ S.tmid = mid; S.subj = mid; S.rw = 데스크끼움.r; S.screen = 'report'; }      /* 데스크 「리포트 보기」 (C-4) */
     else if(S.who === 'tr' && mid && MEMBERS.some(m => m.id === mid)){ S.tmid = mid; S.subj = mid; S.screen = 't_member'; S.ttab = 't_members';      /* 아래 탭 「회원」에 불 (2026-11-05 데스크 안도 탭) */
-      setTimeout(() => { if(liveOf(mid) && adoptLive(mid)) go('workout'); }, 0); }      /* 시작 창은 안 띄운다 — 회원 화면에서 「수업 시작」 (2026-11-03 대표 노션 「데스크에서 기록하기 눌렀을 때 팝업 없어도 됨」) */
+      setTimeout(() => { if(데스크끼움.fix && D.workouts.some(w => w.id === 데스크끼움.fix)) 고침열기(데스크끼움.fix); else if(liveOf(mid) && adoptLive(mid)) go('workout'); }, 0); }      /* 데스크 지난 기록 「수정」 = 같은 시작 창 (2026-11-16) */      /* 시작 창은 안 띄운다 — 회원 화면에서 「수업 시작」 (2026-11-03 대표 노션 「데스크에서 기록하기 눌렀을 때 팝업 없어도 됨」) */
     else if(S.who === 'tr' && mid) setTimeout(() => toast('이 회원을 앱에서 열 수 없어요\n담당 범위를 확인해 주세요'), 0); }
   if(!histOn) histInit();
 }
@@ -4168,7 +4169,8 @@ async function 지난수업받기(mid){ const 끝 = 며칠전(지난기록한도
     try{ const j = await 앱crm('lessons', { 부터:끝 }); 지난수업.줄 = j['수업'] || []; 지난수업.실패 = false; 지난수업.왜 = ''; }catch(e){ 지난수업.줄 = 지난수업.줄 || []; 지난수업.실패 = true; 지난수업.왜 = (e && e.message) || ''; }
     지난수업.중 = false; 지난수업.때 = Date.now(); }
   if(document.querySelector('.recday')) drawSheet(); }
-const 기록없는수업 = mid => { const m = MEMBERS.find(x => x.id === mid) || {}, 한 = 지난수업.한날[mid], 오늘 = 오늘날(), 끝 = 며칠전(지난기록한도), 본 = new Set();
+const 기록없는수업 = mid => { const m = MEMBERS.find(x => x.id === mid) || {}, 한0 = 지난수업.한날[mid], 오늘 = 오늘날(), 끝 = 며칠전(지난기록한도), 본 = new Set();
+  const 찬 = new Set(D.workouts.filter(w => w.mid === mid && 세트있나(w)).map(w => w.date)), 빈 = new Set(D.workouts.filter(w => w.mid === mid && !세트있나(w)).map(w => w.date)), 한 = 한0 && new Set([...한0].filter(d => 찬.has(d) || !빈.has(d)));      /* 빈 기록만 있는 날 = 기록 안 한 날 (2026-11-16) */
   return (지난수업.줄 || []).filter(L => (mid === 'c' + L.key || (String(L.name || '').trim() === m.n && (!L.phone4 || String(L.phone4) === m.p4))) && L.날짜 && L.날짜 < 오늘 && L.날짜 >= 끝 && !(한 && 한.has(L.날짜)))
     .sort((a, b) => String(b.날짜).localeCompare(String(a.날짜))).filter(L => { if(본.has(L.날짜)) return false; 본.add(L.날짜); return true; }); };
 const 수업칩글 = L => { const d = new Date(L.날짜 + 'T12:00:00'); return `${d.getMonth() + 1}/${d.getDate()} (${'일월화수목금토'[d.getDay()]})${L.시각 ? ' ' + esc(String(L.시각).slice(0, 5)) : ''}`; };
@@ -5711,7 +5713,7 @@ function bar(title, right, back, sub){
   if(S.who === 'tr' && !bare && ['t_today','t_members','t_feed','t_routine','t_consult'].includes(S.screen))      /* 트레이너 탭 첫 화면 — 내 이름 동그라미 → 로그아웃 (2026-11-04 · 자료 탭 없앰) */
     right = (right || '') + `<span class="tright"><button class="topme trme" data-act="trme" aria-label="내 메뉴">${esc(String(TRAINER || '').slice(0, 1))}</button></span>`;
   const hasHist = !!(S.stack && S.stack.length);
-  const force = (back === 'reccancel' || back === 'rnback' || back === 'wfback');            /* wfback = 플래너 표에서 연 한 종목 → 표로 (2026-10-23) */            /* 수정 그만두기 · 새 루틴 만들다 나가기(묻고 나간다 · 2026-10-17)는 그대로 */
+  const force = (back === 'rnback' || back === 'wfback');            /* wfback = 플래너 표에서 연 한 종목 → 표로 (2026-10-23) */            /* 수정 그만두기 · 새 루틴 만들다 나가기(묻고 나간다 · 2026-10-17)는 그대로 */
   const act = force ? back : (hasHist ? 'back' : (back || ''));
   const canBack = !bare && !!act;
   return (canBack?`<button class="back${첫화면 ? ' ic' : ''}" data-act="${esc(act)}" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>${첫화면 ? '' : '뒤로'}</button>`:'') + logo      /* 종 · 내 사진이 있는 탭 첫 화면은 좁은 폰(360)에서 넘쳐서 화살표만 (2026-10-20) */
@@ -7295,7 +7297,7 @@ function 시계멈춤(w){ if(!w || !w.startAt) return;
   const 이제 = Date.now(), 쉰 = 이제 - w.pausedAt;
   w.startAt += 쉰; w.items.forEach(it => { if(!it.locked && it.startAt) it.startAt = it.startAt >= w.pausedAt ? 이제 : it.startAt + 쉰; });
   w.pausedAt = null; save(); toast('시간을 다시 잽니다'); render(); }
-async function newLive(title, items, kind, rid, mid, by, 기록날){
+async function newLive(title, items, kind, rid, mid, by, 기록날, 고침){
   const id='w'+Date.now();
   mid = mid || S.mid;
   /* 직원(트레이너 · 대표)이 로그인해서 만든 기록은 무조건 「수업」 — 회원 화면 경로(빈 운동 · 루틴 · 지난 운동 · 종목 담기)로 들어와도 (2026-10-23 대표 「트레이너가 로그인해서 기록하는데 개인운동 기록을 왜 물어 무조건 수업이지」 · 김O은 기록이 개인운동이라 리포트가 안 나갔다) */
@@ -7308,6 +7310,7 @@ async function newLive(title, items, kind, rid, mid, by, 기록날){
   D.live={ id, mid, title, kind:kd, rid:rid||null, date:TODAY, startAt:t0, born:Date.now(), items, cur:0,
            by:by||'회원', begun: items.length>0, mine:true };   /* 담기만 한 상태면 아직 시작 전 */
   if(기록날) D.live.기록날 = 기록날;
+  if(고침) D.live.고침 = true;      /* 지난 기록 수정 — 띠 「지난 기록 수정 중」 */
   if(!t0) items.forEach(it=>{ it.startAt = null; });
   save(); go(items.length || by === '트레이너' ? 'workout' : 'pick');      /* 빈 수업 = 종목 선택 말고 기록 화면(그림 · 무게 표)부터 (2026-11-05 대표 시안 ⑦ 「빈 종목으로 수업 시작 누르면 그 페이지가 뜨도록 · 임의로 올려서 바로 등록할 수도 있으니까」) */
   await sv(spost('workouts',[Object.assign({ id, member_id:mid, on_date:TODAY, kind:D.live.kind,
@@ -7415,7 +7418,9 @@ function vWorkout(){
   if(S.wfocus != null) w.cur = S.wfocus;
   return 지난날표시(w, 옛운동화면(w));
 }
-const 지난날표시 = (w, 화면) => { if(w.기록날 && 화면 && typeof 화면.body === 'string') 화면.body = `<div class="recband">${esc(dateTxt(w.기록날))} 수업으로 저장돼요</div>` + 화면.body; return 화면; };
+const 지난날표시 = (w, 화면) => { const 날 = w.기록날 || (w.date && w.date < TODAY ? w.date : ''); if(!날 || !화면 || typeof 화면.body !== 'string') return 화면;      /* 지난 기록 수정 = 수업 시작 창 → 기록 화면 하나 (2026-11-16 대표 「매번 다른 화면이 뜨지 않게 · 수업 시작과 동일 · 수정 중이라는 사실만 잊지 않게」 · 앱_제작북 2-4) */
+  const 요 = '일월화수목금토'[new Date(날 + 'T12:00:00').getDay()] || '';
+  화면.body = `<div class="recband"><i></i><span>${esc(dateTxt(날))}(${요}) ${w.고침 ? '지난 기록 수정 중' : '지난 수업 기록 중'}<small>오늘 수업이 아니에요 · 마치면 ${esc(dateTxt(날))} 수업으로 저장돼요</small></span></div>` + 화면.body; return 화면; };
 function 옛운동화면(w){
   if(!(w.cur >= 0 && w.cur < w.items.length)) w.cur = Math.max(0, w.items.findIndex(it => !it.locked));
   { const c0 = w.items[w.cur]; if(c0 && !c0.sets.length) c0.sets.push({ kg:0, reps:10, done:false }); }      /* 지금 종목이 세트 0개 → 세트[-1].done 로 멈췄다 (2026-10-23 reading 'done') */
@@ -8939,99 +8944,27 @@ function vDays(){
       S.who==='tr'?'go:records':'tab:home'), body: daysPane(mid) };
 }
 
-function recEditing(wid){ return S.recEdit && S.recEdit.wid === wid; }
 
-function vRecord(){
+function vRecord(){      /* 마친 기록 보기 — 고치는 길은 「기록 수정하기」 = 시작 창 → 기록 화면 하나 (2026-11-16 · 옛 따로 수정 화면 걷음) */
   const w = D.workouts.find(x=>x.id===S.wid); if(!w) return vRecords();
   const today = (w.date === TODAY);
   const canEdit = (S.who==='tr') || (today && !live());
-  const ed = recEditing(w.id);
-  const items = ed ? S.recEdit.items : w.items;
   const back = S.who==='tr' ? 'tw:'+w.id : 'tab:records';
-  return { top: bar(dateTxt(w.date), `<span class="sub">${ed?'수정 중':durTxt(w.dur)}</span>`, ed?'reccancel':back), body:
+  return { top: bar(dateTxt(w.date), `<span class="sub">${durTxt(w.dur)}</span>`, back), body:
     `<div class="note">${w.kind?esc(w.kind):''}${w.rid&&rOf(w.rid)?` · 루틴 ${rOf(w.rid).no} ${esc(rOf(w.rid).n)}`:''}</div>`
-    + (!ed && !canEdit ? '<div class="note">지난 날짜는 <b>수정할 수 없습니다</b></div>' : '')
-    + (ed?'':`<button class="btn sub sm" data-act="fendview:${w.id}"
-        style="margin-bottom:2px">운동 마친 화면 다시 보기</button>`)
-    + items.map((it,i)=>`<div class="card">
+    + (!canEdit ? '<div class="note">지난 날짜는 <b>수정할 수 없습니다</b></div>' : '')
+    + `<button class="btn sub sm" data-act="fendview:${w.id}"
+        style="margin-bottom:2px">운동 마친 화면 다시 보기</button>`
+    + w.items.map((it,i)=>`<div class="card">
         <div class="rowc" style="align-items:baseline">
-          <div><div class="nm">${esc(exName(it.ex,it.va))}</div>${!ed && 붙일줄(it) ? `<button class="jbgo" data-act="jbopen:${w.id}:${i}">종목 만들기 ›</button>` : ''}</div>
-          ${ed?'':`<button class="chip t" data-act="exd:${it.ex}:${it.va}${S.who==='tr'?':'+w.mid:''}">피드백 ${cmOf(S.who==='tr'?w.mid:S.mid,it.ex,it.va).length}</button>`}
+          <div><div class="nm">${esc(exName(it.ex,it.va))}</div>${붙일줄(it) ? `<button class="jbgo" data-act="jbopen:${w.id}:${i}">종목 만들기 ›</button>` : ''}</div>
+          <button class="chip t" data-act="exd:${it.ex}:${it.va}${S.who==='tr'?':'+w.mid:''}">피드백 ${cmOf(S.who==='tr'?w.mid:S.mid,it.ex,it.va).length}</button>
         </div>
-        ${ed
-          ? it.sets.map((st,j)=>`<button class="setrow2 ed" data-act="rset:${i}:${j}">
-              <span class="no">${j+1}세트</span>
-              <span class="vv">${setTxt(it.ex,st)}</span>
-              <span class="go2">수정 ›</span></button>`).join('')
-            + `<button class="setrow2" data-act="raddset:${i}" style="justify-content:center">
-              <span class="go2">＋ 세트 추가</span></button>`
-          : `<div class="sm" style="margin-top:5px">${it.sets.map(st=>setTxt(it.ex,st)).join('  ·  ')||'세트 없음'}</div>`}
-      </div>`).join('')
-    + (ed ? `<button class="btn sub" data-act="recaddex" style="margin-top:4px">＋ 종목 추가 <small>빠뜨린 종목</small></button>` : '')      /* 마친 기록 수정에도 종목 추가 (2026-11-06 대표 「수업 기록 완료하고 수정할 때 종목 추가가 안 돼 · 실수로 누락」) */
-    ,
-    foot: ed
-      ? `<button class="btn ghost" data-act="reccancel">취소</button>
-         <button class="btn blue" data-act="recask">수정 완료</button>`
-      : (canEdit ? `<button class="btn blue go" data-act="recedit:${w.id}">기록 수정하기</button>` : '') };
+        <div class="sm" style="margin-top:5px">${it.sets.map(st=>setTxt(it.ex,st)).join('  ·  ')||'세트 없음'}</div>
+      </div>`).join(''),
+    foot: canEdit ? `<button class="btn blue go" data-act="${S.who === 'tr' ? 'recfix' : 'resume'}:${w.id}">기록 수정하기</button>` : '' };
 }
 
-/* 마친 기록에 종목 더하기 — 찾기 → 누르면 수정 중 기록 맨 아래에 1세트(지난 기록 값) · 저장은 「수정 완료」 때 */
-document.addEventListener('input', ev => { const t = ev.target; if(!t || !t.dataset || t.dataset.k !== 'recq' || !S.recEdit) return; S.recq = t.value; const q = t.value.trim(), box = document.getElementById('recqbox'); if(!box) return;      /* 칸은 그대로 두고 목록만 — 치는 중 끊기지 않게 */
-  const 목 = EX.filter(e => 고를수있나(e) && !e.memo && (!q || 검색맞음(e, q))).slice(0, 40);
-  box.innerHTML = 목.length ? 목.map(e => `<button class="card rowc" data-act="recaddgo:${esc(e.id)}"><div><div class="nm">${esc(e.n)}</div><div class="sm">${esc(e.p || '')}${e.e ? ' · ' + esc(e.e) : ''}</div></div><span class="rt">추가 ›</span></button>`).join('') : '<div class="note">찾는 종목이 없어요</div>'; });
-function sheetRecAddEx(){ const E = S.recEdit; if(!E) return;
-  openSheet(() => { const q = String(S.recq || '').trim(), 목 = EX.filter(e => 고를수있나(e) && !e.memo && (!q || 검색맞음(e, q))).slice(0, 40);
-    return `<div class="h2">종목 추가 <small>빠뜨린 종목</small></div>
-      <input class="search" type="search" data-k="recq" value="${esc(S.recq || '')}" placeholder="종목 검색 · 예) 스쿼트, bp" autocomplete="off">
-      <div class="pickbox" id="recqbox">${목.length ? 목.map(e => `<button class="card rowc" data-act="recaddgo:${esc(e.id)}"><div><div class="nm">${esc(e.n)}</div><div class="sm">${esc(e.p || '')}${e.e ? ' · ' + esc(e.e) : ''}</div></div><span class="rt">추가 ›</span></button>`).join('') : '<div class="note">찾는 종목이 없어요</div>'}</div>
-      <button class="btn ghost sm" data-act="close">닫기</button>`; });
-  setTimeout(() => { const el = document.querySelector('[data-k="recq"]'); if(el) el.focus(); }, 30); }
-
-/* 세트 하나 고치기 */
-function sheetSetEdit(i, j){
-  const E = S.recEdit; if(!E) return;
-  const it = E.items[i], st = it.sets[j], e = exOf(it.ex);
-  openSheet(()=>`
-    <div class="h2">${esc(exName(it.ex,it.va))} <small>${j+1}세트</small></div>
-    <div class="grid2">
-      ${e.cardio ? `<div class="fld"><span class="fn">분</span>
-          <input class="search" type="text" inputmode="decimal" data-k="se:reps" value="${esc(st.reps)}"></div>
-        <div class="fld"><span class="fn">속도 km/h</span>
-          <input class="search" type="text" inputmode="decimal" data-k="se:spd" value="${esc(st.spd==null?'':st.spd)}"></div>`
-        + (경사최대(it.ex) ? `<div class="fld"><span class="fn">경사 ° (최대 ${경사최대(it.ex)})</span>
-          <input class="search" type="text" inputmode="decimal" data-k="se:kg" value="${esc(st.kg||'')}"></div>` : '')
-      : `<div class="fld"><span class="fn">무게 kg</span>
-          <input class="search" type="text" inputmode="decimal" data-k="se:kg" value="${esc(st.kg)}"></div>
-        <div class="fld"><span class="fn">횟수</span>
-          <input class="search" type="text" inputmode="numeric" data-k="se:reps" value="${esc(st.reps)}"></div>`}
-    </div>
-    <button class="btn blue sm" data-act="rsetsave:${i}:${j}">이 세트 수정</button>
-    <button class="btn ghost sm" data-act="rsetdel:${i}:${j}" style="color:var(--warn)">이 세트 삭제</button>
-    <button class="btn ghost sm" data-act="close">닫기</button>`);
-}
-
-/* 고친 것 서버에 쓰기 */
-async function recSave(){
-  const E = S.recEdit; if(!E) return;
-  const w = D.workouts.find(x=>x.id===E.wid);
-  closeSheet(); S.recEdit = null;
-  if(!w) return;
-  toast('수정하는 중이에요');
-  for(const it of E.items){
-    if(!it._id && it.새){ if(!it.sets.length) continue;      /* 수정 중 더한 종목 — 줄부터 만든다 */
-      const back = await sv(spost('workout_items', [{ workout_id:w.id, sort:w.items.length, variant_id:VID(it.ex, it.va), sec:0, locked:false }], {ret:true}), '종목 추가');
-      if(!(back && back[0])) continue; it._id = back[0].id; w.items.push({ _id:it._id, ex:it.ex, va:it.va, sets:[], rest:60, sec:0, locked:true }); }
-    const src = w.items.find(x=>x._id===it._id) || {};
-    src.sets = it.sets.map(x=>({ kg:Number(x.kg)||0, reps:Number(x.reps)||0,
-      spd: x.spd==null||x.spd==='' ? undefined : Number(x.spd) }));
-    if(it._id){
-      await sv(sdel('workout_sets','item_id=eq.'+it._id), '세트 삭제');
-      if(src.sets.length) await sv(spost('workout_sets', src.sets.map((x,k)=>({
-        item_id: it._id, sort:k, kg:x.kg, reps:x.reps, spd: x.spd==null?null:x.spd, done:true }))), '세트 저장');
-    }
-  }
-  save(); toast('수정했어요'); render();
-}
 
 /* ── 피드백 · 날짜로 보기 ── */
 function cmOnDay(mid, d){ return D.cm.filter(c => c.mid===mid && String(c.ts||'').slice(0,10) === d); }
@@ -13870,7 +13803,7 @@ function tMember(){
           : `<button class="g" data-act="tstartask:${m.id}">수업 시작</button><button class="r" data-act="rmstart:${m.id}">1RM 측정</button><button class="t tasg2" data-act="zjopen:${m.id}:개인운동">개인운동 지정<small>혼자 할 운동</small></button><button class="t tasg2 lsn" data-act="zjopen:${m.id}:수업">다음 수업 루틴<small>미리 지정하기</small></button>`}</div>
         <div class="tmf">${lv ? `지금 운동 중 · ${esc(lv.title||'')}` : 지정두줄(m.id)}</div>
       </div>`; })()}
-    ${지난기록카드(m, ws)}
+    ${지난기록카드(m, ws.concat(D.workouts.filter(w => w.mid === m.id && !w.done && w.date < TODAY && !세트있나(w))).sort(byDateDesc))}
 
     ${(()=>{ /* 체중 추이 — 인바디 기록이 둘 이상일 때만 곡선 */
       const { logs, ds } = 체중점들(((D.blog||{})[m.id]||[]).map(x => ({ w: x.w, d: x.date })));      /* 최근 3개월 · 20개 · 날짜 · 목표 없음 (2026-11-02 대표) */
@@ -13899,12 +13832,14 @@ function tMember(){
    날짜(요일) · 수업/개인운동 · 제목 머리 → 자극 부위 그림(트레이너가 칠했으면 그 그림 · 아니면 종목으로 자동) → 운동 명칭 · 무게 · 반복수 표 → 수업 메모
    트레이너 = 누르면 피드백 쓰기 · 「몰아서 올리기」 / 회원 = 리포트 › · 「이 기록으로 시작」(⑧) */
 function 지난기록한장(w, o){ o = o || {}; const 요 = '일월화수목금토'[new Date(w.date + 'T00:00:00').getDay()], 메 = (D.cm || []).filter(c => c.wid === w.id && c.ex === 'memo').map(c => c.tx).filter(Boolean);
-  return `<div class="tmrc${w.kind === '개인운동' ? ' self' : ''}"${o.tr ? ` data-act="tw:${w.id}"` : ''}><div class="tlh"><b>${dateTxt(w.date)} <u>(${요})</u></b><span class="k">${esc(w.kind || '')}</span>${w.title ? `<small>${esc(w.title)}</small>` : ''}${o.tr ? '<i>›</i>' : o.pick ? '' : `<button class="tlrp" data-act="rpt:${w.id}">리포트 ›</button>`}</div>
+  if(o.tr && !세트있나(w)) return `<div class="tmrc none${w.kind === '개인운동' ? ' self' : ''}"><div class="tlh"><b>${dateTxt(w.date)} <u>(${요})</u></b><span class="k">${esc(w.kind || '')}</span>${w.title ? `<small>${esc(w.title)}</small>` : ''}<span class="tlno">기록 없음</span></div>
+    <div class="tlnone"><b>종목을 입력하지 않은 수업이에요</b><small>수업을 시작만 하고 저장 전에 나갔어요</small></div><div class="tlnb"><button class="btn main sm" data-act="recfix:${w.id}">기록하기</button><button class="btn ghost sm" data-act="recdrop:${w.id}">삭제</button></div></div>`;      /* 빈 기록도 보이게 (2026-11-16 대표 「기록이 없는지도 표시가 아예 안 나와」) */
+  return `<div class="tmrc${w.kind === '개인운동' ? ' self' : ''}"${o.tr ? ` data-act="tw:${w.id}"` : ''}><div class="tlh"><b>${dateTxt(w.date)} <u>(${요})</u></b><span class="k">${esc(w.kind || '')}</span>${w.title ? `<small>${esc(w.title)}</small>` : ''}${o.tr ? `<button class="btn sub sm tlfix" data-act="recfix:${w.id}">기록 수정</button>` : o.pick ? '' : `<button class="tlrp" data-act="rpt:${w.id}">리포트 ›</button>`}</div>
     <div class="tmfig tmfig2">${오늘부위판(w, false)}</div><div class="tlt">${플래너표(w)}</div>${o.tr || o.pick ? '' : 팁줄들(w.id)}${메.length ? `<div class="tmmemo"><b>수업 메모</b>${메.map(t => esc(t)).join(' · ')}</div>` : ''}`
     + (o.tr ? `<button class="mu-go sm" data-act="bulkopen:${w.id}"><span class="e">📤</span><span>이 수업 피드백 몰아서 올리기</span></button>` : '')
     + (o.start ? `<button class="btn main sm tlgo" data-act="again:${w.id}">이 기록으로 시작</button>` : '')
     + (o.pick ? `<button class="btn main tlgo zjgo" data-act="${o.pick[0]}">${o.pick[1]}</button>` : '') + `</div>`; }
-function 지난기록카드(m, ws){ const 다 = ws.filter(x => 세트있나(x)), n = S.tmN && S.tmN.mid === m.id ? S.tmN.n : 5, 보 = 다.slice(0, n);
+function 지난기록카드(m, ws){ const 다 = ws.filter(x => 세트있나(x) || (x.date < TODAY && !(D.live && D.live.id === x.id))),      /* 빈 기록도 「기록 없음」 카드로 (2026-11-16) */ n = S.tmN && S.tmN.mid === m.id ? S.tmN.n : 5, 보 = 다.slice(0, n);
   if(!다.length) return `<div class="tmlast none"><small>지난 기록</small><span>아직 기록이 없어요 · 수업을 기록하면 여기에 나와요</span></div>`;
   const 세트 = s => (s.kg ? kgfmt(s.kg) + 'kg × ' : '') + (s.reps || 0);
   const 카드 = w => 지난기록한장(w, { tr:true });
@@ -13953,7 +13888,7 @@ function tWrite(){
           <span class="pill${n?' q':''}">${n?`피드백 ${n}`:'피드백 쓰기'} ›</span></button>`; }).join('')
       : '<div class="empty">세트를 입력한 종목이 없습니다<small class="e2">아래 「기록 수정하기」에서 세트를 입력해 주세요</small></div>')
     ,
-    foot:`<button class="btn blue go" data-act="recedit:${w.id}">기록 수정하기</button>` };
+    foot:`<button class="btn blue go" data-act="recfix:${w.id}">기록 수정하기</button>` };
 }
 function tRoutines(){
   const 갈래 = `<div class="chips rcm"><button class="chip ${S.rcm?'':'on'}" data-act="rcm:0">회원 루틴</button><button class="chip ${S.rcm?'on':''}" data-act="rcm:1">공통 루틴 ${공통루틴().length}</button></div>`;
@@ -14231,25 +14166,37 @@ function 루틴미리창(mid, rid, kind){ const r = rOf(rid); if(!r) return; let
 /* 수업 시작 창 — 개인운동 지정 창과 같은 부품 (2026-11-13 20:19 · 20:48 · 21:00 · 21:05 대표 「루틴표로 시작이면 지금 보는 것처럼 통일 · 지난 기록은 기록으로 · 버튼이 너무 많아 · 경계 확실히 · 톤앤매너 같게 · 설명 자질구레」 · 21:12 「넣어」 · 시안 수업시작창_1113)
    수업 날짜 한 줄(「수정」 누르면 지난 예약 · 날짜) → [지정 있으면 ① 오늘 지정한 수업 루틴 · ② 다른 운동으로 시작] → [📋 루틴 | 🗓 지난 기록] 한 판
    루틴 = 표지 썸네일(내 루틴 · 받은 루틴표) → 루틴 카드(종목 그림 + 이름) → 누르면 확대 창(무게 · 횟수) → 「이 루틴으로 시작」 / 지난 기록 = 지난 기록 카드 + 「이 기록으로 시작」 */
-function sheetStartSession(mid){
+function sheetStartSession(mid, 고침){
   S.recDay = null; S.recMode = ''; 지난수업받기(mid);
   if(!S.ss || S.ss.mid !== mid) S.ss = { mid, 보기:'표', sid:'', 날열림:false };
+  S.ss.고침 = 고침 || null;      /* 지난 기록 수정 = 같은 시작 창 · 날짜 줄만 「지난 기록 수정 중」 (2026-11-16) */
   openSheet(() => 시작창그림(mid)); }
+/* 지난 기록 수정 = 수업 시작 창 → 기록 화면 하나 (2026-11-16 대표 「매번 다른 화면이 뜨지 않게 · 수업 시작과 동일 · 수정 중이라는 사실만 잊지 않게」 · 앱_제작북 2-4) */
+const 고침기록 = mid => { const o = S.ss && S.ss.mid === mid ? S.ss : null; return (o && o.고침 && D.workouts.find(w => w.id === o.고침)) || null; };
+async function 고침준비(mid){ const 고 = 고침기록(mid); if(!고) return null;      /* 루틴 · 지난 기록 · 빈 운동으로 다시 적기 — 적힌 종목이 있으면 묻고 옛 기록을 지운다(같은 날짜로 새로 적음) */
+  if(세트있나(고)){ const 이름 = 고.items.filter(it => it.sets && it.sets.length).map(it => exName(it.ex, it.va)).join(' · ');
+    if(!await 물어(dateTxt(고.date) + ' 수업을 다시 기록할까요?' + String.fromCharCode(10) + '지금 기록된 ' + 이름 + ' 은(는) 삭제돼요', '다시 기록')) return false; }
+  S.ss.고침 = null; D.workouts = D.workouts.filter(x => x.id !== 고.id); await sv(sdel('workouts', 'id=eq.' + 고.id), '지난 기록 다시 기록'); return 고; }
+const 빈기록지움 = (mid, 날) => { if(!날) return; D.workouts.filter(w => w.mid === mid && w.date === 날 && !세트있나(w) && !(D.live && D.live.id === w.id)).forEach(w => { D.workouts = D.workouts.filter(x => x.id !== w.id); sv(sdel('workouts', 'id=eq.' + w.id), '빈 기록 지움'); }); };      /* 그날 빈 기록만 있던 날에 새로 적으면 빈 것은 지운다 */
+function 고침열기(wid){ const w = D.workouts.find(x => x.id === wid); if(!w) return;
+  if(D.live){ toast('지금 기록 중인 수업이 있어요' + String.fromCharCode(10) + '먼저 마쳐 주세요'); return; }
+  S.tmid = w.mid; S.subj = w.mid; sheetStartSession(w.mid, w.id); }
 function 시작창그림(mid){ const m = MEMBERS.find(x => x.id === mid) || { n:'' }, t = 수업예약(mid) || D.today[mid], o = S.ss && S.ss.mid === mid ? S.ss : (S.ss = { mid, 보기:'표', sid:'', 날열림:false }), tr = t && rOf(t.rid);
   const 묶음 = [].concat(myRoutines(mid).length ? [{ id:'my', title:'내 루틴', rs:myRoutines(mid) }] : [], 내루틴표(mid).filter(x => x.s).map(x => ({ id:x.s.id, title:x.s.title || '루틴표', s:x.s, rs:표루틴(x.s.id) })));
   if(!묶음.some(g => g.id === o.sid)) o.sid = (묶음[0] || {}).id || ''; const g = 묶음.find(z => z.id === o.sid);
   const 칸 = r => `<span class="rjx4">${(r.items || []).map(it => `<span><i>${종목그림(exOf(it.ex))}</i><small>${esc(exName(it.ex, it.va))}</small></span>`).join('')}</span>`;
   const 카드 = r => `<button class="rjex" data-act="rprev:${mid}:${r.id}:수업"><span class="bd"><b><em>${r.sheet ? '운동' : '루틴'} ${r.no}</em>${esc(r.n)}</b><small class="rjsub">${(r.items || []).length}종목 · 예상 ${estMin(r)}분</small>${칸(r)}</span></button>`;
   const 표지 = z => z.s ? 지정표지(z.s) : `<span class="rjcv nm my">내 루틴</span>`;
-  const 날글 = S.recDay ? dateTxt(S.recDay) : '오늘 ' + 짧은날(TODAY);
+  const 날글 = S.recDay ? dateTxt(S.recDay) : '오늘 ' + 짧은날(TODAY), 고 = 고침기록(mid), 고요 = 고 ? '일월화수목금토'[new Date(고.date + 'T12:00:00').getDay()] || '' : '';
   const 같은날 = (() => { const 날 = (S.recDay && S.recDay < 오늘날() ? S.recDay : null) || TODAY, 있 = D.workouts.filter(w => w.mid === mid && w.done && w.kind === '수업' && w.date === 날 && 세트있나(w)).sort(byDateDesc)[0]; return 있 && S.sameNew !== 있.id ? `<div class="zsame"><b>${날 === TODAY ? '오늘' : dateTxt(날)} 수업 기록이 이미 있어요</b><small>${esc(수업제목(있))} · ${있.items.filter(it => it.sets.length).length}종목 · 같은 수업이면 이어서 기록해 주세요(리포트가 두 번 나가지 않게)</small><div class="zsb"><button class="btn main sm" data-act="resume:${있.id}">이어서 기록</button><button class="btn ghost sm" data-act="samenew:${있.id}">새로 기록</button></div></div>` : ''; })();
   const 유산 = (() => { const 지난 = D.workouts.filter(w => w.mid === mid && w.done && w.kind === '수업').sort(byDateDesc)[0]; return 지난 && 팁of(지난.id).length ? `<div class="ctlast"><b>지난 수업(${dateTxt(지난.date)}) 유산소</b>${팁줄들(지난.id)}</div>` : ''; })();
   let h = `<div class="h2">${esc(m.n)} 회원 <small>무엇으로 시작할까요</small></div>`
-    + (o.날열림 ? 수업날줄(mid) : `<div class="ssday"><span>수업 날짜</span><b>${esc(날글)}</b><button class="btn sub sm" data-act="ssday">수정</button></div>`)
-    + 같은날 + 유산 + 주기줄(mid, 'tsub:cycle:' + mid)
-    + (tr ? `<div class="sssec"><span class="ssno">1</span>${t.kind === '수업' ? '오늘 지정한 수업 루틴' : '오늘 지정한 개인운동'}</div><div class="sstoday">${카드(tr)}<button class="btn main ssgo" data-act="tstart:${mid}:${tr.id}:${t.kind}">이대로 시작</button></div><div class="sssec"><span class="ssno">2</span>다른 운동으로 시작</div>` : '')
+    + (고 ? `<div class="ssday fix"><span>수업 날짜</span><b>${esc(dateTxt(고.date))}(${고요}) · 지난 기록 수정 중</b></div>` : o.날열림 ? 수업날줄(mid) : `<div class="ssday"><span>수업 날짜</span><b>${esc(날글)}</b><button class="btn sub sm" data-act="ssday">수정</button></div>`)
+    + (고 ? '' : 같은날 + 유산) + 주기줄(mid, 'tsub:cycle:' + mid)
+    + (고 ? (세트있나(고) ? `<div class="sssec"><span class="ssno">1</span>지금 기록된 운동</div><div class="sstoday"><div class="rjex"><span class="bd"><b>${esc(dateTxt(고.date))} ${esc(고.kind || '수업')}</b><small class="rjsub">${esc(고.items.filter(it => it.sets && it.sets.length).map(it => exName(it.ex, it.va)).join(' · '))} · ${고.items.filter(it => it.sets && it.sets.length).length}종목</small></span></div><button class="btn main ssgo" data-act="resume:${고.id}">이대로 이어서 수정</button></div><div class="sssec"><span class="ssno">2</span>다른 운동으로 다시 기록</div>` : '')
+      : tr ? `<div class="sssec"><span class="ssno">1</span>${t.kind === '수업' ? '오늘 지정한 수업 루틴' : '오늘 지정한 개인운동'}</div><div class="sstoday">${카드(tr)}<button class="btn main ssgo" data-act="tstart:${mid}:${tr.id}:${t.kind}">이대로 시작</button></div><div class="sssec"><span class="ssno">2</span>다른 운동으로 시작</div>` : '')
     + `<div class="sspan"><div class="sstab"><button class="${o.보기 !== '기록' ? 'on' : ''}" data-act="ssv:표">📋 루틴</button><button class="${o.보기 === '기록' ? 'on' : ''}" data-act="ssv:기록">🗓 지난 기록</button></div><div class="sspb">`;
-  if(o.보기 === '기록'){ const ws = workoutsOf(mid).filter(w => 세트있나(w)).slice(0, 12);
+  if(o.보기 === '기록'){ const ws = workoutsOf(mid).filter(w => 세트있나(w) && !(고 && w.id === 고.id)).slice(0, 12);
     h += ws.length ? `<div class="tmrs zjrecs">${ws.map(w => 지난기록한장(w, { pick:[`tstartrec:${mid}:${w.id}:수업`, '이 기록으로 시작'] })).join('')}</div>` : `<div class="fe">아직 마친 기록이 없습니다</div>`; }
   else h += 묶음.length ? `<span class="lbl">루틴표</span><div class="zjsh">${묶음.map(z => `<button class="${z.id === o.sid ? 'on' : ''}" data-act="sssid:${z.id}">${표지(z)}${z.s && (z.s.cover || {}).img ? `<small>${esc(z.title)}</small>` : ''}</button>`).join('')}</div>
       <span class="lbl">루틴</span>${g.rs.map(카드).join('')}` : `<div class="fe">만들어 둔 루틴이 없습니다<br>아래 「빈 운동으로 시작」으로 시작할 수 있어요</div>`;
@@ -14550,9 +14497,9 @@ const 지움확인 = {
   fdelgo:['이 음식을 삭제할까요?', '삭제'], mealdel:['이 식단 사진을 삭제할까요?', '삭제'], rdelitem:['루틴에서 이 종목을 삭제할까요?', '삭제'],
   delcm:['이 피드백을 삭제할까요?<br>회원 화면에서도 사라집니다.', '삭제'], unask:['피드백 요청을 취소할까요?', '요청 취소'], bldel:['이 날의 인바디 기록을 삭제할까요?', '삭제'],
   wsdel:['이 세트를 삭제할까요?', '삭제'], kpdel:['이 세트를 삭제할까요?', '삭제'], pldel:['이 종목을 삭제할까요?', '삭제'], spdel:['이 종목을 삭제할까요?', '삭제'], clearpick:['추가한 종목을 전부 비울까요?', '전부 비우기'], pcdel:['이 댓글을 삭제할까요?<br>달린 답글도 같이 삭제돼요', '삭제'],
-  rsetdel:['이 세트를 삭제할까요?', '삭제'], psrm:['세트에서 이 종목을 삭제할까요?', '삭제'], mkclear:['표시를 모두 삭제할까요?', '모두 삭제'], rcartclr:['추가한 것을 전부 비울까요?', '비우기'],
+  psrm:['세트에서 이 종목을 삭제할까요?', '삭제'], mkclear:['표시를 모두 삭제할까요?', '모두 삭제'], rcartclr:['추가한 것을 전부 비울까요?', '비우기'],
   grpdel:['이 그룹을 삭제할까요?<br>안에 있던 루틴은 남습니다.', '삭제'], phdreq:['이 사진의 완전 삭제를 요청할까요?', '삭제 요청'], ootddel:['이 사진을 삭제할까요?<br>되돌릴 수 없습니다.', '삭제'],
-  exdel:['이 종목을 삭제할까요?', '삭제'],
+  exdel:['이 종목을 삭제할까요?', '삭제'], recdrop:['이 빈 기록을 삭제할까요?<br>입력한 종목이 없는 기록이에요', '삭제'],
   rhide:['이 루틴을 숨길까요?<br>「숨긴 루틴」에서 다시 보이게 할 수 있습니다.', '숨기기'], rshow:['이 루틴을 다시 보이게 할까요?', '다시 보이기'],
   switch:['로그아웃할까요?<br>다음에 들어올 때 문자 인증을 다시 합니다.', '로그아웃'] };      /* 2026-10-13 — 나가면 기기 기억이 지워진다 */
 const 창에 = sel => !!document.querySelector('#sheetbox ' + sel + ', #main ' + sel);
@@ -14778,18 +14725,20 @@ document.addEventListener('click', async ev=>{
     case 'rprevback': sheetStartSession(rest[0]); return;
     case 'tstart': {
       const [mid, rid, kind] = rest;
-      closeSheet(); S.tmid=mid; S.subj=mid; const 날 = 고른수업날();
-      if(kind === '수업' && D.next && D.next[mid]){ delete D.next[mid]; sv(sdel('assignments','member_id=eq.'+mid+'&on_date=eq.'+NEXT_LESSON), '다음 수업 예약 씀'); }      /* 다음 수업 예약 = 이 수업에서 끝 (2026-11-05) */
+      const 고 = await 고침준비(mid); if(고 === false) return;
+      closeSheet(); S.tmid=mid; S.subj=mid; const 날 = 고 ? 고.date : 고른수업날(); if(!고) 빈기록지움(mid, 날);
+      if(!고 && kind === '수업' && D.next && D.next[mid]){ delete D.next[mid]; sv(sdel('assignments','member_id=eq.'+mid+'&on_date=eq.'+NEXT_LESSON), '다음 수업 예약 씀'); }      /* 다음 수업 예약 = 이 수업에서 끝 (2026-11-05) */
       if(rid && rid!=='0'){ const r=rOf(rid);
-        newLive(`루틴 ${r.no} · ${r.n}`, itemsFromRoutine(r), kind, r.id, mid, '트레이너', 날); }
-      else newLive('수업', [], kind, null, mid, '트레이너', 날);
+        newLive(`루틴 ${r.no} · ${r.n}`, itemsFromRoutine(r), kind, r.id, mid, '트레이너', 날, !!고); }
+      else newLive('수업', [], kind, null, mid, '트레이너', 날, !!고);
       return; }
     case 'tstartrecs': S.tmid=rest[0]; S.trf='전체'; sheetRecentPick(rest[0]); return;
     case 'trf': S.trf=rest[1]; sheetRecentPick(rest[0]); return;
     case 'tstartrec': {
       const [mid, wid, kind] = rest; const w = D.workouts.find(x=>x.id===wid); if(!w) return;
-      closeSheet(); S.tmid=mid; S.subj=mid;
-      newLive(`${dateTxt(w.date)} ${w.kind==='수업'?'수업':'개인운동'} 다시`, itemsFromWorkout(w), kind, null, mid, '트레이너', 고른수업날());
+      const 고 = await 고침준비(mid); if(고 === false) return;
+      closeSheet(); S.tmid=mid; S.subj=mid; const 날 = 고 ? 고.date : 고른수업날(); if(!고) 빈기록지움(mid, 날);
+      newLive(`${dateTxt(w.date)} ${w.kind==='수업'?'수업':'개인운동'} 다시`, itemsFromWorkout(w), kind, null, mid, '트레이너', 날, !!고);
       return; }
     case 'tgo': { const mid=rest[0];
       if(!adoptLive(mid)){ toast('진행 중인 운동이 없어요'); return; }
@@ -16292,54 +16241,20 @@ document.addEventListener('click', async ev=>{
     case 'qatag': S.qaTag = rest[0] || ''; render(); return;
     case 'tmall': S.tmAll = rest[0] === '1'; render(); return;
     case 'trec': S.wid=rest[0]; go('record'); return;
-    case 'recedit': { const w=D.workouts.find(x=>x.id===rest[0]); if(!w) return;
-      S.recEdit = { wid:w.id, items: w.items.map(it=>({ _id:it._id, ex:it.ex, va:it.va,
-        sets: it.sets.map(x=>({ kg:x.kg, reps:x.reps, spd:x.spd })) })) };
-      S.wid = w.id; go('record'); return; }
-    case 'reccancel': { S.recEdit=null; closeSheet(); render(); return; }
-    case 'rset': sheetSetEdit(Number(rest[0]), Number(rest[1])); return;
-    case 'rsetsave': {
-      const [i,j] = rest.map(Number), it = S.recEdit.items[i], st = it.sets[j];
-      const g = k => { const el=document.querySelector('[data-k="se:'+k+'"]'); return el? el.value.trim() : ''; };
-      if(exOf(it.ex).cardio){ st.reps = nnum(g('reps')); st.spd = g('spd')===''? undefined : nnum(g('spd'));
-        if(경사최대(it.ex)) st.kg = Math.min(경사최대(it.ex), nnum(g('kg'))); }
-      else { st.kg = nnum(g('kg')); st.reps = nnum(g('reps')); }
-      closeSheet(); toast('수정했어요\n「저장」을 눌러야 반영됩니다'); render(); return; }
-    case 'rsetdel': {
-      const [i,j] = rest.map(Number);
-      S.recEdit.items[i].sets.splice(j,1);
-      closeSheet(); toast('삭제했어요\n「저장」을 눌러야 반영됩니다'); render(); return; }
-    case 'recaddex': S.recq = ''; sheetRecAddEx(); return;
-    case 'recaddgo': { const E = S.recEdit; if(!E) return; const e = exOf(rest[0]); if(!e) return; const va = (vars(e.id)[0] || {}).k || 'a', w = D.workouts.find(x => x.id === E.wid);
-      const 지 = w && w.mid ? 지난한것(w.mid, e.id, va) : null, 첫 = 지 || { kg:0, reps: e.cardio ? 0 : 10 };
-      E.items.push({ _id:null, ex:e.id, va, 새:true, sets:[{ kg:Number(첫.kg) || 0, reps:Number(첫.reps) || (e.cardio ? 0 : 10), spd:첫.spd }] });
-      closeSheet(); toast(e.n + ' 추가했어요\n세트를 수정하고 「수정 완료」를 눌러야 반영됩니다'); render(); return; }
-    case 'raddset': {
-      const i = Number(rest[0]), it = S.recEdit.items[i];
-      const last = it.sets[it.sets.length-1] || { kg:0, reps:10 };
-      it.sets.push({ kg:last.kg, reps:last.reps, spd:last.spd });
-      render(); return; }
-    case 'recask': {
-      const E = S.recEdit; if(!E) return;
-      const n = E.items.reduce((a,it)=>a+it.sets.length, 0);
-      openSheet(()=>`<div class="h2">이대로 수정할까요?</div>
-        <div class="card">${E.items.map(it=>`<div class="frow"><span class="fk">${esc(exName(it.ex,it.va))}</span>
-          <span class="fv">${it.sets.map(x=>setTxt(it.ex,x)).join(' · ')||'세트 없음'}</span></div>`).join('')}</div>
-        <div class="note">세트 ${n}개로 수정합니다 · <b>기록만 수정하고</b> 운동은 다시 시작하지 않습니다</div>
-        <button class="btn blue" data-act="recsavego">수정</button>
-        <button class="btn ghost sm" data-act="close">닫기</button>`);
-      return; }
-    case 'recsavego': recSave(); return;
+    case 'recfix': 고침열기(rest[0]); return;      /* 지난 기록 수정 = 수업 시작 창 → 기록 화면 하나 (2026-11-16 대표 「매번 다른 화면이 뜨지 않게 · 수업 시작과 동일 · 수정 중이라는 사실만 잊지 않게」 · 앱_제작북 2-4) */
+    case 'recdrop': { const w = D.workouts.find(x => x.id === rest[0]); if(!w || 세트있나(w)) return;
+      D.workouts = D.workouts.filter(x => x.id !== w.id); sv(sdel('workouts', 'id=eq.' + w.id), '빈 기록 지움'); toast('삭제했어요'); render(); return; }
     case 'samenew': S.sameNew = rest[0]; drawSheet(); return;      /* 같은 날 다른 수업 = 안내 접고 아래에서 선택 (2026-11-03) */
     case 'resume': {
       const i=D.workouts.findIndex(x=>x.id===rest[0]);
-      if(i>=0 && $('#sheet').classList.contains('open')) closeSheet();      /* 시작 창의 「이어서 기록」 = 끝낸 수업을 다시 열어 플래너로 (2026-11-03 · 전엔 recedit 수정 화면이 떴다) */
+      if(i>=0 && $('#sheet').classList.contains('open')) closeSheet();      /* 시작 창의 「이어서 기록」 = 끝낸 수업을 다시 열어 플래너로 (2026-11-03 · 전엔 따로 만든 수정 수정 화면이 떴다) */
       if(i<0){ toast('되돌릴 수 없어요'); return; }
       const rec=D.workouts[i];
       D.workouts.splice(i,1);
       /* 시계를 안 켜고 끝낸 수업이면 이어서 할 때도 꺼 둔다 */
-      const 꺼둠 = 시계는손으로(rec) && !Number(rec.dur);
-      D.live={ id:rec.id, mid:rec.mid, title:rec.title||'이어서 하는 운동', kind:rec.kind, rid:rec.rid, date:rec.date, mine:true,
+      const 지난 = !!rec.date && rec.date < TODAY, 꺼둠 = 지난 || (시계는손으로(rec) && !Number(rec.dur));      /* 지난 기록 수정 = 시계 끈 채(지난 수업 시간이 늘지 않게 · 2026-11-16) */
+      if(S.ss) S.ss.고침 = null;
+      D.live={ id:rec.id, mid:rec.mid, title:rec.title||'이어서 하는 운동', kind:rec.kind, rid:rec.rid, date:rec.date, mine:true, 고침:지난,
         startAt: 꺼둠 ? null : Date.now() - rec.dur*1000, cur: Math.max(0, rec.items.length-1),
         items: rec.items.map(it=>({ _id:it._id, ex:it.ex, va:it.va, rest:60, locked:true, sec:it.sec, startAt:Date.now(),
           sets: it.sets.map(x=>({kg:x.kg, reps:x.reps, spd:x.spd, done:true})) })) };
