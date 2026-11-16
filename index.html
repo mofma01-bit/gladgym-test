@@ -1700,7 +1700,8 @@ body .cm2 .tx{font-size:14px;line-height:1.6;color:var(--cream)}
 .rpvl{overflow:auto;display:flex;flex-direction:column;gap:8px}.rpvr{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:center;background:#22201c;border:1px solid #34322d;border-radius:12px;padding:8px}
 .rpvr .rtimg,.rpvr .rtph{width:64px;height:64px;border-radius:9px;object-fit:cover}.rpvr b{display:block;font-size:14.5px}.rpvr small{color:var(--sub);font-size:13px}
 .rpvf{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;margin-top:12px}
-.card.shpk{display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start;text-align:left;padding:10px}.shpk-cv{width:74px;height:96px;border-radius:10px;object-fit:cover;flex:none}.shpk-cv.none,.shpv-cv.none{display:flex;align-items:center;justify-content:center;background:#2a2722;color:var(--sub);font-size:13px;font-weight:800}
+.card.shpk{display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start;text-align:left;padding:10px}.shpk-cv{width:74px;height:96px;border-radius:10px;object-fit:cover;flex:none}
+.shtags{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 6px}.shgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 12px;margin-bottom:6px}.shg{display:flex;flex-direction:column;gap:3px;min-width:0}.shg-b{padding:0;border:0;background:none;cursor:pointer;display:block;width:100%}.shg-cv{display:flex;width:100%;aspect-ratio:3/4;height:auto;border-radius:12px;object-fit:cover}.shg-cv.none{align-items:center;justify-content:center;background:#2a2722;color:var(--cream,#f2ead9);font-size:16px;font-weight:800;padding:10px;text-align:center;box-sizing:border-box}.shg .nm{font-size:14.5px;margin-top:4px}.shg .shpk-b .chip{flex:1;justify-content:center}.shpk-cv.none,.shpv-cv.none{display:flex;align-items:center;justify-content:center;background:#2a2722;color:var(--sub);font-size:13px;font-weight:800}
 .shpk-t{flex:1;min-width:0}.shpk-b{display:flex;gap:6px;margin-top:8px}.shpv-h{display:flex;gap:12px;align-items:center;margin-bottom:12px}.shpv-cv{width:56px;height:72px;border-radius:9px;object-fit:cover;flex:none}.shpv-h b{display:block;font-size:17px}.shpv-h small{color:var(--sub);font-size:13px}
 #rpvw .shrow{margin:0}#rpvw .rst{width:76px}#rpvw .rst .rtimg,#rpvw .rst .rtph{width:76px;height:76px;border-radius:10px;object-fit:cover}.rpvb{display:flex;gap:6px;align-items:center;flex:none}
 #jfw{position:fixed;inset:0;z-index:9997;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center}
@@ -3696,7 +3697,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '592';
+const BUILD = '593';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -3967,7 +3968,7 @@ async function boot(){
   const 뒤받기 = Promise.all([뒤(sget('prep_sets?select=*&order=created_at'), []), 뒤(sget('prep_items?select=*&order=created_at'), []),
     뒤(sget('trainer_favs?select=trainer,member_id'), []), 뒤(sget('cardio_tips?select=*&order=created_at.desc&limit=600'), null),
     뒤(sget('rest_tips?select=*&order=created_at.desc&limit=600'), null), 뒤(sget('ex_favs?select=trainer,ex_id'), []),
-    뒤(sget('routine_sheets?select=id,kind,title,owner,note,hidden,cover'), []), 뒤(sget('sheet_gives?select=*'), []),
+    뒤(sget('routine_sheets?select=id,kind,title,owner,note,hidden,cover,tags'), []), 뒤(sget('sheet_gives?select=*'), []),
     뒤(전부받기('comments?select=member_id,variant_id&order=id'), null)]);
   const [exs, vrs, mems, rts, ritems, asg, wks, witems, wsets, cms, mdesc, intk, plns, bdy, cyc, mls, mits, aks, bphs, blgs, brds, psts, pcms, plks, rms, bdgs] = await Promise.all([
     sget('exercises?select=*&order=sort'),
@@ -13952,16 +13953,19 @@ function sheetRmPick(){
 /* 웨이트 루틴표 보내기 — 루틴표 목록 (2026-11-03 시안 확정) · 스트레칭 루틴표는 「스트레칭 루틴」 쪽 */
 const 보낼표들 = () => (D.sheets || []).filter(x => !x.hidden && x.kind !== '스트레칭' && 표루틴(x.id).length);
 function 표지칸(x, 클){ const c = (x.cover || {}).img; return c ? `<img class="${클}" src="img/cover/${encodeURIComponent(c)}.jpg" alt="">` : `<span class="${클} none">${esc(String(x.title || '루틴표').slice(0, 4))}</span>`; }
+const 표대상 = ['초급자', '중급자', '상급자', '여성용', '남성용', '재활'];      /* 데스크 루틴표대상과 같은 말 */
 function 루틴표보내기창(mid){ const m = MEMBERS.find(x => x.id === mid) || { n:'' };
-  openSheet(() => { const 받은 = new Set((D.gives || []).filter(g => g.member_id === mid).map(g => g.sheet_id)), 다 = 보낼표들();
+  openSheet(() => { const 받은 = new Set((D.gives || []).filter(g => g.member_id === mid).map(g => g.sheet_id)), 다0 = 보낼표들(), 대 = S.shTag || '', 다 = 다0.filter(x => !대 || (x.tags || []).includes(대));
+    /* 바둑판 = 데스크 「루틴표 주기」 · 「루틴표 · 스트레칭」 카드와 같은 꼴(큰 표지 · 이름 · 만든 사람 · 루틴 수 · 대상) (2026-11-16 대표 「바둑판 · 분류 탭」) */
     const 줄 = x => { const L = 표루틴(x.id), n = L.reduce((a, r) => a + r.items.length, 0);
-      return `<div class="card shpk" data-nm="${esc((x.title || '') + ' ' + (x.owner || ''))}">${표지칸(x, 'shpk-cv')}<div class="shpk-t"><div class="nm">${esc(x.title || '루틴표')}${받은.has(x.id) ? ' <span class="pill">받은 루틴표</span>' : ''}</div>
-        <div class="sm">루틴 ${L.length}개 · ${n}종목${x.owner ? ' · ' + esc(x.owner) : ''}</div>
-        <div class="shpk-b"><button class="chip" data-act="shpv:${x.id}:${mid}">미리보기</button><button class="chip t" data-act="shgive:${x.id}:${mid}">보내기</button></div></div></div>`; };
+      return `<div class="shg" data-nm="${esc((x.title || '') + ' ' + (x.owner || ''))}"><button class="shg-b" data-act="shpv:${x.id}:${mid}">${표지칸(x, 'shg-cv')}</button><div class="nm">${esc(x.title || '루틴표')}${받은.has(x.id) ? ' <span class="pill">받은 루틴표</span>' : ''}</div>
+        <div class="sm">루틴 ${L.length}개 · ${n}종목${x.owner ? ' · ' + esc(x.owner) : ''}${(x.tags || []).length ? ' · ' + esc(x.tags.join(' · ')) : ''}</div>
+        <div class="shpk-b"><button class="chip" data-act="shpv:${x.id}:${mid}">미리보기</button><button class="chip t" data-act="shgive:${x.id}:${mid}">보내기</button></div></div>`; };
     const 내 = 다.filter(x => x.owner === TRAINER), 센 = 다.filter(x => x.owner !== TRAINER);
+    const 칩 = `<div class="shtags"><button class="chip ${!대 ? 'on' : ''}" data-act="shtag:">전체 ${다0.length}</button>${표대상.map(t => `<button class="chip ${대 === t ? 'on' : ''}" data-act="shtag:${t}">${t} ${다0.filter(x => (x.tags || []).includes(t)).length}</button>`).join('')}</div>`;
     return `<div class="h2">웨이트 루틴표 보내기 <small>${esc(m.n)} 회원에게</small></div>
-      ${다.length ? `<input class="search" type="text" data-filter="1" placeholder="루틴표 이름으로 검색">
-        ${내.length ? `<span class="lbl">내 루틴표</span>${내.map(줄).join('')}` : ''}${센.length ? `<span class="lbl">센터 루틴표</span>${센.map(줄).join('')}` : ''}`
+      ${다0.length ? 칩 + `<input class="search" type="text" data-filter="1" placeholder="루틴표 이름으로 검색">
+        ${내.length ? `<span class="lbl">내 루틴표</span><div class="shgrid">${내.map(줄).join('')}</div>` : ''}${센.length ? `<span class="lbl">센터 루틴표</span><div class="shgrid">${센.map(줄).join('')}</div>` : ''}${다.length ? '' : '<div class="empty">이 대상 루틴표가 없습니다<br>「전체」를 눌러 주세요</div>'}`
         : `<div class="empty">아직 보낼 루틴표가 없습니다<br>데스크 「루틴표 · 스트레칭」에서 만들어 주세요</div>`}
       <button class="btn ghost sm" data-act="close">닫기</button><div class="cyfoot"><span>미리보기로 루틴을 확인하고 「보내기」</span></div>`; }); }
 /* 루틴표 미리보기 — 루틴 1 ~ n 통째로 · 루틴마다 머리 + 종목 그림 칸 (개인운동 지정 화면과 같은 꼴) */
@@ -16259,6 +16263,7 @@ document.addEventListener('click', async ev=>{
     case 'recfix': 고침열기(rest[0]); return;      /* 지난 기록 수정 = 수업 시작 창 → 기록 화면 하나 (2026-11-16 대표 「매번 다른 화면이 뜨지 않게 · 수업 시작과 동일 · 수정 중이라는 사실만 잊지 않게」 · 앱_제작북 2-4) */
     case 'recdrop': { const w = D.workouts.find(x => x.id === rest[0]); if(!w || 세트있나(w)) return;
       D.workouts = D.workouts.filter(x => x.id !== w.id); sv(sdel('workouts', 'id=eq.' + w.id), '빈 기록 지움'); toast('삭제했어요'); render(); return; }
+    case 'shtag': S.shTag = S.shTag === rest[0] ? '' : rest[0]; drawSheet(); return;      /* 루틴표 보내기 대상 칩 — 다시 누르면 전체 (2026-11-16) */
     case 'samenew': S.sameNew = rest[0]; drawSheet(); return;      /* 같은 날 다른 수업 = 안내 접고 아래에서 선택 (2026-11-03) */
     case 'resume': {
       const i=D.workouts.findIndex(x=>x.id===rest[0]);
