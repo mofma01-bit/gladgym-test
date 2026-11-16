@@ -3696,7 +3696,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '591';
+const BUILD = '592';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -3865,6 +3865,17 @@ const 데스크끼움 = (() => { try{ const q = new URLSearchParams(location.sea
   return { mid: q.get('m') || '', r: q.get('r') || '', fix: q.get('fix') || '', au: { token: a.token, who: a.who || 'trainer', name: a.name || '', sb: a.access_token || '', sbexp: Math.floor((+a.exp || 0) / 1000) } }; }catch(e){ return null; } })();
 if(데스크끼움) document.documentElement.classList.add('deskin');      /* 폰 테두리 · 아래 탭 · 여는 그림 없이 창을 꽉 채운다 */
 const 데스크알림 = 몸 => { try{ if(데스크끼움) window.parent.postMessage(Object.assign({ gg: 'deskrec' }, 몸), '*'); }catch(e){} };
+/* 데스크 앱 창 미리 띄우기 (2026-11-16 대표 「앱 화면 띄울 때 너무 오래 걸려」) — 데스크가 켜질 때 ?desk=1 로 한 번 불러 두고, 누르면 「deskopen」으로 그 화면만 옮긴다 · 자료에 없으면 그때만 새로 불러옴 */
+const 데스크새로열기 = d => { const q = new URLSearchParams({ desk:'1' }); if(d.mid) q.set('m', d.mid); if(d.r) q.set('r', d.r); if(d.fix) q.set('fix', d.fix); location.replace(location.pathname + '?' + q.toString()); };
+window.addEventListener('message', e => { const d = e.data || {}; if(d.gg !== 'deskopen' || !데스크끼움 || e.source !== window.parent) return;
+  try{ closeSheet(); }catch(_){}
+  if(S.who !== 'tr') return 데스크새로열기(d);
+  const mid = d.mid || '', 있 = id => D.workouts.some(w => w.id === id);
+  if(d.r){ if(!있(d.r)) return 데스크새로열기(d); S.tmid = mid; S.subj = mid; S.rw = d.r; S.stack = []; go('report'); return; }
+  if(mid && !MEMBERS.some(m => m.id === mid)) return 데스크새로열기(d);
+  if(d.fix){ if(!있(d.fix)) return 데스크새로열기(d); S.stack = []; S.ttab = 't_members'; S.tmid = mid; S.subj = mid; go('t_member'); 고침열기(d.fix); return; }
+  if(mid){ S.stack = []; S.ttab = 't_members'; S.tmid = mid; S.subj = mid; go('t_member'); if(liveOf(mid) && adoptLive(mid)) go('workout'); return; }
+  S.stack = []; S.ttab = 't_today'; go('t_today'); });
 const LIVEKEY = 데스크끼움 ? 'gladgym_live_desk' : 'gladgym_live_v1';
 function save(){ try{ localStorage.setItem(LIVEKEY, JSON.stringify(D.live)); }catch(e){} }
 /* 이 기기에 남은 **다른 사람의** 하던 운동은 버린다 (2026-10-25 대표 「김O은으로 로그인했는데 양인수가 스쳐 가듯 떴다」 · 한 폰을 여럿이 쓴 경우)
@@ -4136,7 +4147,8 @@ async function boot(){
     if(S.who === 'tr' && mid && 데스크끼움.r && D.workouts.some(w => w.id === 데스크끼움.r)){ S.tmid = mid; S.subj = mid; S.rw = 데스크끼움.r; S.screen = 'report'; }      /* 데스크 「리포트 보기」 (C-4) */
     else if(S.who === 'tr' && mid && MEMBERS.some(m => m.id === mid)){ S.tmid = mid; S.subj = mid; S.screen = 't_member'; S.ttab = 't_members';      /* 아래 탭 「회원」에 불 (2026-11-05 데스크 안도 탭) */
       setTimeout(() => { if(데스크끼움.fix && D.workouts.some(w => w.id === 데스크끼움.fix)) 고침열기(데스크끼움.fix); else if(liveOf(mid) && adoptLive(mid)) go('workout'); }, 0); }      /* 데스크 지난 기록 「수정」 = 같은 시작 창 (2026-11-16) */      /* 시작 창은 안 띄운다 — 회원 화면에서 「수업 시작」 (2026-11-03 대표 노션 「데스크에서 기록하기 눌렀을 때 팝업 없어도 됨」) */
-    else if(S.who === 'tr' && mid) setTimeout(() => toast('이 회원을 앱에서 열 수 없어요\n담당 범위를 확인해 주세요'), 0); }
+    else if(S.who === 'tr' && mid) setTimeout(() => toast('이 회원을 앱에서 열 수 없어요\n담당 범위를 확인해 주세요'), 0);
+    try{ window.parent.postMessage({ gg:'deskready' }, '*'); }catch(e){} }      /* 미리 띄운 창 = 다 받았다고 데스크에 알림 */
   if(!histOn) histInit();
 }
 
@@ -14178,10 +14190,11 @@ async function 고침준비(mid){ const 고 = 고침기록(mid); if(!고) return
     if(!await 물어(dateTxt(고.date) + ' 수업을 다시 기록할까요?' + String.fromCharCode(10) + '지금 기록된 ' + 이름 + ' 은(는) 삭제돼요', '다시 기록')) return false; }
   S.ss.고침 = null; D.workouts = D.workouts.filter(x => x.id !== 고.id); await sv(sdel('workouts', 'id=eq.' + 고.id), '지난 기록 다시 기록'); return 고; }
 const 빈기록지움 = (mid, 날) => { if(!날) return; D.workouts.filter(w => w.mid === mid && w.date === 날 && !세트있나(w) && !(D.live && D.live.id === w.id)).forEach(w => { D.workouts = D.workouts.filter(x => x.id !== w.id); sv(sdel('workouts', 'id=eq.' + w.id), '빈 기록 지움'); }); };      /* 그날 빈 기록만 있던 날에 새로 적으면 빈 것은 지운다 */
-function 고침열기(wid){ const w = D.workouts.find(x => x.id === wid); if(!w) return;
+async function 고침열기(wid){ const w = D.workouts.find(x => x.id === wid); if(!w) return;
   const L = D.live, 찬 = x => !!x && (x.items || []).some(it => (it.sets || []).length);
-  if(L && !찬(L)){ D.live = null; save(); }      /* 세트 0 인 진행 기록(시작만 한 것 · 그 빈 기록 자신 포함)은 잃을 게 없다 — 막지 않고 비운다 (2026-11-16 대표 「아무 내역 없는 수업인데 기록 중이라며 안 돼」) */
-  else if(L){ const mm = MEMBERS.find(x => x.id === L.mid) || {}; toast(dateTxt(L.date) + ' ' + (mm.n || '') + ' 수업을 기록 중이에요' + String.fromCharCode(10) + '먼저 마쳐 주세요'); return; }
+  if(L){ if(찬(L)){ for(let i = 0; i < (L.items || []).length; i++){ try{ await svItem(i); }catch(e){} }      /* 하던 수업 = 세트까지 서버에 저장하고 「기록 중」으로 남김 · 그 회원 「이어서 기록하기」로 돌아감 */
+      if(L.id !== w.id){ const mm = MEMBERS.find(x => x.id === L.mid) || {}; toast((mm.n || '') + ' 수업은 기록 중으로 두었어요' + String.fromCharCode(10) + '「이어서 기록하기」로 돌아가요'); } }
+    D.live = null; save(); }      /* 지난 기록 수정은 막지 않는다 (2026-11-16 대표 「지난 기록이니까 기록이 있든 없든 수정하겠다는 건데」) */
   S.tmid = w.mid; S.subj = w.mid; sheetStartSession(w.mid, w.id); }
 function 시작창그림(mid){ const m = MEMBERS.find(x => x.id === mid) || { n:'' }, t = 수업예약(mid) || D.today[mid], o = S.ss && S.ss.mid === mid ? S.ss : (S.ss = { mid, 보기:'표', sid:'', 날열림:false }), tr = t && rOf(t.rid);
   const 묶음 = [].concat(myRoutines(mid).length ? [{ id:'my', title:'내 루틴', rs:myRoutines(mid) }] : [], 내루틴표(mid).filter(x => x.s).map(x => ({ id:x.s.id, title:x.s.title || '루틴표', s:x.s, rs:표루틴(x.s.id) })));
