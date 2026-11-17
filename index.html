@@ -1883,7 +1883,9 @@ body .prephd .ph1{font-size:21px}
 .prg .prow .kd{flex:none;align-self:flex-start;margin-top:5px;font-size:10.5px;letter-spacing:0;border:1px solid currentColor;border-radius:999px;padding:1px 8px;opacity:.85}
 .tmsum.btn3 b .td안{font-style:normal;font-size:10.5px;font-weight:700;color:var(--teal);margin-left:6px;white-space:nowrap}
 .rtb{flex:1;min-width:0}.rvths{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0 8px}.rvth{aspect-ratio:1;border-radius:9px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center}.rvth img{width:100%;height:100%;object-fit:contain;display:block}.rvth.ph{background:#26241f}.rvth.ph svg{width:60%;height:60%}.rvth.m{background:#26241f;color:var(--gold);font-weight:800;font-size:15px}.rvex{font-size:13.5px;line-height:1.45;margin-bottom:4px;overflow-wrap:anywhere}.rvex1,.mrow2 .mt small.rvex1{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-style:normal;white-space:normal;line-height:1.4;text-overflow:clip}.shc-go .btn{display:flex;flex-direction:column;align-items:flex-start;height:auto;min-height:44px;padding:8px 12px;text-align:left;gap:2px;width:100%}.shc-go .btn small{font-size:13px;font-weight:500;opacity:.85;white-space:normal;line-height:1.35}
-.recnote{font-size:13px;color:var(--mute,#a9a294)}.recday{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px}.recday>span{flex:0 0 100%;font-size:13px;font-weight:700;color:var(--mute,#a9a294)}.recday input{flex:0 1 150px;min-width:0;height:34px;padding:0 8px;font-size:13px}.recband{position:sticky;top:6px;z-index:6;flex:none;display:flex;align-items:center;gap:9px;margin:0;padding:9px 12px;border-radius:14px;border:1.5px solid var(--gold);background:#2a2216;box-shadow:0 6px 18px rgba(0,0,0,.45);color:#f2ead9;font-size:14px;font-weight:800}.recband i{width:9px;height:9px;border-radius:50%;background:var(--gold);flex:none;animation:recp 1.4s ease-in-out infinite}.recband small{display:block;font-size:13px;color:#d9c9a5;font-weight:600}@keyframes recp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}@media (prefers-reduced-motion:reduce){.recband i{animation:none}}
+.recnote{font-size:13px;color:var(--mute,#a9a294)}.recday{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px}.recday>span{flex:0 0 100%;font-size:13px;font-weight:700;color:var(--mute,#a9a294)}.recday input{flex:0 1 150px;min-width:0;height:34px;padding:0 8px;font-size:13px}.recband{position:sticky;top:6px;z-index:6;flex:none;display:flex;align-items:center;gap:10px;margin:0;padding:12px 14px;border-radius:14px;border:1.5px solid var(--gold);background:#2a2216;box-shadow:0 6px 18px rgba(0,0,0,.45);color:#f6e7c6;font-size:16.5px;font-weight:800}
+.tlbar{display:flex;gap:8px;margin-top:12px}.tlbar .tlgo{flex:1;margin:0!important}.tlbar .tlfix2{flex:0 0 38%;margin:0}
+.tlwho{margin-top:12px;font-size:13.5px;color:#a39b8d;text-align:center}.tlwho2{margin-left:auto;flex:none;font-size:13px;color:#a39b8d;font-weight:700}.recband i{width:9px;height:9px;border-radius:50%;background:var(--gold);flex:none;animation:recp 1.4s ease-in-out infinite}.recband small{display:block;font-size:13px;color:#d9c9a5;font-weight:600}@keyframes recp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}@media (prefers-reduced-motion:reduce){.recband i{animation:none}}
 .ssday.fix{border:1.5px solid var(--gold);background:#2a2216}.tmrc.none{border-style:dashed;border-color:#8a7a5c}.tmrc .tlh .tlfix{margin-left:auto;flex:none}.tmrc .tlno{margin-left:auto;font-size:13px;font-weight:800;color:#f0b46a}.tmrc .tlnone{padding:8px 2px 2px;font-size:14px;color:#e4ddd1}.tmrc .tlnone b{display:block;font-size:15px}.tmrc .tlnone small{font-size:13px;color:var(--mute,#a9a294)}.tmrc .tlnb{display:flex;gap:8px;margin-top:10px}.tmrc .tlnb .btn{margin:0}.tmrc .tlnb .main{flex:1}
 .pkparts .chip.mine{border-color:var(--gold);color:var(--gold)}.pkparts .chip.mine.on{background:var(--gold);color:#1a1408}
 .rtpics{display:flex;gap:8px;overflow-x:auto;margin:4px 0 8px}.rtpics span{flex:none;width:120px;text-align:center}.rtpics img{width:120px;height:120px;object-fit:contain;background:#fff;border-radius:10px;display:block}.rtpics small{font-size:12px;color:var(--sub)}
@@ -3697,7 +3699,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '593';
+const BUILD = '594';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -7433,7 +7435,12 @@ function vWorkout(){
 }
 const 지난날표시 = (w, 화면) => { const 날 = w.기록날 || (w.date && w.date < TODAY ? w.date : ''); if(!날 || !화면 || typeof 화면.body !== 'string') return 화면;      /* 지난 기록 수정 = 수업 시작 창 → 기록 화면 하나 (2026-11-16 대표 「매번 다른 화면이 뜨지 않게 · 수업 시작과 동일 · 수정 중이라는 사실만 잊지 않게」 · 앱_제작북 2-4) */
   const 요 = '일월화수목금토'[new Date(날 + 'T12:00:00').getDay()] || '';
-  화면.body = `<div class="recband"><i></i><span>${esc(dateTxt(날))}(${요}) ${w.고침 ? '지난 기록 수정 중' : '지난 수업 기록 중'}<small>오늘 수업이 아니에요 · 마치면 ${esc(dateTxt(날))} 수업으로 저장돼요</small></span></div>` + 화면.body; return 화면; };
+  화면.body = `<div class="recband"><i></i><span>${esc(dateTxt(날))}(${요}) ${w.고침 ? '지난 기록 수정 중' : w.kind === '개인운동' ? '지난 운동 기록 중' : '지난 수업 기록 중'}</span></div>` + 화면.body; return 화면; };      /* 한 줄만 크게 · 아래 설명 뺌 (2026-11-17 대표 「이거만 잘 보이게 · 자질구레한 설명 다 빼」) */
+/* 누가 고치나 — 「수업」 = 트레이너가 쓴 것 · 「개인운동」 = 회원이 쓴 것(2026-10-23 부터 직원이 쓰면 무조건 수업) · 회원은 오늘 포함 14일 전까지 (2026-11-17 대표) */
+const 회원기록인가 = w => !!w && w.kind === '개인운동';
+const 회원수정기한 = () => { const d = new Date(TODAY + 'T12:00:00'); d.setDate(d.getDate() - 14); return d.toISOString().slice(0, 10); };
+const 회원수정가능 = w => 회원기록인가(w) && (w.date || '') >= 회원수정기한() && (w.date || '') <= TODAY;
+const 회원수정막힘 = w => !회원기록인가(w) ? '트레이너가 기록한 수업이에요 · 수정은 트레이너만' : '2주가 지나 수정할 수 없어요';
 function 옛운동화면(w){
   if(!(w.cur >= 0 && w.cur < w.items.length)) w.cur = Math.max(0, w.items.findIndex(it => !it.locked));
   { const c0 = w.items[w.cur]; if(c0 && !c0.sets.length) c0.sets.push({ kg:0, reps:10, done:false }); }      /* 지금 종목이 세트 0개 → 세트[-1].done 로 멈췄다 (2026-10-23 reading 'done') */
@@ -8961,11 +8968,11 @@ function vDays(){
 function vRecord(){      /* 마친 기록 보기 — 고치는 길은 「기록 수정하기」 = 시작 창 → 기록 화면 하나 (2026-11-16 · 옛 따로 수정 화면 걷음) */
   const w = D.workouts.find(x=>x.id===S.wid); if(!w) return vRecords();
   const today = (w.date === TODAY);
-  const canEdit = (S.who==='tr') || (today && !live());
+  const canEdit = S.who === 'tr' ? !회원기록인가(w) : 회원수정가능(w);      /* 2026-11-17 — 트레이너 = 수업만 · 회원 = 내 개인운동 14일 안 (전엔 회원이 오늘 「수업」도 고칠 수 있었다) */
   const back = S.who==='tr' ? 'tw:'+w.id : 'tab:records';
   return { top: bar(dateTxt(w.date), `<span class="sub">${durTxt(w.dur)}</span>`, back), body:
     `<div class="note">${w.kind?esc(w.kind):''}${w.rid&&rOf(w.rid)?` · 루틴 ${rOf(w.rid).no} ${esc(rOf(w.rid).n)}`:''}</div>`
-    + (!canEdit ? '<div class="note">지난 날짜는 <b>수정할 수 없습니다</b></div>' : '')
+    + (!canEdit ? '<div class="note">' + (S.who === 'tr' ? '회원이 기록한 운동이에요 · 수정은 회원만' : 회원수정막힘(w)) + '</div>' : '')
     + `<button class="btn sub sm" data-act="fendview:${w.id}"
         style="margin-bottom:2px">운동 마친 화면 다시 보기</button>`
     + w.items.map((it,i)=>`<div class="card">
@@ -8975,7 +8982,7 @@ function vRecord(){      /* 마친 기록 보기 — 고치는 길은 「기록 
         </div>
         <div class="sm" style="margin-top:5px">${it.sets.map(st=>setTxt(it.ex,st)).join('  ·  ')||'세트 없음'}</div>
       </div>`).join(''),
-    foot: canEdit ? `<button class="btn blue go" data-act="${S.who === 'tr' ? 'recfix' : 'resume'}:${w.id}">기록 수정하기</button>` : '' };
+    foot: canEdit ? `<button class="btn blue go" data-act="${S.who === 'tr' ? 'recfix' : 'myfix'}:${w.id}">기록 수정하기</button>` : '' };
 }
 
 
@@ -13846,11 +13853,12 @@ function tMember(){
    트레이너 = 누르면 피드백 쓰기 · 「몰아서 올리기」 / 회원 = 리포트 › · 「이 기록으로 시작」(⑧) */
 function 지난기록한장(w, o){ o = o || {}; const 요 = '일월화수목금토'[new Date(w.date + 'T00:00:00').getDay()], 메 = (D.cm || []).filter(c => c.wid === w.id && c.ex === 'memo').map(c => c.tx).filter(Boolean);
   if(o.tr && !세트있나(w)) return `<div class="tmrc none${w.kind === '개인운동' ? ' self' : ''}"><div class="tlh"><b>${dateTxt(w.date)} <u>(${요})</u></b><span class="k">${esc(w.kind || '')}</span>${w.title ? `<small>${esc(w.title)}</small>` : ''}<span class="tlno">기록 없음</span></div>
-    <div class="tlnone"><b>종목을 입력하지 않은 수업이에요</b><small>수업을 시작만 하고 저장 전에 나갔어요</small></div><div class="tlnb"><button class="btn main sm" data-act="recfix:${w.id}">기록하기</button><button class="btn ghost sm" data-act="recdrop:${w.id}">삭제</button></div></div>`;      /* 빈 기록도 보이게 (2026-11-16 대표 「기록이 없는지도 표시가 아예 안 나와」) */
-  return `<div class="tmrc${w.kind === '개인운동' ? ' self' : ''}"${o.tr ? ` data-act="tw:${w.id}"` : ''}><div class="tlh"><b>${dateTxt(w.date)} <u>(${요})</u></b><span class="k">${esc(w.kind || '')}</span>${w.title ? `<small>${esc(w.title)}</small>` : ''}${o.tr ? `<button class="btn sub sm tlfix" data-act="recfix:${w.id}">기록 수정</button>` : o.pick ? '' : `<button class="tlrp" data-act="rpt:${w.id}">리포트 ›</button>`}</div>
+    <div class="tlnone"><b>종목을 입력하지 않은 수업이에요</b><small>수업을 시작만 하고 저장 전에 나갔어요</small></div><div class="tlnb">${회원기록인가(w) ? '' : `<button class="btn main sm" data-act="recfix:${w.id}">기록하기</button>`}<button class="btn ghost sm" data-act="recdrop:${w.id}">삭제</button></div></div>`;      /* 빈 기록도 보이게 (2026-11-16 대표 「기록이 없는지도 표시가 아예 안 나와」) */
+  return `<div class="tmrc${w.kind === '개인운동' ? ' self' : ''}"${o.tr ? ` data-act="tw:${w.id}"` : ''}><div class="tlh"><b>${dateTxt(w.date)} <u>(${요})</u></b><span class="k">${esc(w.kind || '')}</span>${w.title ? `<small>${esc(w.title)}</small>` : ''}${o.tr ? (회원기록인가(w) ? `<span class="tlwho2">회원 기록</span>` : `<button class="btn sub sm tlfix" data-act="recfix:${w.id}">기록 수정</button>`) : o.pick ? '' : `<button class="tlrp" data-act="rpt:${w.id}">리포트 ›</button>`}</div>
     <div class="tmfig tmfig2">${오늘부위판(w, false)}</div><div class="tlt">${플래너표(w)}</div>${o.tr || o.pick ? '' : 팁줄들(w.id)}${메.length ? `<div class="tmmemo"><b>수업 메모</b>${메.map(t => esc(t)).join(' · ')}</div>` : ''}`
     + (o.tr ? `<button class="mu-go sm" data-act="bulkopen:${w.id}"><span class="e">📤</span><span>이 수업 피드백 몰아서 올리기</span></button>` : '')
-    + (o.start ? `<button class="btn main sm tlgo" data-act="again:${w.id}">이 기록으로 시작</button>` : '')
+    + (o.start ? (회원수정가능(w) ? `<div class="tlbar"><button class="btn sub sm tlfix2" data-act="myfix:${w.id}">기록 수정</button><button class="btn main sm tlgo" data-act="again:${w.id}">이 기록으로 시작</button></div>`
+        : `<button class="btn main sm tlgo" data-act="again:${w.id}">이 기록으로 시작</button><div class="tlwho">${회원수정막힘(w)}</div>`) : '')
     + (o.pick ? `<button class="btn main tlgo zjgo" data-act="${o.pick[0]}">${o.pick[1]}</button>` : '') + `</div>`; }
 function 지난기록카드(m, ws){ const 다 = ws.filter(x => 세트있나(x) || (x.date < TODAY && !(D.live && D.live.id === x.id))),      /* 빈 기록도 「기록 없음」 카드로 (2026-11-16) */ n = S.tmN && S.tmN.mid === m.id ? S.tmN.n : 5, 보 = 다.slice(0, n);
   if(!다.length) return `<div class="tmlast none"><small>지난 기록</small><span>아직 기록이 없어요 · 수업을 기록하면 여기에 나와요</span></div>`;
@@ -13901,7 +13909,7 @@ function tWrite(){
           <span class="pill${n?' q':''}">${n?`피드백 ${n}`:'피드백 쓰기'} ›</span></button>`; }).join('')
       : '<div class="empty">세트를 입력한 종목이 없습니다<small class="e2">아래 「기록 수정하기」에서 세트를 입력해 주세요</small></div>')
     ,
-    foot:`<button class="btn blue go" data-act="recfix:${w.id}">기록 수정하기</button>` };
+    foot: 회원기록인가(w) ? '' : `<button class="btn blue go" data-act="recfix:${w.id}">기록 수정하기</button>` };
 }
 function tRoutines(){
   const 갈래 = `<div class="chips rcm"><button class="chip ${S.rcm?'':'on'}" data-act="rcm:0">회원 루틴</button><button class="chip ${S.rcm?'on':''}" data-act="rcm:1">공통 루틴 ${공통루틴().length}</button></div>`;
@@ -16260,11 +16268,20 @@ document.addEventListener('click', async ev=>{
     case 'qatag': S.qaTag = rest[0] || ''; render(); return;
     case 'tmall': S.tmAll = rest[0] === '1'; render(); return;
     case 'trec': S.wid=rest[0]; go('record'); return;
-    case 'recfix': 고침열기(rest[0]); return;      /* 지난 기록 수정 = 수업 시작 창 → 기록 화면 하나 (2026-11-16 대표 「매번 다른 화면이 뜨지 않게 · 수업 시작과 동일 · 수정 중이라는 사실만 잊지 않게」 · 앱_제작북 2-4) */
+    case 'recfix': { const w = D.workouts.find(x => x.id === rest[0]); if(회원기록인가(w)){ toast('회원이 기록한 운동이에요' + String.fromCharCode(10) + '수정은 회원만 할 수 있어요'); return; } 고침열기(rest[0]); return; }      /* 지난 기록 수정 = 수업 시작 창 → 기록 화면 하나 (2026-11-16 대표 「매번 다른 화면이 뜨지 않게 · 수업 시작과 동일 · 수정 중이라는 사실만 잊지 않게」 · 앱_제작북 2-4) */
     case 'recdrop': { const w = D.workouts.find(x => x.id === rest[0]); if(!w || 세트있나(w)) return;
       D.workouts = D.workouts.filter(x => x.id !== w.id); sv(sdel('workouts', 'id=eq.' + w.id), '빈 기록 지움'); toast('삭제했어요'); render(); return; }
     case 'shtag': S.shTag = S.shTag === rest[0] ? '' : rest[0]; drawSheet(); return;      /* 루틴표 보내기 대상 칩 — 다시 누르면 전체 (2026-11-16) */
     case 'samenew': S.sameNew = rest[0]; drawSheet(); return;      /* 같은 날 다른 수업 = 안내 접고 아래에서 선택 (2026-11-03) */
+    case 'myfix': {      /* 회원 기록 수정 = 한 번 누르면 그 기록 그대로 기록 화면 (2026-11-17 대표 「복잡하지 않게」 · 시안 회원기록수정_1117 2) */
+      const w = D.workouts.find(x => x.id === rest[0]);
+      if(!w){ toast('그 기록을 찾지 못했어요'); return; }
+      if(S.who === 'tr' || !회원수정가능(w)){ toast(회원수정막힘(w)); return; }
+      const L = D.live;
+      if(L && L.id === w.id){ go('workout'); return; }
+      if(L){ if((L.items || []).some(it => (it.sets || []).length)){ for(let i = 0; i < L.items.length; i++){ try{ await svItem(i); }catch(e){} } toast('하던 운동은 기록 중으로 두었어요'); }      /* 하던 것 = 세트까지 저장 · 「이어서 기록하기」로 남김 */
+        D.live = null; save(); } }
+      /* falls through */
     case 'resume': {
       const i=D.workouts.findIndex(x=>x.id===rest[0]);
       if(i>=0 && $('#sheet').classList.contains('open')) closeSheet();      /* 시작 창의 「이어서 기록」 = 끝낸 수업을 다시 열어 플래너로 (2026-11-03 · 전엔 따로 만든 수정 수정 화면이 떴다) */
