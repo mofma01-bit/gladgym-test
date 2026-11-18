@@ -3206,6 +3206,9 @@ body.kpon #main{padding-bottom:380px}
 .zjsh button.on .rjcv{outline:2.5px solid var(--gold)!important;outline-offset:3px}.zjsh button.on small{color:var(--gold)}.zjsh .rjcv.my{background:#2b2a27;color:#f3ead8;border:1px solid #5a554a}.zjgo{width:100%;margin-top:10px}
 #cfm p .cfs{display:block;font-size:13.5px;font-weight:600;opacity:.75;margin-top:4px}
 .zjrec{display:flex;flex-direction:column;gap:8px}.zjrec button{display:flex;gap:10px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--dark-2);border-radius:14px;padding:10px 12px;color:var(--cream);font:inherit}.zjrec .d{flex:none;width:54px;text-align:center;border-radius:10px;background:var(--dark-3);padding:4px 0;font-weight:900;font-size:15px;line-height:1.25}.zjrec .d small{display:block;font-size:12.5px;color:var(--sub);font-weight:600}.zjrec .t{min-width:0}.zjrec b{display:block;font-size:14.5px}.zjrec b em{font-style:normal;font-size:12.5px;border-radius:6px;padding:0 6px;margin-left:6px}.zjrec b em.cl{background:#232f1f;color:#b0e299}.zjrec b em.pe{background:var(--gold-dim);color:var(--gold)}.zjrec small{font-size:13px;color:var(--sub)}
+#ggconn{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:9999;display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:#1a1917;color:#e6c487;border:1px solid #34332d;font-size:13px;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,.35);pointer-events:none}
+#ggconn i{width:12px;height:12px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:ggconnspin .9s linear infinite}
+@keyframes ggconnspin{to{transform:rotate(360deg)}}
 </style>
 
 </head>
@@ -3699,7 +3702,7 @@ async function 수파fetch(u, o){ const 실은 = String((o && o.headers && o.hea
 
 const TODAY = (d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'))(new Date());
 
-const BUILD = '594';
+const BUILD = '595';
 /* ══ 앱 안 브라우저 → 바깥 브라우저 · 아이폰 홈 화면 추가 큰 안내 ══ 2026-10-23 대표 「사파리로 열리게 · 데스크 · 회원앱 둘 다 · 글씨 크게 알아보기 쉽게」
    카톡 안 = 카톡 기능(openExternal)으로 사파리 · 크롬에서 다시 연다 · 라인 = openExternalBrowser · 그 밖 앱 안: 안드로이드 = 크롬으로 · 아이폰 = 크게 안내 */
 const 큰안내아이폰 = () => /iphone|ipad|ipod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -3909,12 +3912,40 @@ const 서명유효 = 3600;                     /* 한 시간 */
 /* ══ S3 길목 ══ 2026-10-14 대표 「새로 올리는 영상은 S3 로 바로 · 옮기기는 내일 · 길목부터」 — 중앙 창구 /app/media/{upload|view|delete}
    「media/」 로 시작하는 경로 = S3(CloudFront 서명 주소 · 하루짜리로 받아 23시간 쓰고 다시) · 그 밖 = 예전 수파베이스.
    S3 로 올리는 것은 회원 개인 영상만(피드백 영상 · 체형 영상) — 공용 자료(종목 · 스트레칭)는 수파베이스(회원이 남의 S3 자료를 못 연다) */
+/* ══ 연결 지킴 ══ 2026-11-18 중앙 요청 · 대표 「넣어」 — 대시보드 재시작 3~5초에 주간 177번 · 사진 주소 96번 되풀이(중앙 실측 · 다시 켜지자마자 몰려 또 느려짐).
+   502 · 503 · 504 · 못 닿음 = 2 → 4 → 8 → … 최대 30초 쉬었다 다시 · 쉬는 동안 다른 부름도 같이 기다림 · 쉼이 끝나면 하나만 먼저 보내 살펴봄
+   같은 읽기가 도는 중이면 새로 안 부르고 그 답을 같이 씀 · 쓰기는 쉼이 끝나길 기다렸다 한 번만(두 번 저장 막기) · 오류 창 대신 「잠시 연결 중」 작은 표시 */
+const 연결 = { n:0, 쉼까지:0, 살핌:null, 도는:new Map(), 최대:8 };      /* 최대 = 한 부름이 시도하는 횟수(2+4+8+16+30+30+30 ≈ 2분) */
+const 연결쉼 = n => Math.min(30000, 2000 * Math.pow(2, Math.max(0, n - 1)));
+const 연결끊김 = s => s === 502 || s === 503 || s === 504;
+function 연결표시(){ let el = document.getElementById('ggconn'); const 켬 = 연결.n > 0;
+  if(!el){ if(!켬 || !document.body) return; el = document.createElement('div'); el.id = 'ggconn'; el.setAttribute('role', 'status'); el.innerHTML = '<i></i>잠시 연결 중'; document.body.appendChild(el); }
+  el.hidden = !켬; }
+function 연결실패(){ const 지금 = Date.now(); if(지금 >= 연결.쉼까지){ 연결.n++; 연결.쉼까지 = 지금 + 연결쉼(연결.n); } 연결표시(); }      /* 한 쉼에 한 번만 늘린다 — 동시에 10개가 실패해도 2초가 30초로 뛰지 않게 */
+function 연결됨(){ if(연결.n || 연결.쉼까지){ 연결.n = 0; 연결.쉼까지 = 0; 연결표시(); } }
+async function 연결기다림(){ for(;;){ const 남 = 연결.쉼까지 - Date.now();
+  if(남 > 0){ await new Promise(z => setTimeout(z, Math.min(1000, 남))); continue; }
+  if(연결.n && 연결.살핌){ await 연결.살핌; continue; } return; } }
+async function 연결fetch(url, opt, 다시, 한도){
+  for(let n = 0; ; n++){
+    await 연결기다림();
+    const 끊 = 한도 && typeof AbortController === 'function' ? new AbortController() : null, 시계 = 끊 ? setTimeout(() => 끊.abort(), 한도) : 0;
+    const 살핌 = 연결.n > 0 && !연결.살핌; let 끝살핌 = null; if(살핌) 연결.살핌 = new Promise(z => 끝살핌 = z);
+    try{
+      let r; try{ r = await fetch(url, 끊 ? Object.assign({}, opt, { signal: 끊.signal }) : opt); }
+      catch(e){ if(e && e.name === 'AbortError') throw e; 연결실패(); if(!다시 || n >= 연결.최대 - 1) throw e; continue; }
+      if(연결끊김(r.status)){ 연결실패(); if(!다시 || n >= 연결.최대 - 1) return r; continue; }
+      연결됨(); return r;
+    }finally{ clearTimeout(시계); if(살핌){ 연결.살핌 = null; 끝살핌(); } }
+  } }
+function 연결묶기(열쇠, 일){ if(연결.도는.has(열쇠)) return 연결.도는.get(열쇠);
+  const p = Promise.resolve().then(일).finally(() => 연결.도는.delete(열쇠)); 연결.도는.set(열쇠, p); return p; }
 const S3키 = p => typeof p === 'string' && p.indexOf('media/') === 0;
 const S3만료 = {};
 async function S3부르기(길, 몸){ const a = 로그인기억.읽() || {}; if(!a.token) throw new Error('로그인이 필요해요');
-  const r = await fetch(GG_API + '/app/media/' + 길, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(Object.assign({ token: a.token }, 몸 || {})) });
+  const r = await 연결fetch(GG_API + '/app/media/' + 길, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(Object.assign({ token: a.token }, 몸 || {})) }, 길 === 'view');
   if(!r.ok) throw new Error('서버에 닿지 못했어요 (' + r.status + ')'); const j = await r.json(); if(!j.ok) throw new Error(j.why || '안 되었어요'); return j; }
-async function S3주소받기(keys){ await Promise.all(keys.map(async k => { try{ const j = await S3부르기('view', { key: k, 분: 1440 }); if(j.url){ SIGNED[k] = j.url; S3만료[k] = Date.now() + 23 * 3600 * 1000; } }catch(e){ console.warn('S3 주소 못 받음', e.message); } })); }
+async function S3주소받기(keys){ await Promise.all(keys.map(async k => { try{ const j = await 연결묶기('s3:' + k, () => S3부르기('view', { key: k, 분: 1440 })); if(j.url){ SIGNED[k] = j.url; S3만료[k] = Date.now() + 23 * 3600 * 1000; } }catch(e){ console.warn('S3 주소 못 받음', e.message); } })); }
 async function S3올리기(blob, 종류, 파일명, type, mid){
   const j = await S3부르기('upload', Object.assign({ 종류, 파일명, content_type: type }, mid ? { mid } : {}));
   const r = await fetch(j.url, { method:'PUT', headers:{ 'Content-Type': j.content_type || type }, body: blob });
@@ -6016,7 +6047,8 @@ function vLogin(){
 async function 앱crm(길, 몸){ if(샘플판 && 길 === 'booking'){ const m = MEMBERS.find(x => x.id === window.__샘플mid) || {}; return { '나': TRAINER, '오늘예약': { [TRAINER]: [{ name: m.n || '', phone4: m.p4 || '', '시각':'15:00', '종목':'PT', '상태':'예약' }] } }; }      /* 샘플 트레이너 화면 — 가짜 오늘 예약 한 줄 (2026-11-05) */
   const au = 로그인기억.읽() || {}; if(!au.token || au.mid) throw new Error('직원으로 로그인해야 검색할 수 있어요');
   /* 앱은 늘 트레이너 본인 범위 — 대신 = 로그인한 직원 이름(서버가 자기 이름이면 등급과 상관없이 트레이너 범위로 답한다) · 2026-10-23 대표 「앱은 관리자로 볼 필요가 없으니 조민철 트레이너로만」 */
-  let r; try{ r = await fetch(GG_API + '/app/crm/' + 길, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(Object.assign({ token: au.token }, 몸 || {}, au.name && 길 !== 'lessons' ? { 대신: au.name } : {})) }); }      /* 지난 예약은 대신을 안 붙인다 — 붙이면 관리자도 본인 수업만 와서 다른 선생님 회원을 기록할 때 비었다 (2026-11-01 대표) · 트레이너 토큰은 서버가 본인 수업만 준다 */
+  const 몸글 = JSON.stringify(Object.assign({ token: au.token }, 몸 || {}, au.name && 길 !== 'lessons' ? { 대신: au.name } : {}));      /* 연결 지킴 (2026-11-18) — 앱이 부르는 4개(booking · lessons · search · states)는 모두 읽기: 같은 부름 묶기 · 끊기면 기다렸다 다시 */
+  let r; try{ r = await 연결묶기('crm:' + 몸글 + 길, () => 연결fetch(GG_API + '/app/crm/' + 길, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: 몸글 }, 길 !== 'search')).then(x => x && x.clone ? x.clone() : x); }      /* 지난 예약은 대신을 안 붙인다 — 붙이면 관리자도 본인 수업만 와서 다른 선생님 회원을 기록할 때 비었다 (2026-11-01 대표) · 트레이너 토큰은 서버가 본인 수업만 준다 */
   catch(e){ const x = new Error('서버에 닿지 못했어요'); x.막힘 = true; throw x; }
   if(!r.ok){ const x = new Error('서버에 닿지 못했어요 (' + r.status + ')'); x.막힘 = r.status >= 500; throw x; }
   const j = await r.json(); if(!j.ok){ const x = new Error(/권한이 없/.test(j.why || '') ? '「내 정보 → 로그아웃」 뒤 다시 로그인해 주세요' : (j.why || '검색하지 못했어요')); x.막힘 = !!j['막힘']; throw x; } return j; }
